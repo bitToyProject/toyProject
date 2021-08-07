@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiLogin  = (data) =>{
     return axios({
-        url: "/login",
+        url: "http://localhost:8080/login",
         method: 'POST',
         data: data,
         headers:{
