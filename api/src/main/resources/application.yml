@@ -1,0 +1,18 @@
+spring:
+  jwt:
+    secret: jwtsecret
+  main:
+    web-application-type: none
+  datasource:
+    url: jdbc:mysql://localhost:3306/root?serverTimezone=UTC&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: woals1212!
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+
