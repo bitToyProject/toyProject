@@ -1,12 +1,12 @@
-import { Route } from "react-router";
-import { TodoListApp } from "./webapp/todoList";
+import { Route } from 'react-router';
+import { LoginApp } from '@/webapp/member/index';
 
 const App = () => {
-  return (
-    <>
-      <Route path="/todo" component={TodoListApp}/>
-    </>
-  );
+    return (
+        <>
+            <Route exact path={'/user/login'} component={LoginApp}></Route>
+        </>
+    );
 };
 
 export default App;

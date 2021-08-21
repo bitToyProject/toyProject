@@ -1,11 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { useInput } from "../../hook/useInput";
 
 const EmailInput = () => {
+  const name = useInput("", undefined);
+  console.log("name: ", name);
   return (
     <>
       <label>이메일</label>
-      <input type="text" />
+      <input type="text" {...name} />
     </>
   );
 };
