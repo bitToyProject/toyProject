@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/roots?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/root?serverTimezone=UTC&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: woals1212!
+    password: 5959@Ssol
   jpa:
     open-in-view: false
     generate-ddl: true
@@ -11,4 +11,8 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+jwt:
+  header: Authorization
+  secret: dG95cHJvamVjdC1iaXQ1MDItdGVhbS13ZS1jYW4tbWFkZS1pdC1mb3ItdGhlLWJlc3Qtb2YtbXktbGlmZS1kb250LWJlLWFmZnJhaWQtb2YtQWxsLW9mLUVycm9y
+  token-validity-in-seconds: 86400
 
