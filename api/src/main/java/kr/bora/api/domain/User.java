@@ -28,9 +28,14 @@ public class User {
     private Authority authority;
 
     @Builder
-    public User(String email, String password, Authority authority) {
+    public User(Long id, String email, String password, Authority authority) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.authority = authority;
+    }
+
+    public void changePassword(String password) {
+        this.password = password;
     }
 }

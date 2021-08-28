@@ -1,5 +1,4 @@
 package kr.bora.api.config;
-
 import kr.bora.api.jwt.JwtFilter;
 import kr.bora.api.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;

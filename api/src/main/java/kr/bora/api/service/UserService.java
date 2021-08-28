@@ -1,28 +1,33 @@
 package kr.bora.api.service;
 
-import kr.bora.api.dto.UserResponseDto;
-import kr.bora.api.repository.UserRepository;
-import kr.bora.api.util.SecurityUtil;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import kr.bora.api.domain.Authority;
+import kr.bora.api.domain.User;
+import kr.bora.api.dto.UserRequestDto;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Service
-@RequiredArgsConstructor
-public class UserService {
-    private final UserRepository repository;
+public interface UserService {
 
-    @Transactional(readOnly = true)
-    public UserResponseDto getUserInfo(String email) {
-        return repository.findByEmail(email)
-                .map(UserResponseDto::of)
-                .orElseThrow(() -> new RuntimeException("사용자 정보가 없습니다."));
+    UserRequestDto modify(UserRequestDto userRequestDto);
+
+   default User dtoEntity(UserRequestDto userRequestDto, PasswordEncoder passwordEncoder) {
+        User entity = User.builder()
+                .id(userRequestDto.getId())
+                .email(userRequestDto.getEmail())
+                .password(passwordEncoder.encode(userRequestDto.getPassword()))
+                .authority(Authority.ROLE_USER)
+                .build();
+        return entity;
     }
 
-    @Transactional(readOnly = true)
-    public UserResponseDto getMyInfo() {
-        return repository.findById(SecurityUtil.getCurrentUserId())
-                .map(UserResponseDto::of)
-                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
+    default UserRequestDto entityDto(User user, PasswordEncoder passwordEncoder) {
+        UserRequestDto userRequestDto = UserRequestDto.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .password(passwordEncoder.encode(user.getPassword()))
+                .authority(Authority.ROLE_USER)
+                .build();
+
+        return userRequestDto;
     }
+
 }
