@@ -1,6 +1,6 @@
-package kr.bora.api.config;
-import kr.bora.api.jwt.JwtFilter;
-import kr.bora.api.jwt.TokenProvider;
+package kr.bora.api.user.config;
+import kr.bora.api.user.jwt.JwtFilter;
+import kr.bora.api.user.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,18 +1,17 @@
-package kr.bora.api.service;
+package kr.bora.api.user.service;
 
 
 
-import kr.bora.api.domain.RefreshToken;
-import kr.bora.api.domain.User;
-import kr.bora.api.dto.TokenDto;
-import kr.bora.api.dto.TokenRequestDto;
-import kr.bora.api.dto.UserRequestDto;
-import kr.bora.api.dto.UserResponseDto;
-import kr.bora.api.jwt.TokenProvider;
-import kr.bora.api.repository.RefreshTokenRepository;
-import kr.bora.api.repository.UserRepository;
+import kr.bora.api.user.domain.RefreshToken;
+import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.TokenDto;
+import kr.bora.api.user.dto.TokenRequestDto;
+import kr.bora.api.user.dto.UserRequestDto;
+import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.jwt.TokenProvider;
+import kr.bora.api.user.repository.RefreshTokenRepository;
+import kr.bora.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;

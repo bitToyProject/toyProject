@@ -1,8 +1,8 @@
-package kr.bora.api.service;
+package kr.bora.api.user.service;
 
 
 
-import kr.bora.api.repository.UserRepository;
+import kr.bora.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
-    private UserDetails createUserDetails(kr.bora.api.domain.User user) {
+    private UserDetails createUserDetails(kr.bora.api.user.domain.User user) {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getAuthority().toString());
 
         return new User(

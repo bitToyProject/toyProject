@@ -1,8 +1,8 @@
-package kr.bora.api.service;
+package kr.bora.api.user.service;
 
-import kr.bora.api.domain.Authority;
-import kr.bora.api.domain.User;
-import kr.bora.api.dto.UserRequestDto;
+import kr.bora.api.user.domain.Authority;
+import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.UserRequestDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UserService {

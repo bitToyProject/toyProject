@@ -1,6 +1,6 @@
-package kr.bora.api.repository;
+package kr.bora.api.user.repository;
 
-import kr.bora.api.domain.User;
+import kr.bora.api.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

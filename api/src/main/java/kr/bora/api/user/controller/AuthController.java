@@ -1,11 +1,11 @@
-package kr.bora.api.controller;
+package kr.bora.api.user.controller;
 
-import kr.bora.api.domain.User;
-import kr.bora.api.dto.TokenDto;
-import kr.bora.api.dto.TokenRequestDto;
-import kr.bora.api.dto.UserRequestDto;
-import kr.bora.api.dto.UserResponseDto;
-import kr.bora.api.service.AuthService;
+import kr.bora.api.resultMaster.ResultMaster;
+import kr.bora.api.user.dto.TokenDto;
+import kr.bora.api.user.dto.TokenRequestDto;
+import kr.bora.api.user.dto.UserRequestDto;
+import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

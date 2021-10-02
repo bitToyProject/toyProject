@@ -1,4 +1,4 @@
-package kr.bora.api.util;
+package kr.bora.api.user.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

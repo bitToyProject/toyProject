@@ -1,11 +1,10 @@
-package kr.bora.api.controller;
+package kr.bora.api.user.controller;
 
-import kr.bora.api.dto.UserRequestDto;
-import kr.bora.api.dto.UserResponseDto;
-import kr.bora.api.service.UserServiceImpl;
+import kr.bora.api.user.dto.UserRequestDto;
+import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
