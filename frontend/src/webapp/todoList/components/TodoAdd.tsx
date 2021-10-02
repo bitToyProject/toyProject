@@ -1,47 +1,50 @@
 import { ChangeEvent, useCallback } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { inputState, ITodoType, todoState } from "../recoil/todo";
 
 const TodoAdd = () => {
-    const [contents, setContents] = useRecoilState<string>(inputState);
+  const [contents, setContents] = useRecoilState<string>(inputState);
 
-    const todos = useRecoilValue<ITodoType[]>(todoState);  // get 변수
-    const setTodos = useSetRecoilState<ITodoType[]>(todoState); // setter 지정
-    
-    const handleChagne = useCallback((e: ChangeEvent<HTMLInputElement>) : void=> {
-        e.preventDefault();
+  const todos = useRecoilValue<ITodoType[]>(todoState); // get 변수
+  const setTodos = useSetRecoilState<ITodoType[]>(todoState); // setter 지정
 
-        const {value} = e.target;
+  const handleChagne = useCallback(
+    (e: ChangeEvent<HTMLInputElement>): void => {
+      e.preventDefault();
+      const { value } = e.target;
+      setContents(value);
+    },
+    [setContents]
+  );
 
-        setContents(value);
-    },[setContents]);
+  const handleClick = useCallback(
+    (e: any): void => {
+      e.preventDefault();
+      const nextId: number =
+        todos.length > 0 ? todos[todos.length - 1].id + 1 : 0;
+      const todo: ITodoType = {
+        id: nextId,
+        contents,
+        isCompleted: false,
+      };
 
-    const handleClick = useCallback((e: any):void => {
-        e.preventDefault();
+      setTodos([...todos, todo]);
+      setContents("");
+    },
+    [contents, setContents, todos, setTodos]
+  );
 
-        const nextId: number = todos.length > 0 
-                                ? todos[todos.length -1].id + 1 
-                                : 0;
-        const todo: ITodoType = {
-            id: nextId,
-            contents,
-            isCompleted: false
-        }
+  return (
+    <>
+      <input
+        type="text"
+        placeholder="todo를 입력해주세요"
+        value={contents}
+        onChange={handleChagne}
+      />
+      <button onClick={handleClick}>추가</button>
+    </>
+  );
+};
 
-        setTodos([...todos,todo]);
-        setContents("");
-    },[contents, setContents, todos, setTodos]);
-
-    return (
-        <>
-            <input type="text" 
-                    placeholder="todo를 입력해주세요" 
-                    value={contents} 
-                    onChange={handleChagne}
-            />
-            <button onClick={handleClick}>추가</button>
-        </>
-    )
-}
-
-export default TodoAdd
+export default TodoAdd;

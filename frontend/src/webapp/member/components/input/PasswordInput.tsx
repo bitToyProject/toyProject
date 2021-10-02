@@ -1,15 +1,14 @@
-import { useInput } from "../../hook/useInput";
+import { useInput } from "../../../hook/useInput";
 
 const PasswordInput = () => {
   const maxLength = (value: string) => value.length < 10;
 
-  const pw = useInput("", maxLength);
-  console.log("pw: ", typeof pw.value);
+  const inputPassword = useInput("", maxLength);
 
   return (
     <>
       <label>패스워드</label>
-      <input type={"password"} {...pw} />
+      <input type={"password"} {...inputPassword} />
     </>
   );
 };

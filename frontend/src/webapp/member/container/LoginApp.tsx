@@ -2,8 +2,8 @@ import { EmailInput, PasswordInput } from "../index";
 const LoginApp = () => {
   return (
     <>
-      <EmailInput />
       <PasswordInput />
+      <button />
     </>
   );
 };

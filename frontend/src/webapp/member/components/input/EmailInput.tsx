@@ -1,13 +1,25 @@
-import { useInput } from "../../hook/useInput";
+import React from "react";
 
-const EmailInput = () => {
-  const name = useInput("", undefined);
-  console.log("name: ", name);
+interface ISignInput {
+  type?: string;
+  text: string;
+  setState: React.Dispatch<any>;
+}
+
+const EmailInput = ({ type, text, setState }: ISignInput) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState(e.target.value);
+  };
   return (
-    <>
-      <label>이메일</label>
-      <input type="text" {...name} />
-    </>
+    <div className="signinform__input">
+      <input
+        type={type ? type : "text"}
+        className="signinform__input__tag"
+        onChange={onChange}
+        required
+      />
+      <span className="signinform__input__placeholder">{text}</span>
+    </div>
   );
 };
 
