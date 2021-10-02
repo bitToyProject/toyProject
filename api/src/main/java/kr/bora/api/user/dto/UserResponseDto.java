@@ -1,6 +1,6 @@
-package kr.bora.api.dto;
+package kr.bora.api.user.dto;
 
-import kr.bora.api.domain.User;
+import kr.bora.api.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

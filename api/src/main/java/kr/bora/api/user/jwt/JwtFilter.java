@@ -1,4 +1,4 @@
-package kr.bora.api.jwt;
+package kr.bora.api.user.jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

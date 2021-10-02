@@ -1,11 +1,10 @@
-package kr.bora.api.service;
+package kr.bora.api.user.service;
 
-import kr.bora.api.domain.Authority;
-import kr.bora.api.domain.User;
-import kr.bora.api.dto.UserRequestDto;
-import kr.bora.api.dto.UserResponseDto;
-import kr.bora.api.repository.UserRepository;
-import kr.bora.api.util.SecurityUtil;
+import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.UserRequestDto;
+import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.repository.UserRepository;
+import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

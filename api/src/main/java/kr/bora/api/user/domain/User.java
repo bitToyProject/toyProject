@@ -1,4 +1,4 @@
-package kr.bora.api.domain;
+package kr.bora.api.user.domain;
 
 import lombok.Builder;
 import lombok.Getter;

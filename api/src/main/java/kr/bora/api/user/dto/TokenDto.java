@@ -1,4 +1,4 @@
-package kr.bora.api.dto;
+package kr.bora.api.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package kr.bora.api.jwt;
+package kr.bora.api.user.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

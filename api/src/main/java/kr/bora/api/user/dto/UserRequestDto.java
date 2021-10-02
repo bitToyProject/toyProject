@@ -1,7 +1,7 @@
-package kr.bora.api.dto;
+package kr.bora.api.user.dto;
 
-import kr.bora.api.domain.Authority;
-import kr.bora.api.domain.User;
+import kr.bora.api.user.domain.Authority;
+import kr.bora.api.user.domain.User;
 import lombok.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

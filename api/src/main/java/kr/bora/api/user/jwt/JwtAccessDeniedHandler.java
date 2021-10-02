@@ -1,4 +1,4 @@
-package kr.bora.api.jwt;
+package kr.bora.api.user.jwt;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
