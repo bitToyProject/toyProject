@@ -1,12 +1,11 @@
-import { LoginPage } from "@/webapp/components/login";
-import React from "react";
+import { LoginPage } from '@/webapp/components/login';
 
 const LoginApp = () => {
-  return (
-    <>
-      <LoginPage />
-    </>
-  );
+    return (
+        <>
+            <LoginPage />
+        </>
+    );
 };
 
 export default LoginApp;
