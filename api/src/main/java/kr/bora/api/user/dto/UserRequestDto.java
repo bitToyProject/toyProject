@@ -3,8 +3,11 @@ package kr.bora.api.user.dto;
 import kr.bora.api.user.domain.Authority;
 import kr.bora.api.user.domain.User;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.security.InvalidParameterException;
 
 @Getter
 @Setter
@@ -31,6 +34,7 @@ public class UserRequestDto {
 
     @Builder
     public UserRequestDto(Long id, String email, String password, Authority authority) {
+
         this.id = id;
         this.email = email;
         this.password = password;
