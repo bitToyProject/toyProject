@@ -2,6 +2,8 @@ package kr.bora.api.user.service;
 
 
 
+import kr.bora.api.common.response.CommonResponse;
+import kr.bora.api.common.response.Errorcode;
 import kr.bora.api.user.domain.RefreshToken;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.TokenDto;
@@ -30,18 +32,20 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
+
     @Transactional
-    public UserResponseDto signup(UserRequestDto userRequestDto) {
+    public CommonResponse signup(UserRequestDto userRequestDto) {
         if (userRepository.existsByEmail(userRequestDto.getEmail())) {
-            throw new RuntimeException("이미 가입되어 있는 사용자 입니다.");
+            return CommonResponse.fail(Errorcode.ALREADY_EXIT_USER);
         }
 
         User user = userRequestDto.toUser(passwordEncoder);
-        return UserResponseDto.of(userRepository.save(user));
+        UserResponseDto response = UserResponseDto.of(userRepository.save(user));
+        return CommonResponse.success(response);
     }
 
     @Transactional
-    public TokenDto login(UserRequestDto userRequestDto) {
+    public CommonResponse login(UserRequestDto userRequestDto) {
 
         UsernamePasswordAuthenticationToken authenticationToken = userRequestDto.toAuthentication();
 
@@ -56,13 +60,13 @@ public class AuthService {
 
         refreshTokenRepository.save(refreshToken);
 
-        return tokenDto;
+        return CommonResponse.success(tokenDto);
     }
 
     @Transactional
-    public TokenDto reIssue(TokenRequestDto tokenRequestDto) {
+    public CommonResponse reIssue(TokenRequestDto tokenRequestDto) {
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("Refresh Token이 유효하지 않습니다.");
+            return CommonResponse.fail(Errorcode.UNUSABLE_REFRESH_TOKEN);
         }
 
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
@@ -71,7 +75,7 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
 
         if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("토큰의 사용자 정보가 일치하지 않습니다.");
+            return CommonResponse.fail(Errorcode.UNMATCHED_USER);
         }
 
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
@@ -80,6 +84,6 @@ public class AuthService {
 
         refreshTokenRepository.save(newRefreshToken);
 
-        return tokenDto;
+        return CommonResponse.success(tokenDto);
     }
 }
