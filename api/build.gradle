@@ -24,14 +24,14 @@ dependencies {
 	implementation 'org.apache.commons:commons-lang3:3.9'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '3.0.0'
+
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'//이게 없으면 decoders.base64,keys 사용 불가
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-
-
 }
 
 test {
