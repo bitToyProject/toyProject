@@ -13,7 +13,11 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+<<<<<<< HEAD
 @CrossOrigin(origins ="*")
+=======
+@CrossOrigin(origins = "*")
+>>>>>>> 8337b063cac5a3633c0b01723200adffc5118fd8
 public class AuthController {
 
     private final AuthService authService;
