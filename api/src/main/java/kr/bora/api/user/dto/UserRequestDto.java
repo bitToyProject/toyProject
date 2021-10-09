@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.validation.constraints.*;
 import java.security.InvalidParameterException;
 
 @Getter
@@ -15,7 +16,10 @@ import java.security.InvalidParameterException;
 public class UserRequestDto {
 
     private Long id;
+    @Email
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String password;
     private Authority authority;
 
@@ -34,7 +38,6 @@ public class UserRequestDto {
 
     @Builder
     public UserRequestDto(Long id, String email, String password, Authority authority) {
-
         this.id = id;
         this.email = email;
         this.password = password;
