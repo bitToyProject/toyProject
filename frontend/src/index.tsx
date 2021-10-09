@@ -14,15 +14,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <RecoilRoot>
-        <div
-          css={css`
-            background-color: black;
-            width: 100%;
-            height: 100%;
-          `}
-        >
-          <App />
-        </div>
+        <App />
       </RecoilRoot>
     </BrowserRouter>
   </React.StrictMode>,
