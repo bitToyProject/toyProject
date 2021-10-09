@@ -1,22 +1,27 @@
 import { InputModule } from "@/webapp/common";
 import React, { useState, ChangeEvent, MouseEvent } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { ILoginType, loginState } from "@/webapp/recoil/login/login";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  apiLogin,
+  ILoginType,
+  IResStatus,
+  loginState,
+} from "@/webapp/recoil/login/login";
 import { ColoredButton } from "@/webapp/container";
 
 interface loginValType {
-  username: string;
+  email: string;
   password: string;
 }
 const LoginPage = () => {
   const [loginVal, setLoginVal] = useState<loginValType>({
-    username: "",
+    email: "",
     password: "",
   });
   const [disabled, setDisabled] = useState<boolean>(false);
-  const loginInfo = useRecoilValue<ILoginType>(loginState);
-  const setLoginInfo = useSetRecoilState<ILoginType>(loginState);
-
+  const [loginInfo, setLoginInfo] = useRecoilState<ILoginType>(loginState);
+  const apiLoginCall = useRecoilValue(apiLogin(loginInfo));
+  console.log(apiLoginCall);
   const handleClick = (
     e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => {
@@ -25,7 +30,6 @@ const LoginPage = () => {
     setLoginInfo(loginVal);
   };
 
-  console.log("lgoinInfo", loginInfo);
   console.log("loginVal", loginVal);
   return (
     <>
@@ -34,9 +38,7 @@ const LoginPage = () => {
         type={"text"}
         disabled={false}
         placeholder={"Email"}
-        onChange={(value: string) =>
-          setLoginVal({ ...loginVal, username: value })
-        }
+        onChange={(value: string) => setLoginVal({ ...loginVal, email: value })}
       />
       <label>비밀번호</label>
       <InputModule

@@ -1,21 +1,19 @@
-import { Route } from 'react-router';
-import { TodoListApp } from '@/webapp/todoList/index';
-import { useRecoilValue } from 'recoil';
-import { errorMsgState } from '@/webapp/recoil/common/index';
-import { LoginApp, SignupApp } from '@/webapp/container';
-
+import { Route } from "react-router";
+import { LoginApp, SignupApp } from "@/webapp/container";
+import { Suspense } from "react";
+import Loading from "./webapp/common/Loading";
+import { css } from "@emotion/react";
 const App = () => {
-    const errorMsg = useRecoilValue(errorMsgState);
-
-    return (
-        <>
-            <Route exact path="/" component={LoginApp}></Route>
-            {/* 회원가입 */}
-            <Route exact path={'/member/signup'} component={SignupApp}></Route>
-            {/* recoil test todoList */}
-            <Route exact path={'/todo'} component={TodoListApp}></Route>
-        </>
-    );
+  return (
+    <>
+      <Suspense fallback={<Loading />}>
+        <Route exact path="/" component={LoginApp}></Route>
+        {/* 회원가입 */}
+        <Route exact path={"/member/signup"} component={SignupApp}></Route>
+        {/* recoil test todoList */}
+      </Suspense>
+    </>
+  );
 };
 
 export default App;
