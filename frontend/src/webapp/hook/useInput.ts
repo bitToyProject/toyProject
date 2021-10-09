@@ -5,7 +5,7 @@ export const useInput = (
   validator?: (value: string) => boolean
 ) => {
   const [value, setValue] = useState(initialState);
-  console.log("value", value);
+  // console.log("value", value);
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
