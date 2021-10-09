@@ -1,32 +1,40 @@
 import { InputModule } from '@/webapp/common';
 import { ColoredButton } from '@/webapp/container';
-import { ISignupType, signupState } from '@/webapp/recoil/signup/signup';
-import React, { MouseEvent, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { signupState } from '@/webapp/recoil/atom';
+import { signupSelector } from '@/webapp/recoil/seletors';
+import { ISignupType } from '@/webapp/recoil/type';
+import React, { MouseEvent, useState, useCallback, useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 interface signupValType {
-    username: string;
+    email: string;
     password: string;
-    nickname: string;
 }
 
 const SignupPage = () => {
     const [signupVal, setSignupVal] = useState<signupValType>({
-        username: '',
+        email: '',
         password: '',
-        nickname: '',
     });
     const [disabled, setDisabled] = useState<boolean>(false);
-    const signupInfo = useRecoilValue<ISignupType>(signupState); // atom getter
-    const setSignupInfo = useSetRecoilState<ISignupType>(signupState); // atom setter
+    const [signup, setSignup] = useRecoilState<ISignupType>(signupState);
 
-    const handleClick = (
-        e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>
-    ) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setSignupInfo(signupVal);
-    };
+    const data = useRecoilValue(signupSelector(signup));
+
+    const handleClick = useCallback(
+        (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setSignup(signupVal);
+
+            if (data.result === 'SUCCESS') {
+                alert('회원가입 되었습니다.');
+            } else {
+                return false;
+            }
+        },
+        []
+    );
 
     return (
         <>
@@ -36,7 +44,7 @@ const SignupPage = () => {
                 disabled={false}
                 placeholder={'Email'}
                 onChange={(value: string) =>
-                    setSignupVal({ ...signupVal, username: value })
+                    setSignupVal({ ...signupVal, email: value })
                 }
             />
             <label>비밀번호</label>
@@ -46,15 +54,6 @@ const SignupPage = () => {
                 placeholder={'Password'}
                 onChange={(value: string) =>
                     setSignupVal({ ...signupVal, password: value })
-                }
-            />
-            <label>닉네임</label>
-            <InputModule
-                type={'text'}
-                disabled={false}
-                placeholder={'Nickname'}
-                onChange={(value: string) =>
-                    setSignupVal({ ...signupVal, nickname: value })
                 }
             />
             <ColoredButton
