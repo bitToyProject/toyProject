@@ -1,12 +1,13 @@
+@import '@kfonts/neodgm';
 @font-face {
     font-family: 'DisposableDroidBB';
     src: url('./fonts/DisposableDroidBB.otf');
 }
-
 @font-face {
-    font-family: 'PFstardust';
-    src: url('./fonts/PFStardust+1.3.ttf');
+  font-family: "Neo둥근모", "neodgm";
+  src: url("https://unpkg.com/@kfonts/neodgm/index.css");
 }
+
 
 body {
     font-size: 13px;
