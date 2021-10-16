@@ -8,21 +8,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+<<<<<<< HEAD
+@CrossOrigin(origins ="*")
+=======
 @CrossOrigin(origins = "*")
+>>>>>>> 8337b063cac5a3633c0b01723200adffc5118fd8
 public class AuthController {
 
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<CommonResponse> signup(@RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<CommonResponse> signup(@Valid @RequestBody UserRequestDto userRequestDto) {
         return ResponseEntity.ok(authService.signup(userRequestDto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<CommonResponse> login(@RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<CommonResponse> login(@Valid @RequestBody UserRequestDto userRequestDto) {
         return ResponseEntity.ok(authService.login(userRequestDto));
     }
 

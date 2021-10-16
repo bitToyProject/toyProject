@@ -3,10 +3,16 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
-
+apply plugin: 'io.spring.dependency-management'
 group = 'kr.bora'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+configurations {
+	compileOnly{
+		extendsFrom annotationProcessor
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -23,13 +29,19 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	implementation 'org.apache.commons:commons-lang3:3.9'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+<<<<<<< HEAD
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.5.4'
+=======
 
 	implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '3.0.0'
 
+>>>>>>> 8337b063cac5a3633c0b01723200adffc5118fd8
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'//이게 없으면 decoders.base64,keys 사용 불가
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
-
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//embedded-redis
+	implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
