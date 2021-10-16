@@ -2,7 +2,7 @@ import { InputModule } from '@/webapp/common';
 import { ColoredButton } from '@/webapp/container';
 import { signupState } from '@/webapp/recoil/atom';
 import { signupSelector } from '@/webapp/recoil/seletors';
-import { ISignupType } from '@/webapp/recoil/type';
+import { ISignupType } from '@/webapp/recoil/types';
 import React, { MouseEvent, useState, useCallback, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -17,21 +17,21 @@ const SignupPage = () => {
         password: '',
     });
     const [disabled, setDisabled] = useState<boolean>(false);
-    const [signup, setSignup] = useRecoilState<ISignupType>(signupState);
+    // const [signup, setSignup] = useRecoilState<ISignupType>(signupState);
 
-    const data = useRecoilValue(signupSelector(signup));
+    // const data = useRecoilValue(signupSelector(signup));
 
     const handleClick = useCallback(
         (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
             e.preventDefault();
             e.stopPropagation();
-            setSignup(signupVal);
+            // setSignup(signupVal);
 
-            if (data.result === 'SUCCESS') {
-                alert('회원가입 되었습니다.');
-            } else {
-                return false;
-            }
+            // if (data.result === 'SUCCESS') {
+            //     alert('회원가입 되었습니다.');
+            // } else {
+            //     return false;
+            // }
         },
         []
     );

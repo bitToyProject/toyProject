@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "customize-cra": "^1.0.0",
+    "pixel-borders": "^1.1.4",
     "react-app-rewired": "^2.1.8"
   }
 }

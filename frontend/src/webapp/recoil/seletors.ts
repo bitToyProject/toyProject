@@ -1,22 +1,20 @@
-import axios from "axios";
 import { selectorFamily } from "recoil";
+import { apiPost } from "../service/login/Login.service";
+import { IResStatus, ISignupType, Param } from "./types";
 
-export const signupSelector = selectorFamily<any, any>({
+export const signupSelector = selectorFamily<IResStatus, Param>({
     key: '/member/signup',
-      get: (param:any)  => async() => {
+      get: (data:ISignupType)  => async() => {
   
-        if(!param) return false
-  
-        console.log(param);
-        const response = await axios({
-          url: "http://172.16.101.44:8080/auth/signup",
-          method: `POST`,
-          data: param,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-        })
-        console.log(response.data);
-        return response.data;
-    }
-  })
+        if(!data) return false;
+
+        try {
+          const response = await apiPost("/auth/signup", data);
+          if (response.status === 200) {
+            return response.data;
+          }
+        } catch (e:any) {
+          return e.response.errorCode;   
+        }    
+  }
+})
