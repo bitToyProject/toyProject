@@ -34,7 +34,7 @@ export const apiLogin = selectorFamily<IResStatus, Param>({
         });
       }
       return response;
-    } catch (e) {
+    } catch (e:any) {
       return e.response.status;
     }
   },
