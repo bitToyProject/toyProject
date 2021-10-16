@@ -8252,6 +8252,11 @@ pirates@^4.0.1:
   dependencies:
     node-modules-regexp "^1.0.0"
 
+pixel-borders@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/pixel-borders/-/pixel-borders-1.1.4.tgz#5bcea9a6734384fde36683aa481fa625c471164d"
+  integrity sha512-jBX9MMRsCeYNl1sHnXnAgtBD5hLAMa59/MDvVBZUoeHtsF6t97goigzIPQHvssh8xsQ5w+vF7hqabutbpb0zxA==
+
 pkg-dir@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/pkg-dir/-/pkg-dir-2.0.0.tgz"
