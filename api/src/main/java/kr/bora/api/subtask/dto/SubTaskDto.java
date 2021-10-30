@@ -1,7 +1,6 @@
-package kr.bora.api.todo.dto;
+package kr.bora.api.subtask.dto;
 
-import kr.bora.api.todo.domain.SubTask;
-import lombok.AllArgsConstructor;
+import kr.bora.api.subtask.domain.SubTask;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class SubTaskDto {
 
-    private Long subtaskId;
+    private Long subTaskId;
 
     private Long todoId;
 

@@ -6,7 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name="todo")
+@Table(name="todos")
 @Entity
 @Getter
 @NoArgsConstructor
@@ -14,6 +14,7 @@ public class Todo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="todo_id")
     private Long todoId;
 
     private String title;
@@ -29,7 +30,7 @@ public class Todo extends BaseEntity {
     private int priority;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="userId")
+    @JoinColumn(name="user_id")
     private User user;
 
     @Builder

@@ -1,6 +1,7 @@
-package kr.bora.api.todo.domain;
+package kr.bora.api.subtask.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
+import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
-@Table(name = "subtask")
+@Table(name = "subtasks")
 @Entity
 @Getter
 @NoArgsConstructor
@@ -17,7 +18,8 @@ public class SubTask extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long subtaskId;
+    @Column(name="subtask_id")
+    private Long subTaskId;
 
     private String title;
 
@@ -28,11 +30,11 @@ public class SubTask extends BaseEntity {
     private String assignee;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="todoId")
+    @JoinColumn(name="todo_id")
     private Todo todo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="userId")
+    @JoinColumn(name="user_id")
     private User user;
 
     @Builder
