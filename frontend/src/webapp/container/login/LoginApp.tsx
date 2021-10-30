@@ -1,11 +1,11 @@
-import { LoginPage } from '@/webapp/components/login';
+import { LoginPage } from "@/webapp/components/index";
 
 const LoginApp = () => {
-    return (
-        <>
-            <LoginPage />
-        </>
-    );
+  return (
+    <>
+      <LoginPage />
+    </>
+  );
 };
 
 export default LoginApp;
