@@ -22,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<CommonResponse> signup(@Valid @RequestBody UserRequestDto userRequestDto) {
-        log.info("넘어온 데이터 :::::{}",userRequestDto.toString());
+        log.info("넘어온 데이터 :::::username ={}, firstname={} ",userRequestDto.getUsername(),userRequestDto.getFirstName());
         return ResponseEntity.ok(authService.signup(userRequestDto));
     }
 

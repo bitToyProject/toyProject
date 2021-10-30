@@ -21,6 +21,16 @@ public class UserRequestDto {
     private String username;
     @NotEmpty
     private String password;
+    @NotEmpty
+    private String lastName;
+    @NotEmpty
+    private String firstName;
+
+    private String nickName;
+    @NotEmpty
+    private String phoneNum;
+    @NotNull
+    private int gender;
     private Authority authority;
 
     public User toUser(PasswordEncoder passwordEncoder) {
@@ -28,6 +38,11 @@ public class UserRequestDto {
                 .userId(userId)
                 .username(username)
                 .password(passwordEncoder.encode(password))
+                .lastName(lastName)
+                .firstName(firstName)
+                .nickName(nickName)
+                .phoneNum(phoneNum)
+                .gender(gender)
                 .authority(Authority.ROLE_USER)
                 .build();
     }
@@ -37,12 +52,10 @@ public class UserRequestDto {
     }
 
     @Builder
-    public UserRequestDto(Long userId, String username, String password, Authority authority) {
+    public UserRequestDto(Long userId, String username, String password,Authority authority) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.authority = authority;
     }
-
-
 }
