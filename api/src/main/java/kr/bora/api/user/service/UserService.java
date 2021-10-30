@@ -11,8 +11,8 @@ public interface UserService {
 
    default User dtoEntity(UserRequestDto userRequestDto, PasswordEncoder passwordEncoder) {
         User entity = User.builder()
-                .id(userRequestDto.getId())
-                .email(userRequestDto.getEmail())
+                .userId(userRequestDto.getUserId())
+                .username(userRequestDto.getUsername())
                 .password(passwordEncoder.encode(userRequestDto.getPassword()))
                 .authority(Authority.ROLE_USER)
                 .build();
@@ -21,8 +21,8 @@ public interface UserService {
 
     default UserRequestDto entityDto(User user, PasswordEncoder passwordEncoder) {
         UserRequestDto userRequestDto = UserRequestDto.builder()
-                .id(user.getId())
-                .email(user.getEmail())
+                .userId(user.getUserId())
+                .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .authority(Authority.ROLE_USER)
                 .build();
