@@ -34,7 +34,7 @@ public class UserController {
     @PutMapping("/modify/{id}")
     public ResponseEntity<String> modify(@PathVariable("id") Long id, @RequestBody UserRequestDto userRequestDto) {
 
-        userRequestDto.setId(id);
+        userRequestDto.setUserId(id);
         userServiceImpl.modify(userRequestDto);
 
         return ResponseEntity.ok("비번 변경 성공");
