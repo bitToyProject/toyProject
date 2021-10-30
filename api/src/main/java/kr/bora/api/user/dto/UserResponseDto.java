@@ -13,6 +13,6 @@ public class UserResponseDto {
     private String email;
 
     public static UserResponseDto of(User user) {
-        return new UserResponseDto(user.getEmail());
+        return new UserResponseDto(user.getUsername());
     }
 }

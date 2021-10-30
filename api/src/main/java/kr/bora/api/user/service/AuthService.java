@@ -35,7 +35,7 @@ public class AuthService {
 
     @Transactional
     public CommonResponse signup(UserRequestDto userRequestDto) {
-        if (userRepository.existsByEmail(userRequestDto.getEmail())) {
+        if (userRepository.existsByusername(userRequestDto.getUsername())) {
             return CommonResponse.fail(Errorcode.ALREADY_EXIT_USER);
         }
 

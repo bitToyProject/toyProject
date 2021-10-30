@@ -15,31 +15,31 @@ import java.security.InvalidParameterException;
 @NoArgsConstructor
 public class UserRequestDto {
 
-    private Long id;
+    private Long userId;
     @Email
     @NotEmpty
-    private String email;
+    private String username;
     @NotEmpty
     private String password;
     private Authority authority;
 
     public User toUser(PasswordEncoder passwordEncoder) {
         return User.builder()
-                .id(id)
-                .email(email)
+                .userId(userId)
+                .username(username)
                 .password(passwordEncoder.encode(password))
                 .authority(Authority.ROLE_USER)
                 .build();
     }
 
     public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(email, password);
+        return new UsernamePasswordAuthenticationToken(username, password);
     }
 
     @Builder
-    public UserRequestDto(Long id, String email, String password, Authority authority) {
-        this.id = id;
-        this.email = email;
+    public UserRequestDto(Long userId, String username, String password, Authority authority) {
+        this.userId = userId;
+        this.username = username;
         this.password = password;
         this.authority = authority;
     }
