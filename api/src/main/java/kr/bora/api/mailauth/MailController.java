@@ -1,23 +1,24 @@
 package kr.bora.api.mailauth;
 
 import kr.bora.api.common.response.CommonResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController("/mail")
+@RestController
+@RequestMapping("/mail")
+@RequiredArgsConstructor
+@CrossOrigin(origins ="*")
 public class MailController {
   @Autowired
   private MailSendService mss;
 
-  @PostMapping("/check")
-  public String sendCheckMail(@Valid @RequestParam String email){
-    return mss.sendAuthMail(email);
-  }
+//  @PostMapping("/check")
+//  public ResponseEntity<CommonResponse> sendCheckMail(@Valid @RequestBody AuthMailDto authMailDto){
+//    return ResponseEntity.ok(mss.sendAuthMail(authMailDto));
+//  }
 
 }
