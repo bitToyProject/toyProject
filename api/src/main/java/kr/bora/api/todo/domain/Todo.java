@@ -34,12 +34,41 @@ public class Todo extends BaseEntity {
     private User user;
 
     @Builder
-    public Todo(String title, String start, String end, String description, String viewer, int priority) {
+    public Todo(Long todoId, String title, String start, String end, String description, String viewer, int priority, User user) {
+        this.todoId = todoId;
         this.title = title;
         this.start = start;
         this.end = end;
         this.description = description;
         this.viewer = viewer;
         this.priority = priority;
+        this.user = user;
     }
+
+
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+
+    public void changeDescription(String description) {
+        this.description = description;
+    }
+
+    public void changeStart(String start) {
+        this.start = start;
+    }
+
+    public void changeEnd(String end) {
+        this.end=end;
+    }
+
+    public void changeViewer(String viewer) {
+        this.viewer = viewer;
+    }
+
+    public void changePriority(int priority) {
+        this.priority = priority;
+    }
+
 }

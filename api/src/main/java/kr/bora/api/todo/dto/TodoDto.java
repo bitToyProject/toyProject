@@ -33,7 +33,9 @@ public class TodoDto {
     private LocalDateTime modDate;
 
     @Builder
-    public TodoDto(String title, String start, String end, String description, String viewer, int priority, LocalDateTime regDate, LocalDateTime modDate) {
+    public TodoDto(Long todoId, Long userId, String title, String start, String end, String description, String viewer, int priority) {
+        this.todoId = todoId;
+        this.userId = userId;
         this.title = title;
         this.start = start;
         this.end = end;
@@ -42,15 +44,6 @@ public class TodoDto {
         this.priority = priority;
     }
 
-    //dto ->  entity
-    public Todo toEntity() {
-        return Todo.builder()
-                .title(title)
-                .start(start)
-                .end(end)
-                .description(description)
-                .viewer(viewer)
-                .priority(priority)
-                .build();
-    }
+
+
 }
