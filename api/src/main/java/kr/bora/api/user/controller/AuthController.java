@@ -39,14 +39,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(@Valid @RequestBody UserRequestDto userRequestDto) {
-        authService.login(userRequestDto);
-        return ResponseEntity.ok(HttpEntity.EMPTY);
+        return ResponseEntity.ok(authService.login(userRequestDto));
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity eissue(@RequestBody TokenRequestDto tokenRequestDto) {
-        authService.reIssue(tokenRequestDto);
-        return ResponseEntity.ok(HttpEntity.EMPTY);
+    public ResponseEntity reissue(@RequestBody TokenRequestDto tokenRequestDto) {
+        return ResponseEntity.ok(authService.reIssue(tokenRequestDto));
     }
 
 
