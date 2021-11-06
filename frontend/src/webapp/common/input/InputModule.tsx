@@ -1,7 +1,7 @@
 import { useInput } from '@/webapp/hook/useInput';
 import { css } from '@emotion/react';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { COLOR_BLACK } from '../CCstyle/CCstyle';
 interface PropTypes {
     input: {
