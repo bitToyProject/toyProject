@@ -1,11 +1,16 @@
 export interface ISignupType {
-    email: string;
-    password: string;
+  username: string;
+  password: string;
+  nickName: string;
+  phoneNum: string;
+  firstName: string;
+  lastName: string;
+  gender: number;
 }
 export interface IResStatus {
-    result: string;
+  result: string;
 }
 
 export interface Param extends ISignupType {
-    [key: string]: any;
+  [key: string]: any;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 export const useInput = (
   initialState: string,
@@ -19,5 +19,7 @@ export const useInput = (
       }
     }
   };
-  return { value, onChange };
+
+  console.log(value)
+return { value, onChange };
 };

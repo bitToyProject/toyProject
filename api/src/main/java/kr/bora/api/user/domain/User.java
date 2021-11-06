@@ -21,7 +21,7 @@ public class User {
     @Column(name="username", nullable = false, length = 50)
     private String username;
 
-    @Column(name="password", nullable = false, length = 20)
+    @Column(name="password", nullable = false)
     private String password;
 
     @Column(name = "last_name", nullable = false, length = 10)
@@ -34,7 +34,7 @@ public class User {
     private String nickName;
 
     @Column(name = "phone_num", nullable = false, length = 13)
-    private int phoneNum;
+    private String phoneNum;
 
     @Column(name = "gender",nullable = false)
     private int gender;
@@ -44,10 +44,16 @@ public class User {
     private Authority authority;
 
     @Builder
-    public User(Long userId, String username, String password, Authority authority) {
+    public User(Long userId, String username, String password, String lastName, String firstName
+        , String nickName, String phoneNum, int gender, Authority authority) {
         this.userId = userId;
         this.username = username;
         this.password = password;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.nickName = nickName;
+        this.phoneNum = phoneNum;
+        this.gender = gender;
         this.authority = authority;
     }
 

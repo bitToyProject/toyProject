@@ -7,12 +7,12 @@ import { css } from "@emotion/react";
 const App = () => {
   return (
     <>
-      {/* <Suspense fallback={<Loading />}> */}
-      <Route exact path="/" component={LoginApp}></Route>
-      {/* 회원가입 */}
-      <Route exact path={"/member/signup"} component={SignupApp}></Route>
-      {/* recoil test todoList */}
-      {/* </Suspense> */}
+      <Suspense fallback={<Loading />}>
+        <Route exact path="/" component={LoginApp}></Route>
+        {/* 회원가입 */}
+        <Route exact path={"/member/signup"} component={SignupApp}></Route>
+        {/* recoil test todoList */}
+      </Suspense>
     </>
   );
 };
