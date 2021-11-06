@@ -13,4 +13,6 @@ import java.util.List;
 
 public interface TodoRepository extends JpaRepository<Todo, Long> {
 
+    @Query("SELECT to, w FROM Todo to LEFT JOIN to.user w where to.todoId = :todoId" )
+    List<Object[]> getTodo(@Param("todoId") Long todoId);
 }

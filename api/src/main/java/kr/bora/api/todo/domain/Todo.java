@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@ToString(exclude = {"user"})
 public class Todo extends BaseEntity {
 
     @Id

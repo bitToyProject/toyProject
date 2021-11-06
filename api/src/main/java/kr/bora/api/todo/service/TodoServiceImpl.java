@@ -40,18 +40,11 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public TodoDto get(Long todoId) {
-        Optional<Todo> todoRead = repository.findById(todoId);
-        Todo todo = todoRead.get();
-        TodoDto todoDto = TodoDto.builder()
-                .todoId(todo.getTodoId())
-                .title(todo.getTitle())
-                .description(todo.getDescription())
-                .viewer(todo.getViewer())
-                .start(todo.getStart())
-                .end(todo.getEnd())
-                .priority(todo.getPriority())
-                .build();
-        return todoDto;
+        List<Object[]> result = repository.getTodo(todoId);
+        Todo todo = (Todo) result.get(0)[0];
+        User user = (User) result.get(0)[1];
+
+        return entityTodoDto(todo, user);
     }
 
     @Transactional

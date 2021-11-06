@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -34,5 +35,15 @@ public class TodoRepositoryTest {
 
             todoRepository.save(todo);
         });
+    }
+
+    @Test
+    public void testRead() {
+        Optional<Todo> result = todoRepository.findById(10L);
+
+        Todo todo = result.get();
+
+        System.out.println(todo);
+        System.out.println(todo.getTodoId());
     }
 }
