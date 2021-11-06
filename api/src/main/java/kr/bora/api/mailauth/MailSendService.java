@@ -17,6 +17,7 @@ public class MailSendService {
     this.size = size;
     return getAuthCode();
   }
+
   private String getAuthCode(){
     int num = (int) (Math.random()*10-1);
 
