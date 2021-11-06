@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     public UserResponseDto getUserInfo(String email) {
-        return repository.findByEmail(email)
+        return repository.findByusername(email)
                 .map(UserResponseDto::of)
                 .orElseThrow(() -> new RuntimeException("사용자 정보가 없습니다."));
     }
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        User user = repository.getById(userRequestDto.getId());
+        User user = repository.getById(userRequestDto.getUserId());
 
         user.changePassword(passwordEncoder.encode(userRequestDto.getPassword()));
 

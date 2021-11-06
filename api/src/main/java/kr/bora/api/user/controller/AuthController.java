@@ -5,6 +5,8 @@ import kr.bora.api.user.dto.TokenRequestDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,17 +15,15 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-<<<<<<< HEAD
 @CrossOrigin(origins ="*")
-=======
-@CrossOrigin(origins = "*")
->>>>>>> 8337b063cac5a3633c0b01723200adffc5118fd8
+@Log4j2
 public class AuthController {
 
     private final AuthService authService;
 
     @PostMapping("/signup")
     public ResponseEntity<CommonResponse> signup(@Valid @RequestBody UserRequestDto userRequestDto) {
+        log.info("넘어온 데이터 :::::username ={}, firstname={} ",userRequestDto.getUsername(),userRequestDto.getFirstName());
         return ResponseEntity.ok(authService.signup(userRequestDto));
     }
 

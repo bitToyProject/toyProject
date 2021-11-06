@@ -1,9 +1,11 @@
+@import '@kfonts/neodgm';
 @font-face {
     font-family: 'DisposableDroidBB';
     src: url('./fonts/DisposableDroidBB.otf');
 }
 
 @import url('//cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@1.521/neodgm/style.css');
+
 
 body {
     font-size: 13px;
