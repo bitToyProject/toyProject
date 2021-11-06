@@ -1,6 +1,5 @@
 package kr.bora.api.mailauth;
 
-import kr.bora.api.common.response.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

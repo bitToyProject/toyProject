@@ -3,11 +3,13 @@ package kr.bora.api.user.controller;
 import kr.bora.api.user.dto.TokenRequestDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +23,15 @@ import javax.validation.Valid;
 @Log4j2
 public class AuthController {
 
+    private final UserRepository repository;
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity signup(@Valid @RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity signup(@Valid @RequestBody UserRequestDto userRequestDto ) {
+        HttpHeaders headders = new HttpHeaders();
+        if(repository.existsByusername(userRequestDto.getUsername())){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
         log.info("넘어온 데이터 :::::username ={}, firstname={} ",userRequestDto.getUsername(),userRequestDto.getFirstName());
         authService.signup(userRequestDto);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);

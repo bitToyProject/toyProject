@@ -3,7 +3,6 @@ package kr.bora.api.mailauth;
 import java.io.UnsupportedEncodingException;
 import javax.mail.MessagingException;
 
-import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.user.dto.UserRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -31,7 +30,7 @@ public class MailSendService {
     return buffer.toString();
   }
 
-  public CommonResponse<UserRequestDto> sendAuthMail(UserRequestDto userRequestDto){
+  public UserRequestDto sendAuthMail(UserRequestDto userRequestDto){
     String authKey = getKey(6);
     try {
       MailUtil sendMail = new MailUtil(mailSender);
@@ -55,7 +54,7 @@ public class MailSendService {
     AuthMailDto.toAuthMail(authKey);
 
     AuthMailDto authMailDto = new AuthMailDto(authKey);
-    return CommonResponse.success(userRequestDto);
+    return userRequestDto;
   }
 
 }
