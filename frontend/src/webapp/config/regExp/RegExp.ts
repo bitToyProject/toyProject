@@ -84,7 +84,7 @@ export const validateBirthday = (birthday:string) => {
 
 export const validateNumber = (phone:string) => {
   console.log("phone", phone);
-  const numRegExp = /^01(?:0|1|[6-9])-\d{4}-\d{4}$/;
+  const numRegExp = /^01(?:0|1|[6-9])\d{4}\d{4}$/;
   if (phone?.length > 0) {
     if (numRegExp.test(phone)) {
       return { isNumberError: false, numberMsg: "" };

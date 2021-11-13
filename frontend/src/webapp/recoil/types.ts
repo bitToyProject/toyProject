@@ -14,3 +14,10 @@ export interface IResStatus {
 export interface Param extends ISignupType {
   [key: string]: any;
 }
+
+export interface ToggleButton {
+  [BOLD: string]: boolean;
+  ITALIC: boolean;
+  UNDERLINE: boolean;
+  STRIKETHROUGH: boolean;
+};

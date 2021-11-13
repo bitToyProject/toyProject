@@ -1,18 +1,14 @@
 import { InputModule } from '@/webapp/common';
 import { COLOR_WHITE } from '@/webapp/common/CCstyle/CCstyle';
+import { checkNull } from '@/webapp/config/regExp/RegExp';
 import { ColoredButton } from '@/webapp/container';
 import { signupState } from '@/webapp/recoil/atom';
 import { signupSelector } from '@/webapp/recoil/seletors';
 import { ISignupType } from '@/webapp/recoil/types';
 import { css } from '@emotion/react';
 /** @jsxImportSource @emotion/react */
-import React, {
-    MouseEvent,
-    useState,
-    useCallback,
-    useEffect,
-    useMemo,
-} from 'react';
+import React, { MouseEvent, useState, useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 interface signupValType {
@@ -35,26 +31,45 @@ const SignupPage = () => {
         lastName: '',
         gender: 0,
     });
-    const [disabled, setDisabled] = useState<boolean>(false);
+    const [disabled, setDisabled] = useState<boolean>(true);
     const [signup, setSignup] = useRecoilState<ISignupType>(signupState);
 
     const data = useRecoilValue(signupSelector(signup));
+    const history = useHistory();
 
-    console.log(signupVal);
+    useEffect(() => {
+        if (data?.result === 'SUCCESS') {
+            alert('회원가입 되었습니다.');
+            history.replace('/member/mail_auth');
+        }
+        // mount 될 경우
+        return () => {};
+    }, [data]);
 
-    const handleClick = (
-        e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>
-    ) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setSignup(signupVal);
+    // 모든 input이 null값이 아닌 경우 disabled false로 변경하기(수정하기)
+    useEffect(() => {
+        if (
+            !checkNull([
+                signupVal.firstName,
+                signupVal.gender,
+                signupVal.lastName,
+                signupVal.nickName,
+                signupVal.password,
+                signupVal.phoneNum,
+                signupVal.username,
+            ])
+        )
+            setDisabled(false);
+    }, [signupVal, disabled]);
 
-        // if (data.result === 'SUCCESS') {
-        //     alert('회원가입 되었습니다.');
-        // } else {
-        //     return false;
-        // }
-    };
+    const handleClick = useCallback(
+        (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setSignup(signupVal);
+        },
+        [signupVal]
+    );
 
     return (
         <>
@@ -86,7 +101,6 @@ const SignupPage = () => {
                         setSignupVal({ ...signupVal, password: value })
                     }
                 />
-
                 <label>핸드폰 번호</label>
                 <InputModule
                     type={'phoneNum'}

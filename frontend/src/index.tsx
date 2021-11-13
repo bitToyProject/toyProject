@@ -7,7 +7,7 @@ import axios from 'axios';
 import { css } from '@emotion/react';
 /** @jsxImportSource @emotion/react */
 import './index.css';
-axios.defaults.baseURL = 'http://192.168.0.78:8080';
+axios.defaults.baseURL = 'http://192.168.0.9:8080';
 // axios.defaults.withCredentials = true;
 
 ReactDOM.render(

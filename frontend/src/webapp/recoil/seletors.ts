@@ -2,12 +2,17 @@ import { selectorFamily } from "recoil";
 import { apiPost } from "../service/login/Login.service";
 import { signupState } from "./atom";
 import { IResStatus, ISignupType, Param } from "./types";
-import { checkNull, validateEmail, validateNumber} from "@/webapp/config/regEx/RegEx";
+import { checkNull, validateEmail, validateNumber} from "@/webapp/config/regExp/RegExp";
 
 export const signupSelector = selectorFamily<IResStatus, Param>({
   key: "auth/signup",
   get: (data: ISignupType) => async () => {
     console.log("data", data);
+
+    /** 
+     * 처음 렌더링 될 때 
+     * post 되지 않게 null값 체크
+    */
     if (checkNull(
       [data.firstName, 
       data.gender, 
@@ -17,7 +22,6 @@ export const signupSelector = selectorFamily<IResStatus, Param>({
       data.phoneNum, 
       data.username])) return;
     
-      
     if(validateEmail(data.username).isError) {
       alert(validateEmail(data.username).msg);
       return false;
