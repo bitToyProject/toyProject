@@ -9,5 +9,10 @@
       "name": "spring.devtools.add-properties",
       "type": "java.lang.String",
       "description": "Description for spring.devtools.add-properties."
+    },
+    {
+      "name": "spring.jpa.hibernate.show_sql",
+      "type": "java.lang.String",
+      "description": "Description for spring.jpa.hibernate.show_sql."
     }
   ] }

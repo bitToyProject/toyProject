@@ -10,37 +10,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommonResponse<T>{
-    private Result result;
     private T data;
-    private String message;
-    private String errorCode;
+    private int status;
 
-    public static <T> CommonResponse<T> success(T data, String message){
-        return (CommonResponse<T>) CommonResponse.builder()
-                .result(Result.SUCCESS)
-                .data(data)
-                .message(message)
-                .build();
-    }
     public static <T> CommonResponse<T> success(T data){
-        return success(data,null);
-    }
-    public static CommonResponse fail(String message, String errorCode){
-        return CommonResponse.builder()
-                .result(Result.FAIL)
-                .message(message)
-                .errorCode(errorCode)
+        return (CommonResponse<T>) CommonResponse.builder()
+                .data(data)
+                .status(200)
                 .build();
     }
-    public static CommonResponse fail(Errorcode errorcode){
+    public static <T>  CommonResponse<T> success(){
+        return (CommonResponse<T>) CommonResponse.builder()
+                .status(200)
+                .build();
+    }
+    public static CommonResponse fail(Status status){
         return CommonResponse.builder()
-                .result(Result.FAIL)
-                .message(errorcode.getErrorMsg())
-                .errorCode(errorcode.name())
+                .status(status.getStatus())
                 .build();
     }
 
-    public enum Result{
-        SUCCESS, FAIL
-    }
+//    public enum Result{
+//        SUCCESS, FAIL
+//    }
 }
