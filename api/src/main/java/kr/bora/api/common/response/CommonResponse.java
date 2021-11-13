@@ -19,6 +19,11 @@ public class CommonResponse<T>{
                 .status(200)
                 .build();
     }
+    public static <T>  CommonResponse<T> success(){
+        return (CommonResponse<T>) CommonResponse.builder()
+                .status(200)
+                .build();
+    }
     public static CommonResponse fail(Status status){
         return CommonResponse.builder()
                 .status(status.getStatus())

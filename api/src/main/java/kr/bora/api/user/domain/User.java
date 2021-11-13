@@ -1,5 +1,6 @@
 package kr.bora.api.user.domain;
 
+import kr.bora.api.mailauth.AuthMail;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,6 +43,7 @@ public class User {
     @Column(name="authority")
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
+
 
     @Builder
     public User(Long userId, String username, String password, String lastName, String firstName

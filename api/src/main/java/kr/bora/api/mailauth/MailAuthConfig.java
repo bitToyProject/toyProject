@@ -16,6 +16,7 @@ public class MailAuthConfig {
     props.put("mail.smtp.starttls.enable", true);
     props.put("mail.smtp.starttls.required", true);
     props.put("mail.debug", true);
+    props.put("mail.socket.timeout",30000);
 
     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
     mailSender.setHost("smtp.gmail.com");

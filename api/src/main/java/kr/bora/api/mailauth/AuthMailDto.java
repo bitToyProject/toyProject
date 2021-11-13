@@ -9,13 +9,14 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AuthMailDto {
 
-    private String authMailKey;
+    private String authMail;
+    private String key;
 
     @Builder
-    public AuthMailDto(String authMailKey){
-        this.authMailKey = authMailKey;
-    }
-    public static AuthMail toAuthMail(String authMailKey){
-        return new AuthMail(authMailKey);
+    public AuthMail toAuthMail(String authMail, String key){
+        return AuthMail.builder()
+                .authMail(authMail)
+                .authMailKey(key)
+                .build();
     }
 }

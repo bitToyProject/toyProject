@@ -2,6 +2,7 @@ package kr.bora.api.user.controller;
 
 import kr.bora.api.common.aop.LogExecutionTime;
 import kr.bora.api.common.response.CommonResponse;
+import kr.bora.api.mailauth.MailSendService;
 import kr.bora.api.user.dto.TokenRequestDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.service.AuthService;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     private final AuthService authService;
+    private final MailSendService mailService;
 
     @LogExecutionTime
     @PostMapping("/signup")
