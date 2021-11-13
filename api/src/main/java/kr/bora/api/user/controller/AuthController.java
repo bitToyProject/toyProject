@@ -30,13 +30,10 @@ public class AuthController {
     }
     @LogExecutionTime
     @PostMapping("/login")
-<<<<<<< HEAD
+
     public ResponseEntity<CommonResponse> login(@RequestBody UserRequestDto userRequestDto) {
         return ResponseEntity.ok(authService.login(userRequestDto));
-=======
-    public ResponseEntity<CommonResponse> login(@Valid @RequestBody UserRequestDto userRequestDto) {
-        return ResponseEntity.ok(CommonResponse.success(authService.login(userRequestDto)));
->>>>>>> cbbd8ad00491d604681c09ab10ad1826609f4849
+
     }
     @LogExecutionTime
     @PostMapping("/reissue")
