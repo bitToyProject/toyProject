@@ -24,23 +24,21 @@ import javax.validation.Valid;
 @Log4j2
 public class AuthController {
 
-    private final UserRepository repository;
     private final AuthService authService;
 
     @PostMapping("/signup")
     public ResponseEntity<CommonResponse> signup(@Valid @RequestBody UserRequestDto userRequestDto) {
-        log.info("넘어온 데이터 :::::username ={}, firstname={} ",userRequestDto.getUsername(),userRequestDto.getFirstName());
-        return ResponseEntity.ok(authService.signup(userRequestDto));
+        return ResponseEntity.ok(CommonResponse.success(authService.signup(userRequestDto)));
     }
 
     @PostMapping("/login")
     public ResponseEntity<CommonResponse> login(@Valid @RequestBody UserRequestDto userRequestDto) {
-        return ResponseEntity.ok(authService.login(userRequestDto));
+        return ResponseEntity.ok(CommonResponse.success(authService.login(userRequestDto)));
     }
 
     @PostMapping("/reissue")
     public ResponseEntity<CommonResponse> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
-        return ResponseEntity.ok(authService.reIssue(tokenRequestDto));
+        return ResponseEntity.ok(CommonResponse.success(authService.reIssue(tokenRequestDto)));
     }
 
 

@@ -17,15 +17,12 @@ public class CommonResponse<T>{
 
     public static <T> CommonResponse<T> success(T data){
         return (CommonResponse<T>) CommonResponse.builder()
-//                .result(Result.SUCCESS)
                 .data(data)
                 .status(200)
                 .build();
     }
     public static CommonResponse fail(Status status){
         return CommonResponse.builder()
-//                .result(Result.FAIL)
-//                .message(errorcode.getErrorMsg())
                 .status(status.getStatus())
                 .build();
     }
