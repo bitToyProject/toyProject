@@ -1,5 +1,6 @@
 package kr.bora.api.user.controller;
 
+import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.user.dto.TokenRequestDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.dto.UserResponseDto;
@@ -27,23 +28,18 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity signup(@Valid @RequestBody UserRequestDto userRequestDto ) {
-        HttpHeaders headders = new HttpHeaders();
-        if(repository.existsByusername(userRequestDto.getUsername())){
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<CommonResponse> signup(@Valid @RequestBody UserRequestDto userRequestDto) {
         log.info("넘어온 데이터 :::::username ={}, firstname={} ",userRequestDto.getUsername(),userRequestDto.getFirstName());
-        authService.signup(userRequestDto);
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+        return ResponseEntity.ok(authService.signup(userRequestDto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@Valid @RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<CommonResponse> login(@Valid @RequestBody UserRequestDto userRequestDto) {
         return ResponseEntity.ok(authService.login(userRequestDto));
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity reissue(@RequestBody TokenRequestDto tokenRequestDto) {
+    public ResponseEntity<CommonResponse> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok(authService.reIssue(tokenRequestDto));
     }
 
