@@ -1,5 +1,6 @@
 package kr.bora.api.user.dto;
 
+import kr.bora.api.mailauth.AuthMail;
 import kr.bora.api.user.domain.Authority;
 import kr.bora.api.user.domain.User;
 import lombok.*;
@@ -32,6 +33,8 @@ public class UserRequestDto {
     @NotNull
     private int gender;
     private Authority authority;
+
+    private String authKey;
 
     public User toUser(PasswordEncoder passwordEncoder) {
         return User.builder()

@@ -1,14 +1,14 @@
-export const checkNull = (item : Array<any>) => {
-    const nullExp = (item: any) => {
-      return (
-        item === "" ||
-        item === undefined ||
-        (item !== null && item === "object" && !Object.keys(item).length) ||
-        item.length === 0
-      );
-    };
-    return item.some(nullExp) ? true : false;
-}
+export const checkNull = (item: Array<any>) => {
+  const nullExp = (item: any) => {
+    return (
+      item === "" ||
+      item === undefined ||
+      (item !== null && item === "object" && !Object.keys(item).length) ||
+      item.length === 0
+    );
+  };
+  return item.some(nullExp) ? true : false;
+};
 
 /*
 validateEmail.jsx Jinwook oh 2021.8.12
@@ -17,7 +17,7 @@ validateEmail.jsx Jinwook oh 2021.8.12
 
 */
 
-export const validateEmail = (email :string) => {
+export const validateEmail = (email: string) => {
   console.log("email,", email);
   const emailRegExp =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -33,7 +33,7 @@ export const validateEmail = (email :string) => {
   }
 };
 
-export const validatePassword = (password:string) => {
+export const validatePassword = (password: string) => {
   console.log("password validation 1 : ", password);
 
   //  8 ~ 10자 영문, 숫자 조합
@@ -53,7 +53,7 @@ export const validatePassword = (password:string) => {
   }
 };
 
-export const validateRePassword = (password:string , rePassword:string) => {
+export const validateRePassword = (password: string, rePassword: string) => {
   console.log("rePasswordrePasswordrePassword", password, rePassword);
   if (rePassword?.length > 0) {
     if (password === rePassword) {
@@ -66,7 +66,7 @@ export const validateRePassword = (password:string , rePassword:string) => {
   }
 };
 
-export const validateBirthday = (birthday:string) => {
+export const validateBirthday = (birthday: string) => {
   const birthdayRegex =
     /^(19[0-9][0-9]|20[0-9][0-9])[-/.](0[0-9]|1[0-2])[-/.](0[1-9]|[1-2][0-9]|3[0-1])$/;
 
@@ -82,9 +82,9 @@ export const validateBirthday = (birthday:string) => {
   }
 };
 
-export const validateNumber = (phone:string) => {
+export const validateNumber = (phone: string) => {
   console.log("phone", phone);
-  const numRegExp = /^01(?:0|1|[6-9])-\d{4}-\d{4}$/;
+  const numRegExp = /^01(?:0|1|[6-9])\d{4}\d{4}$/;
   if (phone?.length > 0) {
     if (numRegExp.test(phone)) {
       return { isNumberError: false, numberMsg: "" };
@@ -99,7 +99,7 @@ export const validateNumber = (phone:string) => {
   }
 };
 
-export const validateAuthNum = (authnum:string) => {
+export const validateAuthNum = (authnum: string) => {
   const authNumRegExp = /^[0-9]{6}$/;
   if (authnum?.length > 0) {
     if (authNumRegExp.test(authnum)) {
@@ -115,13 +115,13 @@ export const validateAuthNum = (authnum:string) => {
   }
 };
 
-export const preventSpaceValue = (value:string) => {
+export const preventSpaceValue = (value: string) => {
   if (value) {
     return value.replace(/\s/gi, "");
   }
 };
 
-export const checkPrefixFileName = (value:string) => {
+export const checkPrefixFileName = (value: string) => {
   const cuttingPrefixRegExp = ",";
   return value.substring(value.indexOf(cuttingPrefixRegExp) + 1);
 };

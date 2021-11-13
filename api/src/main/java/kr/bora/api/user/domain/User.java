@@ -1,6 +1,10 @@
 package kr.bora.api.user.domain;
 
+<<<<<<< HEAD
 import kr.bora.api.todo.domain.Todo;
+=======
+import kr.bora.api.mailauth.AuthMail;
+>>>>>>> cbbd8ad00491d604681c09ab10ad1826609f4849
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,11 +50,14 @@ public class User {
     private Authority authority;
 
 
+<<<<<<< HEAD
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     @JoinColumn(name="todo_id")
     private Todo todo;
 
 
+=======
+>>>>>>> cbbd8ad00491d604681c09ab10ad1826609f4849
     @Builder
     public User(Long userId, String username, String password, String lastName, String firstName
         , String nickName, String phoneNum, int gender, Authority authority) {
