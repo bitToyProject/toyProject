@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommonResponse<T>{
-//    private Result result;
     private T data;
-//    private String message;
     private int status;
 
     public static <T> CommonResponse<T> success(T data){
