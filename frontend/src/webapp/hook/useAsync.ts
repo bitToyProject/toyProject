@@ -53,13 +53,12 @@ const useAsync = <TResult>(
     error: null,
   });
 
-  const run = useCallback(
+  const request = useCallback(
     async (...args) => {
       dispatch({ type: "LOADING" });
       try {
         const data = await callback([...args], config);
         dispatch({ type: "SUCCESS", data });
-
         return data;
       } catch (error) {
         dispatch({ type: "ERROR", error });
@@ -68,7 +67,7 @@ const useAsync = <TResult>(
     [callback, config]
   );
 
-  return { ...state, run };
+  return { ...state, request };
 };
 
 export default useAsync;
