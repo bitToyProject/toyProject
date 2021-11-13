@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 
 export const useInput = (
   initialState: string,
@@ -18,5 +18,9 @@ export const useInput = (
       }
     }
   };
+<<<<<<< HEAD
+return { value, onChange };
+=======
   return { value, onChange };
+>>>>>>> 74665a02616ceec338867c6c7354bd2ee0a02942
 };
