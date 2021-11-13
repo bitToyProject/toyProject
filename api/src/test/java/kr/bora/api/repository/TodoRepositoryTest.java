@@ -18,7 +18,7 @@ public class TodoRepositoryTest {
 
     @Test
     public void insertTodo() {
-        IntStream.rangeClosed(1, 30).forEach(i -> {
+        IntStream.rangeClosed(1, 100).forEach(i -> {
             User user = User.builder()
                     .userId(1L + i)
                     .build();

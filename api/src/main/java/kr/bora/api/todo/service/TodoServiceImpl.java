@@ -1,5 +1,6 @@
 package kr.bora.api.todo.service;
 
+import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.repository.TodoRepository;
@@ -20,12 +21,13 @@ import java.util.stream.Collectors;
 public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository repository;
+    private final SubTaskRepository subTaskRepository;
 
 
     @Override
     public List<Todo> getList() {
 
-        return repository.findAll();
+        return repository.getList();
     }
 
     @Transactional
@@ -63,8 +65,10 @@ public class TodoServiceImpl implements TodoService {
         repository.save(todo);
     }
 
+    @Transactional
     @Override
     public void todoRemove(Long todoId) {
+        subTaskRepository.subTaskDelete(todoId);
         repository.deleteById(todoId);
     }
 

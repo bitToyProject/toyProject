@@ -1,8 +1,10 @@
 package kr.bora.api.user.domain;
 
+import kr.bora.api.todo.domain.Todo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.implementation.bind.annotation.Default;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -42,6 +44,12 @@ public class User {
     @Column(name="authority")
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
+
+
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @JoinColumn(name="todo_id")
+    private Todo todo;
+
 
     @Builder
     public User(Long userId, String username, String password, String lastName, String firstName

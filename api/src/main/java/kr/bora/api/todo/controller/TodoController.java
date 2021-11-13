@@ -28,7 +28,7 @@ public class TodoController {
         return ResponseEntity.ok(service.getList());
     }
 
-    @PostMapping("/register")
+    @PostMapping("/save")
     public ResponseEntity<Map<String, Object>> todoSave(TodoDto todoDto) {
 
         Map<String, Long> result = new HashMap<>();
@@ -44,14 +44,11 @@ public class TodoController {
     }
 
     @PostMapping("/modify/{todoId}")
-    public ResponseEntity<Map<String, Object>> todoModify(TodoDto todoDto) {
-
-        Map<String, String> result = new HashMap<>();
-        result.put("result", "Todo List Success");
+    public ResponseEntity<String> todoModify(TodoDto todoDto) {
 
         service.modify(todoDto);
 
-        return new ResponseEntity(result, HttpStatus.OK);
+        return ResponseEntity.ok(todoDto.getTodoId() + "번 TODO가 수정되었습니다.");
     }
 
     @DeleteMapping("/remove/{todoId}")
@@ -59,7 +56,7 @@ public class TodoController {
 
         service.todoRemove(todoId);
 
-        return ResponseEntity.ok("Todo List가 삭제되었습니다.");
+        return ResponseEntity.ok("Todo List가 성공적으로 삭제되었습니다.");
     }
 
 }

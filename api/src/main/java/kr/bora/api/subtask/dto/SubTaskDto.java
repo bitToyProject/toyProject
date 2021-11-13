@@ -31,20 +31,14 @@ public class SubTaskDto {
     private LocalDateTime modDate;
 
     @Builder
-    public SubTaskDto(String title, String start, String end, String assignee) {
+    public SubTaskDto(Long subTaskId, Long todoId, Long userId, String title, String start, String end, String assignee) {
+        this.subTaskId = subTaskId;
+        this.todoId = todoId;
+        this.userId = userId;
         this.title = title;
         this.start = start;
         this.end = end;
         this.assignee = assignee;
     }
 
-    // dto->entity
-    public SubTask toEntity() {
-        return SubTask.builder()
-                .title(title)
-                .start(start)
-                .end(end)
-                .assignee(assignee)
-                .build();
-    }
 }

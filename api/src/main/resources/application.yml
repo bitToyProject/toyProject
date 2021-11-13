@@ -10,6 +10,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
   kafka:
     consumer:
       bootstrap-servers: localhost:9092
