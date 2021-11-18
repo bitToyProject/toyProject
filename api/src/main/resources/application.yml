@@ -9,14 +9,13 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-<<<<<<< HEAD
       ddl-auto: update
-=======
-      ddl-auto: create-drop
->>>>>>> cbbd8ad00491d604681c09ab10ad1826609f4849
     properties:
       hibernate:
         format_sql: true
+        envers:
+          audit_table_suffix: _TOYHISTORY
+
   kafka:
     consumer:
       bootstrap-servers: localhost:9092
