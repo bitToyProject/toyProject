@@ -32,7 +32,6 @@ const SignupPage = () => {
         gender: 0,
     });
     const [disabled, setDisabled] = useState<boolean>(false);
-
     const [signup, setSignup] = useRecoilState<ISignupType>(signupState);
 
     const data = useRecoilValue(signupSelector(signup));

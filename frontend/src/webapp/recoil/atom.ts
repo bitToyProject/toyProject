@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { ISignupType } from "./types";
+import { IEditorType, ISignupType } from "./types";
 
 export const signupState = atom<ISignupType>({
   key: "signup",
@@ -11,5 +11,12 @@ export const signupState = atom<ISignupType>({
     firstName: "",
     lastName: "",
     gender: 0,
+  },
+});
+
+export const contentsState = atom<IEditorType>({
+  key: "contents",
+  default: {
+    contents: ""
   },
 });

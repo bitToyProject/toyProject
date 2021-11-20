@@ -1,3 +1,5 @@
+import { EditorState } from "draft-js";
+
 export interface ISignupType {
   username: string;
   password: string;
@@ -15,9 +17,12 @@ export interface Param extends ISignupType {
   [key: string]: any;
 }
 
-export interface ToggleButton {
-  [BOLD: string]: boolean;
-  ITALIC: boolean;
-  UNDERLINE: boolean;
-  STRIKETHROUGH: boolean;
-};
+export interface IEditorType {
+  contents: string;
+}
+
+export interface EditorPropsType{
+  editorState: EditorState,
+  setEditorState: any
+}
+

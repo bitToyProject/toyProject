@@ -2,7 +2,7 @@ import { Route } from 'react-router';
 import { LoginApp, SignupApp, MailApp } from '@/webapp/container';
 import { Suspense } from 'react';
 import Loading from './webapp/common/Loading';
-import TextEditor from '@/webapp/common/editor/TextEditor';
+import TextEditor from '@/webapp/common/TextEditor';
 
 const App = () => {
     return (
