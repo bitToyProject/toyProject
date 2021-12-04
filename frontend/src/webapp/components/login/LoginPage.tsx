@@ -1,18 +1,18 @@
-import { InputModule } from "@/webapp/common";
-import React, { useState, ChangeEvent, MouseEvent } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { InputModule } from '@/webapp/common';
+import React, { useState, ChangeEvent, MouseEvent } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   apiLogin,
   ILoginType,
   IResStatus,
   loginState,
-} from "@/webapp/recoil/login/login";
-import { ColoredButton } from "@/webapp/container";
-import { css } from "@emotion/react";
+} from '@/webapp/recoil/login/login';
+import { ColoredButton } from '@/webapp/container';
+import { css } from '@emotion/react';
 import {
   COLOR_WHITE,
   DEFAULT_BACKGROUND,
-} from "@/webapp/common/CCstyle/CCstyle";
+} from '@/webapp/common/CCstyle/CCstyle';
 /** @jsxImportSource @emotion/react */
 
 interface loginValType {
@@ -21,8 +21,8 @@ interface loginValType {
 }
 const LoginPage = () => {
   const [loginVal, setLoginVal] = useState<loginValType>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loginInfo, setLoginInfo] = useRecoilState<ILoginType>(loginState);
@@ -36,7 +36,7 @@ const LoginPage = () => {
     setLoginInfo(loginVal);
   };
 
-  console.log("loginVal", loginVal);
+  console.log('loginVal', loginVal);
   return (
     <>
       <div css={cssWrapper}>
@@ -44,9 +44,9 @@ const LoginPage = () => {
           <label>이메일</label>
           <div>
             <InputModule
-              type={"text"}
+              type={'text'}
               disabled={false}
-              placeholder={"Email"}
+              placeholder={'Email'}
               onChange={(value: string) =>
                 setLoginVal({ ...loginVal, email: value })
               }
@@ -55,9 +55,9 @@ const LoginPage = () => {
           <label>비밀번호</label>
           <div>
             <InputModule
-              type={"password"}
+              type={'password'}
               disabled={false}
-              placeholder={"Password"}
+              placeholder={'Password'}
               onChange={(value: string) =>
                 setLoginVal({ ...loginVal, password: value })
               }
@@ -66,9 +66,9 @@ const LoginPage = () => {
           <div className="btn-box">
             <ColoredButton
               disabled={disabled}
-              btnLabel={"로그인하기"}
-              color={""}
-              backgroundColor={""}
+              btnLabel={'로그인하기'}
+              color={''}
+              backgroundColor={''}
               isWhite
               handleClick={handleClick}
             />
