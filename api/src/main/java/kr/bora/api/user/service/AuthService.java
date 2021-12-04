@@ -1,6 +1,7 @@
 package kr.bora.api.user.service;
 
 
+import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.mailauth.MailSendService;
 import kr.bora.api.user.domain.RefreshToken;
 import kr.bora.api.user.domain.User;
@@ -45,8 +46,7 @@ public class AuthService {
         return response;
     }
 
-    @Transactional
-    public TokenDto login(UserRequestDto userRequestDto) {
+    public CommonResponse<TokenDto> login(UserRequestDto userRequestDto) {
 
 //        mailAuthRepository.findbyMaidId();
 
@@ -63,7 +63,7 @@ public class AuthService {
 
         refreshTokenRepository.save(refreshToken);
 
-        return tokenDto;
+        return CommonResponse.success(tokenDto);
     }
 
     @Transactional

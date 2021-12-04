@@ -33,10 +33,9 @@ public class UserController {
     }
 
     @PutMapping("/modify/{id}")
-    public ResponseEntity<String> modify(@PathVariable("id") Long id, @RequestBody UserRequestDto userRequestDto) {
-
-        userRequestDto.setUserId(id);
-        userServiceImpl.modify(userRequestDto);
+    public ResponseEntity<String> modifyPassword(@RequestBody UserRequestCommand.RequestPasswordChanger command) {
+        var dto = command.toDto();
+        userServiceImpl.modify(dto);
 
         return ResponseEntity.ok("비번 변경 성공");
     }

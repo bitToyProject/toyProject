@@ -36,6 +36,30 @@ public class UserRequestDto {
 
     private String authKey;
 
+    @Builder
+    public UserRequestDto(
+        Long userId,
+        String username,
+        String password,
+        String lastName,
+        String firstName,
+        String nickName,
+        String phoneNum,
+        int gender,
+        Authority authority,
+        String authKey){
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.nickName = nickName;
+        this.phoneNum = phoneNum;
+        this.gender = gender;
+        this.authority = authority;
+        this.authKey = authKey;
+    }
+
     public User toUser(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .userId(userId)
@@ -60,5 +84,8 @@ public class UserRequestDto {
         this.username = username;
         this.password = password;
         this.authority = authority;
+    }
+    public User saveId(UserRequestDto dto){
+        return User.builder().userId(dto.userId).build();
     }
 }

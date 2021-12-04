@@ -1,8 +1,13 @@
 package kr.bora.api.todo.controller;
 
+import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.service.TodoServiceImpl;
+import kr.bora.api.user.dto.TokenDto;
+import kr.bora.api.user.dto.TokenRequestDto;
+import kr.bora.api.user.dto.UserRequestDto;
+import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -22,41 +27,38 @@ public class TodoController {
 
     private final TodoServiceImpl service;
 
-    @GetMapping("/list")
-    public ResponseEntity<List<Todo>> todoList() {
-
-        return ResponseEntity.ok(service.getList());
-    }
+//    @GetMapping("/list")
+//    public ResponseEntity<List<Todo>> todoList() {
+//
+//        return ResponseEntity.ok(service.getList());
+//    }
 
     @PostMapping("/save")
-    public ResponseEntity<Map<String, Object>> todoSave(TodoDto todoDto) {
-
-        Map<String, Long> result = new HashMap<>();
-        result.put("result", (service.TodoSave(todoDto)));
-
-        return new ResponseEntity(result, HttpStatus.OK);
+    public ResponseEntity<CommonResponse<TodoDto>> todoSave(@RequestBody TodoRequestCommand.GetAllTodoRequestCommander commander) {
+        var dto = commander.toDto();
+        return ResponseEntity.ok(service.TodoSave(dto));
     }
 
-    @GetMapping("/read/{todoId}")
-    public ResponseEntity<TodoDto> todoRead(@PathVariable("todoId") Long todoId) {
+//    @GetMapping("/read/{todoId}")
+//    public ResponseEntity<TodoDto> todoRead(@PathVariable("todoId") Long todoId) {
+//
+//        return ResponseEntity.ok(service.get(todoId));
+//    }
 
-        return ResponseEntity.ok(service.get(todoId));
-    }
+//    @PostMapping("/modify/{todoId}")
+//    public ResponseEntity<String> todoModify(TodoDto todoDto) {
+//
+//        service.modify(todoDto);
+//
+//        return ResponseEntity.ok(todoDto.getTodoId() + "번 TODO가 수정되었습니다.");
+//    }
 
-    @PostMapping("/modify/{todoId}")
-    public ResponseEntity<String> todoModify(TodoDto todoDto) {
-
-        service.modify(todoDto);
-
-        return ResponseEntity.ok(todoDto.getTodoId() + "번 TODO가 수정되었습니다.");
-    }
-
-    @DeleteMapping("/remove/{todoId}")
-    public ResponseEntity<String> todoRemove(@PathVariable("todoId") Long todoId) {
-
-        service.todoRemove(todoId);
-
-        return ResponseEntity.ok("Todo List가 성공적으로 삭제되었습니다.");
-    }
+//    @DeleteMapping("/remove/{todoId}")
+//    public ResponseEntity<String> todoRemove(@PathVariable("todoId") Long todoId) {
+//
+//        service.todoRemove(todoId);
+//
+//        return ResponseEntity.ok("Todo List가 성공적으로 삭제되었습니다.");
+//    }
 
 }

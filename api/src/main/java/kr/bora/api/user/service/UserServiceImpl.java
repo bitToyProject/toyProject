@@ -17,21 +17,18 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
 
-    @Transactional(readOnly = true)
     public UserResponseDto getUserInfo(String email) {
         return repository.findByusername(email)
                 .map(UserResponseDto::of)
                 .orElseThrow(() -> new RuntimeException("사용자 정보가 없습니다."));
     }
 
-    @Transactional(readOnly = true)
     public UserResponseDto getMyInfo() {
         return repository.findById(SecurityUtil.getCurrentUserId())
                 .map(UserResponseDto::of)
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
 
-    @Transactional
     public UserRequestDto modify(UserRequestDto userRequestDto) {
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
