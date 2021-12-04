@@ -1,18 +1,9 @@
 package kr.bora.api.user.domain;
 
-
-import kr.bora.api.todo.domain.Todo;
-
-import kr.bora.api.mailauth.AuthMail;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.implementation.bind.annotation.Default;
-
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
