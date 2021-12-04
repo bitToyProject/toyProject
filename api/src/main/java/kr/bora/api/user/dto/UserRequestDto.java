@@ -61,4 +61,7 @@ public class UserRequestDto {
         this.password = password;
         this.authority = authority;
     }
+    public User saveId(UserRequestDto dto){
+        return User.builder().userId(dto.userId).build();
+    }
 }

@@ -1,6 +1,7 @@
 package kr.bora.api.todo.dto;
 
 import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.user.dto.UserRequestDto;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ public class TodoDto {
 
     private Long todoId;
 
-    private Long userId;
+    private UserRequestDto userId;
 
     private String title;
 
@@ -30,7 +31,16 @@ public class TodoDto {
     private LocalDateTime modDate;
 
     @Builder
-    public TodoDto(Long todoId, Long userId, String title, String start, String end, String description, String viewer, int priority) {
+    public TodoDto(
+        Long todoId,
+        UserRequestDto userId,
+        String title,
+        String start,
+        String end,
+        String description,
+        String viewer,
+        int priority) {
+
         this.todoId = todoId;
         this.userId = userId;
         this.title = title;
@@ -41,6 +51,11 @@ public class TodoDto {
         this.priority = priority;
     }
 
-
+    public Todo toEntitySaveUserId(TodoDto dto){
+        return Todo.builder()
+            .title(dto.getTitle())
+            .user((dto.getUserId()).saveId(dto.getUserId()))
+            .build();
+    }
 
 }
