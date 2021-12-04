@@ -1,5 +1,8 @@
 package kr.bora.api.user.service;
 
+import kr.bora.api.common.response.CommonResponse;
+import kr.bora.api.common.response.Status;
+import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.dto.UserResponseDto;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+    private final TodoRepository todoRepository;
 
     public UserResponseDto getUserInfo(String email) {
         return repository.findByusername(email)
@@ -43,9 +47,21 @@ public class UserServiceImpl implements UserService {
 
         return dtoEntity;
     }
+    public void deleteUserRelate(UserRequestDto dto){
+        User user = dto.toUserEntity(dto);
+        todoRepository.modifyTodoUserId(user.getUserId());
+    }
 
-    public String delete(Long id) {
-        repository.deleteById(id);
-        return "삭제 성공";
+    public CommonResponse<UserResponseDto> deleteUser(UserRequestDto dto) {
+        User user = dto.toUserEntity(dto);
+        deleteUserRelate(dto);
+        try {
+            repository.deleteById(user.getUserId());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonResponse.fail(Status.JPACONDUCTERROR);
+        }
+        return CommonResponse.success();
+
     }
 }

@@ -25,4 +25,8 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     @Query(value = "SELECT a FROM Todo a join fetch a.user")
     List<Todo> getList();
 
+    @Modifying(clearAutomatically = true)
+    @Query("update Todo t set t.user.userId = null where t.user.userId =:userId")
+    void modifyTodoUserId(@Param("userId")long userId);
+
 }

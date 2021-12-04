@@ -1,5 +1,7 @@
 package kr.bora.api.user.controller;
 
+import kr.bora.api.common.response.CommonResponse;
+import kr.bora.api.common.response.Status;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.service.UserServiceImpl;
@@ -27,12 +29,15 @@ public class UserController {
         return ResponseEntity.ok(userServiceImpl.getUserInfo(email));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(userServiceImpl.delete(id));
+    @DeleteMapping("/deleteUser")
+    public ResponseEntity<CommonResponse<UserResponseDto>> delete() {
+        var dto = UserRequestCommand.RequestUserId.toDto();
+        var response = userServiceImpl.deleteUser(dto);
+
+        return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/modify/{id}")
+    @PutMapping("/modifyPassword")
     public ResponseEntity<String> modifyPassword(@RequestBody UserRequestCommand.RequestPasswordChanger command) {
         var dto = command.toDto();
         userServiceImpl.modify(dto);

@@ -27,7 +27,16 @@ public class UserRequestCommand {
           .password(password)
           .build();
     }
-
+  }
+  @Getter
+  @NoArgsConstructor
+  public static class RequestUserId{
+    public static UserRequestDto toDto(){
+      var userId = SecurityUtil.getCurrentUserId();
+      return UserRequestDto.builder()
+          .userId(userId)
+          .build();
+    }
   }
 
 }

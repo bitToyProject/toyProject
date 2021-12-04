@@ -41,7 +41,7 @@ public class AuthService {
     @Transactional
     public UserResponseDto signup(UserRequestDto userRequestDto) {
 
-        User user = userRequestDto.toUser(passwordEncoder);
+        User user = userRequestDto.toUserforSave(passwordEncoder);
         UserResponseDto response = UserResponseDto.of(userRepository.save(user));
         return response;
     }
