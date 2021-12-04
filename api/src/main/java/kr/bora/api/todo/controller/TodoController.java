@@ -4,6 +4,10 @@ import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.service.TodoServiceImpl;
+import kr.bora.api.user.dto.TokenDto;
+import kr.bora.api.user.dto.TokenRequestDto;
+import kr.bora.api.user.dto.UserRequestDto;
+import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -30,10 +34,9 @@ public class TodoController {
 //    }
 
     @PostMapping("/save")
-    public ResponseEntity<CommonResponse<TodoDto>> todoSave(@RequestBody TodoDto todoDto) {
-
-
-        return ResponseEntity.ok(service.TodoSave(todoDto));
+    public ResponseEntity<CommonResponse<TodoDto>> todoSave(@RequestBody TodoRequestCommand.GetAllTodoRequestCommander commander) {
+        var dto = commander.toDto();
+        return ResponseEntity.ok(service.TodoSave(dto));
     }
 
 //    @GetMapping("/read/{todoId}")
