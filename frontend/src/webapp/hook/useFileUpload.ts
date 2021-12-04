@@ -1,11 +1,12 @@
-export const useFileUpload = (file:any) => {
-    console.log(typeof file);
+export const useFileUpload = (file:Blob) => {
+
     console.log(file);
+    const formData = new FormData();
 
-    const data = new FormData();
+    formData.append("file", file);
 
-    data.append("file", file);
 
-    console.log(data);
-    return {data};
+    console.log(formData);
+   // post하는 api 추가
+    return { data: { link: "fsfdsfsf"}};
 }
