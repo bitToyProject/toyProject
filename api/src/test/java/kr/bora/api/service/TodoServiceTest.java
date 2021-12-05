@@ -54,22 +54,22 @@ public class TodoServiceTest {
 //                .build();
 //        todoService.TodoSave(dto);
 //    }
-
-    @Transactional
-    @Test
-    @Commit
-    public void testModify() {
-        TodoDto dto = TodoDto.builder()
-                .todoId(36L)
-                .title("변경")
-                .description("변경2")
-                .viewer("변3경")
-                .priority(2)
-                .start("23")
-                .end("2")
-                .userId(1L)
-                .build();
-
-        todoService.modify(dto);
-    }
+//
+//    @Transactional
+//    @Test
+//    @Commit
+//    public void testModify() {
+//        TodoDto dto = TodoDto.builder()
+//                .todoId(36L)
+//                .title("변경")
+//                .description("변경2")
+//                .viewer("변3경")
+//                .priority(2)
+//                .start("23")
+//                .end("2")
+//                .userId(1L)
+//                .build();
+//
+//        todoService.modify(dto);
+//    }
 }

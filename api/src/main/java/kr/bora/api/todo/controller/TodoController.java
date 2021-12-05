@@ -27,38 +27,40 @@ public class TodoController {
 
     private final TodoServiceImpl service;
 
-//    @GetMapping("/list")
-//    public ResponseEntity<List<Todo>> todoList() {
-//
-//        return ResponseEntity.ok(service.getList());
-//    }
+    @GetMapping("/list")
+    public ResponseEntity<List<Todo>> todoList() {
 
-    @PostMapping("/save")
-    public ResponseEntity<CommonResponse<TodoDto>> todoSave(@RequestBody TodoRequestCommand.GetAllTodoRequestCommander commander) {
-        var dto = commander.toDto();
-        return ResponseEntity.ok(service.TodoSave(dto));
+        return ResponseEntity.ok(service.getList());
     }
 
-//    @GetMapping("/read/{todoId}")
-//    public ResponseEntity<TodoDto> todoRead(@PathVariable("todoId") Long todoId) {
-//
-//        return ResponseEntity.ok(service.get(todoId));
-//    }
+    @PostMapping("/save")
+    public ResponseEntity<Map<String, Object>>todoSave(@RequestBody TodoDto todoDto) {
+        Map<String, Object> obj = new HashMap<>();
+        obj.put("Save Success Todo", service.save(todoDto.toDto()));
+        return ResponseEntity.ok(obj);
+    }
 
-//    @PostMapping("/modify/{todoId}")
-//    public ResponseEntity<String> todoModify(TodoDto todoDto) {
-//
-//        service.modify(todoDto);
-//
-//        return ResponseEntity.ok(todoDto.getTodoId() + "번 TODO가 수정되었습니다.");
-//    }
+    @GetMapping("/read/{todoId}")
+    public ResponseEntity<TodoDto> todoRead(@PathVariable("todoId") Long todoId) {
 
-//    @DeleteMapping("/remove/{todoId}")
-//    public ResponseEntity<String> todoRemove(@PathVariable("todoId") Long todoId) {
-//
-//        service.todoRemove(todoId);
-//
-//        return ResponseEntity.ok("Todo List가 성공적으로 삭제되었습니다.");
-//    }
+        return ResponseEntity.ok(service.get(todoId));
+    }
+
+    @PutMapping("/modify/{todoId}")
+    public ResponseEntity<String> todoModify(@PathVariable("todoId") Long todoId, @RequestBody TodoDto todoDto) {
+
+        service.modify(todoId, todoDto);
+
+        return ResponseEntity.ok(todoId + "번 TODO가 수정되었습니다.");
+    }
+
+    @DeleteMapping("/remove/{todoId}")
+    public ResponseEntity<Map<String, Object>>todoRemove(@PathVariable("todoId") Long todoId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("Result", todoId +" 번 Todo 삭제");
+        service.todoRemove(todoId);
+
+        return ResponseEntity.ok(resultMap);
+    }
 
 }

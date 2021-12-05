@@ -20,17 +20,17 @@ public class UserRequestDto {
     @Email
 //    @NotEmpty
     private String username;
-//    @NotEmpty
+    //    @NotEmpty
     private String password;
-//    @NotEmpty
+    //    @NotEmpty
     private String lastName;
-//    @NotEmpty
+    //    @NotEmpty
     private String firstName;
 
     private String nickName;
-//    @NotEmpty
+    //    @NotEmpty
     private String phoneNum;
-//    @NotNull
+    //    @NotNull
     private int gender;
     private Authority authority;
 
@@ -38,16 +38,16 @@ public class UserRequestDto {
 
     @Builder
     public UserRequestDto(
-        Long userId,
-        String username,
-        String password,
-        String lastName,
-        String firstName,
-        String nickName,
-        String phoneNum,
-        int gender,
-        Authority authority,
-        String authKey){
+            Long userId,
+            String username,
+            String password,
+            String lastName,
+            String firstName,
+            String nickName,
+            String phoneNum,
+            int gender,
+            Authority authority,
+            String authKey) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -73,31 +73,32 @@ public class UserRequestDto {
                 .authority(Authority.ROLE_USER)
                 .build();
     }
-    public User toUserEntity(UserRequestDto dto){
+
+    public User toUserEntity(UserRequestDto dto) {
         return User.builder()
-            .userId(dto.getUserId())
-            .lastName(dto.getLastName())
-            .gender(dto.getGender())
-            .firstName(dto.getFirstName())
-            .nickName(dto.getNickName())
-            .authority(dto.getAuthority())
-            .phoneNum(dto.getPhoneNum())
-            .username(dto.getUsername())
-            .build();
+                .userId(dto.getUserId())
+                .lastName(dto.getLastName())
+                .gender(dto.getGender())
+                .firstName(dto.getFirstName())
+                .nickName(dto.getNickName())
+                .authority(dto.getAuthority())
+                .phoneNum(dto.getPhoneNum())
+                .username(dto.getUsername())
+                .build();
     }
 
     public UsernamePasswordAuthenticationToken toAuthentication() {
         return new UsernamePasswordAuthenticationToken(username, password);
     }
 
-//    @Builder
+    //    @Builder
 //    public UserRequestDto(Long userId, String username, String password,Authority authority) {
 //        this.userId = userId;
 //        this.username = username;
 //        this.password = password;
 //        this.authority = authority;
 //    }
-    public User saveId(UserRequestDto dto){
+    public User saveId(UserRequestDto dto) {
         return User.builder().userId(dto.userId).build();
     }
 }

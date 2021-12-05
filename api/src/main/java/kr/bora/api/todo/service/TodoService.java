@@ -3,6 +3,8 @@ package kr.bora.api.todo.service;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.UserRequestDto;
+import kr.bora.api.user.util.SecurityUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,17 +12,19 @@ import java.util.Map;
 
 public interface TodoService {
 
-//    List<Todo> getList();
+    List<Todo> getList();
 
-//    TodoDto get(Long todoId);
+    Long save(TodoDto todoDto);
 
-//    void modify(TodoDto todoDto);
+    TodoDto get(Long todoId);
 
-//    void todoRemove(Long todoId);
+    void modify(Long todoId, TodoDto todoDto);
+
+    void todoRemove(Long todoId);
 
 //    default Map<String, Object> dtoToEntity(TodoDto todoDto) {
 //        Map<String, Object> entityMap = new HashMap<>();
-//        User users = User.builder().userId(todoDto.getUserId()).build();
+//        UserRequestDto users = UserRequestDto.builder().userId(SecurityUtil.getCurrentUserId();).build();
 //        Todo todo = Todo.builder()
 //                .todoId(todoDto.getTodoId())
 //                .title(todoDto.getTitle())
@@ -37,17 +41,30 @@ public interface TodoService {
 //    }
 
 
-//    default TodoDto entityTodoDto(Todo todo, User user) {
-//        TodoDto todoDto = TodoDto.builder()
-//                .todoId(todo.getTodoId())
-//                .userId(user == null ?  1L : user.getUserId())
-//                .title(todo.getTitle())
-//                .description(todo.getDescription())
-//                .start(todo.getStart())
-//                .end(todo.getEnd())
-//                .viewer(user == null ? "" : user.getUsername())
-//                .priority(todo.getPriority())
-//                .build();
-//        return todoDto;
-//    }
+    default TodoDto entityTodoDto(Todo todo, User user) {
+        TodoDto users = TodoDto.builder()
+                .build();
+        return TodoDto.builder()
+                .todoId(todo.getTodoId())
+                .userId(users.toDto().getUserId())
+                .title(todo.getTitle())
+                .description(todo.getDescription())
+                .start(todo.getStart())
+                .end(todo.getEnd())
+                .viewer(user == null ? "" : user.getUsername())
+                .priority(todo.getPriority())
+                .build();
+    }
+
+     default Todo toEntitySaveUserId(TodoDto dto) {
+        return Todo.builder()
+                .title(dto.getTitle())
+                .start(dto.getStart())
+                .end(dto.getEnd())
+                .priority(dto.getPriority())
+                .viewer(dto.getViewer())
+                .description(dto.getDescription())
+                .user((dto.getUserId()).saveId(dto.getUserId()))
+                .build();
+    }
 }

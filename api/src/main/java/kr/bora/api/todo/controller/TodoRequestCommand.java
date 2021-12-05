@@ -20,7 +20,7 @@ public class TodoRequestCommand {
 
     public TodoDto toDto(){
       Long userId = SecurityUtil.getCurrentUserId();
-      return TodoDto.builder()
+      return  TodoDto.builder()
           .userId(UserRequestDto.builder().userId(userId).build())
           .title(title)
           .start(start)
@@ -29,6 +29,7 @@ public class TodoRequestCommand {
           .viewer(viewer)
           .priority(priority)
           .build();
+
     }
 
   }
