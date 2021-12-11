@@ -3,6 +3,8 @@ package kr.bora.api.todo.controller;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.util.SecurityUtil;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +12,9 @@ public class TodoRequestCommand {
 
   @Getter
   @NoArgsConstructor
-  public static class GetAllTodoRequestCommander{
+  @AllArgsConstructor
+  @Builder
+  public static class TodoRequest{
     private String title;
     private String start;
     private String end;

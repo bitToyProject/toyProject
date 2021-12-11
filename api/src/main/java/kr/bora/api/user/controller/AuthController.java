@@ -1,6 +1,5 @@
 package kr.bora.api.user.controller;
 
-import kr.bora.api.common.aop.LogExecutionTime;
 import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.mailauth.MailSendService;
 import kr.bora.api.user.dto.TokenRequestDto;
@@ -23,22 +22,26 @@ public class AuthController {
     private final AuthService authService;
     private final MailSendService mailService;
 
-    @LogExecutionTime
     @PostMapping("/signup")
     public ResponseEntity<CommonResponse> signup(@Valid @RequestBody UserRequestDto userRequestDto) {
         return ResponseEntity.ok(CommonResponse.success(authService.signup(userRequestDto)));
     }
-    @LogExecutionTime
     @PostMapping("/login")
 
     public ResponseEntity<CommonResponse> login(@RequestBody UserRequestDto userRequestDto) {
+
         return ResponseEntity.ok(authService.login(userRequestDto));
 
     }
-    @LogExecutionTime
     @PostMapping("/reissue")
     public ResponseEntity<CommonResponse> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok(CommonResponse.success(authService.reIssue(tokenRequestDto)));
+    }
+
+    // 중복체크
+    @GetMapping("/check/{username}")
+    public ResponseEntity<Boolean> checkUserRequestDto(@PathVariable String username) {
+        return ResponseEntity.ok(authService.checkUsername(username));
     }
 
 

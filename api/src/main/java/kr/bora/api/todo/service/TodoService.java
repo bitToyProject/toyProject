@@ -1,14 +1,10 @@
 package kr.bora.api.todo.service;
 
+import kr.bora.api.todo.controller.TodoRequestCommand;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.TodoDto;
-import kr.bora.api.user.domain.User;
-import kr.bora.api.user.dto.UserRequestDto;
-import kr.bora.api.user.util.SecurityUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface TodoService {
 
@@ -22,28 +18,9 @@ public interface TodoService {
 
     void todoRemove(Long todoId);
 
-//    default Map<String, Object> dtoToEntity(TodoDto todoDto) {
-//        Map<String, Object> entityMap = new HashMap<>();
-//        UserRequestDto users = UserRequestDto.builder().userId(SecurityUtil.getCurrentUserId();).build();
-//        Todo todo = Todo.builder()
-//                .todoId(todoDto.getTodoId())
-//                .title(todoDto.getTitle())
-//                .description(todoDto.getDescription())
-//                .start(todoDto.getStart())
-//                .end(todoDto.getStart())
-//                .viewer(todoDto.getViewer())
-//                .priority(todoDto.getPriority())
-//                .user(users)
-//                .build();
-//        entityMap.put("todo", todo);
-//
-//        return entityMap;
-//    }
 
-
-    default TodoDto entityTodoDto(Todo todo, User user) {
-        TodoDto users = TodoDto.builder()
-                .build();
+    default TodoDto entityTodoDto(Todo todo) {
+        TodoRequestCommand.TodoRequest users = TodoRequestCommand.TodoRequest.builder().build();
         return TodoDto.builder()
                 .todoId(todo.getTodoId())
                 .userId(users.toDto().getUserId())
@@ -51,12 +28,14 @@ public interface TodoService {
                 .description(todo.getDescription())
                 .start(todo.getStart())
                 .end(todo.getEnd())
-                .viewer(user == null ? "" : user.getUsername())
+                .viewer(todo.getViewer())
                 .priority(todo.getPriority())
+                .regDate(todo.getRegDate())
+                .modDate(todo.getModDate())
                 .build();
     }
 
-     default Todo toEntitySaveUserId(TodoDto dto) {
+    default Todo toEntitySaveUserId(TodoDto dto) {
         return Todo.builder()
                 .title(dto.getTitle())
                 .start(dto.getStart())

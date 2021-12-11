@@ -1,20 +1,15 @@
 package kr.bora.api.todo.service;
 
-import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.repository.TodoRepository;
-import kr.bora.api.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -49,13 +44,12 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public TodoDto get(Long todoId) {
-        List<Object[]> result = repository.getTodo(todoId);
-        Todo todo = (Todo) result.get(0)[0];
-        User user = (User) result.get(0)[1];
+        Todo result = repository.getTodo(todoId);
 
-        return entityTodoDto(todo, user);
+        return entityTodoDto(result);
     }
 
+    @Transactional
     @Override
     public void modify(Long todoId, TodoDto todoDto) {
 

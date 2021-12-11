@@ -1,7 +1,6 @@
 package kr.bora.api.subtask.repository;
 
 import kr.bora.api.subtask.domain.SubTask;
-import kr.bora.api.subtask.dto.SubTaskDto;
 import kr.bora.api.todo.domain.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

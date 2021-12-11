@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
     public void deleteUserRelate(UserRequestDto dto){
         User user = dto.toUserEntity(dto);
-        todoRepository.modifyTodoUserId(user.getUserId());
+        todoRepository.deleteTodoUserId(user.getUserId());
     }
 
     public CommonResponse<UserResponseDto> deleteUser(UserRequestDto dto) {
@@ -64,4 +64,6 @@ public class UserServiceImpl implements UserService {
         return CommonResponse.success();
 
     }
+
+
 }
