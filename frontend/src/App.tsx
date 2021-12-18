@@ -3,7 +3,7 @@ import { LoginApp, SignupApp, MailApp, TodoApp } from 'src/webapp/container';
 import { Suspense } from 'react';
 import Loading from 'src/webapp/common/Loading';
 import TextEditor from 'src/webapp/common/TextEditor';
-import './tailwind.output.css';
+import 'src/tailwind.output.css';
 
 const App = () => {
   return (

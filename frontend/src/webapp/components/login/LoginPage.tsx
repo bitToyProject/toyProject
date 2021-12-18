@@ -43,6 +43,32 @@ const LoginPage = () => {
   console.log('loginVal', loginVal);
   return (
     <>
+      <div className="h-screen grid grid-cols-3">
+        <div className="col-span-2 bg-orange-300">
+          <h1 className="justify-center text-center font-bold py-60">Bora</h1>
+        </div>
+        <div className="">
+          <form className="jtext-center py-60">
+            <h1 className="text-center">로그인</h1>
+            <div className="">
+              <label className="mb-1 text-xs tracking-wide text-gray-600">
+                이메일:
+              </label>
+              <input className="text-sm pr-4 w-full py-2 focus:outline-none focus:border-blue-400" />
+            </div>
+            <div>
+              <label className="mb-1 text-xs tracking-wide text-gray-600">
+                비밀번호:
+              </label>
+              <input className="text-sm placeholder-gray-500 pl-10 pr-4 w-full py-2 focus:outline-none focus:border-blue-400" />
+            </div>
+            <button className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">
+              로그인
+            </button>
+          </form>
+          <p className="">회원가입</p>
+        </div>
+      </div>
       <div css={cssWrapper}>
         <div className="inline-block-box">
           <label>이메일</label>

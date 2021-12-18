@@ -4,7 +4,6 @@ const LoginApp = () => {
   return (
     <>
       <LoginPage />
-      <p className="bg-orange-300">fdsfdslfds</p>
     </>
   );
 };
