@@ -1,18 +1,18 @@
 import React, { MouseEvent, useCallback, useState } from 'react';
-/** @jsxImportSource @emotion/react */
+/** srcjsxImportSource srcemotion/react */
 import { css } from '@emotion/react';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw } from 'draft-js';
-import { COLOR_GRAY } from '@/webapp/common/CCstyle/CCstyle';
-import { ColoredButton } from '@/webapp/container';
-import { IEditorType } from '@/webapp/recoil/types';
+import { COLOR_GRAY } from 'src/webapp/common/CCstyle/CCstyle';
+import { ColoredButton } from 'src/webapp/container';
+import { IEditorType } from 'src/webapp/recoil/types';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { editorSelector } from '@/webapp/recoil/seletors';
-import { contentsState } from '@/webapp/recoil/atom';
+import { editorSelector } from 'src/webapp/recoil/seletors';
+import { contentsState } from 'src/webapp/recoil/atom';
 import draftToHtml from 'draftjs-to-html';
-import { useFileUpload } from '@/webapp/hook/useFileUpload';
-import Snackbar from '@/webapp/common/Snackbar';
-import { useSnackbar } from '@/webapp/hook/useSnackbar';
+import { useFileUpload } from 'src/webapp/hook/useFileUpload';
+import Snackbar from 'src/webapp/common/Snackbar';
+import { useSnackbar } from 'src/webapp/hook/useSnackbar';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const TextEditor = () => {

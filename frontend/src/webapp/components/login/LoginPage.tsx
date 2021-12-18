@@ -1,4 +1,4 @@
-import { InputModule } from '@/webapp/common';
+import { InputModule } from 'src/webapp/common';
 import React, { useState, ChangeEvent, MouseEvent } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
@@ -6,14 +6,15 @@ import {
   ILoginType,
   IResStatus,
   loginState,
-} from '@/webapp/recoil/login/login';
-import { ColoredButton } from '@/webapp/container';
+} from 'src/webapp/recoil/login/login';
+import { ColoredButton } from 'src/webapp/container';
 import { css } from '@emotion/react';
 import {
   COLOR_WHITE,
   DEFAULT_BACKGROUND,
-} from '@/webapp/common/CCstyle/CCstyle';
-/** @jsxImportSource @emotion/react */
+} from 'src/webapp/common/CCstyle/CCstyle';
+import { useHistory } from 'react-router';
+/** srcjsxImportSource srcemotion/react */
 
 interface loginValType {
   email: string;
@@ -26,6 +27,9 @@ const LoginPage = () => {
   });
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loginInfo, setLoginInfo] = useRecoilState<ILoginType>(loginState);
+
+  const history = useHistory();
+
   // const apiLoginCall = useRecoilValue(apiLogin(loginInfo));
   // console.log(apiLoginCall);
   const handleClick = (
@@ -71,6 +75,16 @@ const LoginPage = () => {
               backgroundColor={''}
               isWhite
               handleClick={handleClick}
+            />
+            <ColoredButton
+              disabled={disabled}
+              btnLabel={'회원가입하기'}
+              color={''}
+              backgroundColor={''}
+              isWhite
+              handleClick={() => {
+                history.push('/member/signup');
+              }}
             />
           </div>
         </div>
