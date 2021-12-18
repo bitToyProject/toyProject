@@ -1,19 +1,18 @@
-import { InputModule } from 'src/webapp/common';
-import React, { useState, ChangeEvent, MouseEvent } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { InputModule } from "src/webapp/common";
+import React, { useState, ChangeEvent, MouseEvent } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   apiLogin,
   ILoginType,
   IResStatus,
   loginState,
-} from 'src/webapp/recoil/login/login';
-import { ColoredButton } from 'src/webapp/container';
-import { css } from '@emotion/react';
+} from "src/webapp/recoil/login/login";
+import { ColoredButton } from "src/webapp/container";
+import { css } from "@emotion/react";
 import {
   COLOR_WHITE,
   DEFAULT_BACKGROUND,
-} from 'src/webapp/common/CCstyle/CCstyle';
-import { useHistory } from 'react-router';
+} from "src/webapp/common/CCstyle/CCstyle";
 /** srcjsxImportSource srcemotion/react */
 
 interface loginValType {
@@ -22,13 +21,11 @@ interface loginValType {
 }
 const LoginPage = () => {
   const [loginVal, setLoginVal] = useState<loginValType>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loginInfo, setLoginInfo] = useRecoilState<ILoginType>(loginState);
-
-  const history = useHistory();
 
   // const apiLoginCall = useRecoilValue(apiLogin(loginInfo));
   // console.log(apiLoginCall);
@@ -40,17 +37,43 @@ const LoginPage = () => {
     setLoginInfo(loginVal);
   };
 
-  console.log('loginVal', loginVal);
+  console.log("loginVal", loginVal);
   return (
     <>
+      <div className="h-screen grid grid-cols-3">
+        <div className="col-span-2 bg-orange-300">
+          <h1 className="justify-center text-center font-bold py-60">Bora</h1>
+        </div>
+        <div className="">
+          <form className="jtext-center py-60">
+            <h1 className="text-center">로그인</h1>
+            <div className="">
+              <label className="mb-1 text-xs tracking-wide text-gray-600">
+                이메일:
+              </label>
+              <input className="text-sm pr-4 w-full py-2 focus:outline-none focus:border-blue-400" />
+            </div>
+            <div>
+              <label className="mb-1 text-xs tracking-wide text-gray-600">
+                비밀번호:
+              </label>
+              <input className="text-sm placeholder-gray-500 pl-10 pr-4 w-full py-2 focus:outline-none focus:border-blue-400" />
+            </div>
+            <button className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">
+              로그인
+            </button>
+          </form>
+          <p className="">회원가입</p>
+        </div>
+      </div>
       <div css={cssWrapper}>
         <div className="inline-block-box">
           <label>이메일</label>
           <div>
             <InputModule
-              type={'text'}
+              type={"text"}
               disabled={false}
-              placeholder={'Email'}
+              placeholder={"Email"}
               onChange={(value: string) =>
                 setLoginVal({ ...loginVal, email: value })
               }
@@ -59,9 +82,9 @@ const LoginPage = () => {
           <label>비밀번호</label>
           <div>
             <InputModule
-              type={'password'}
+              type={"password"}
               disabled={false}
-              placeholder={'Password'}
+              placeholder={"Password"}
               onChange={(value: string) =>
                 setLoginVal({ ...loginVal, password: value })
               }
@@ -70,21 +93,19 @@ const LoginPage = () => {
           <div className="btn-box">
             <ColoredButton
               disabled={disabled}
-              btnLabel={'로그인하기'}
-              color={''}
-              backgroundColor={''}
+              btnLabel={"로그인하기"}
+              color={""}
+              backgroundColor={""}
               isWhite
               handleClick={handleClick}
             />
             <ColoredButton
               disabled={disabled}
-              btnLabel={'회원가입하기'}
-              color={''}
-              backgroundColor={''}
+              btnLabel={"회원가입하기"}
+              color={""}
+              backgroundColor={""}
               isWhite
-              handleClick={() => {
-                history.push('/member/signup');
-              }}
+              handleClick={() => {}}
             />
           </div>
         </div>

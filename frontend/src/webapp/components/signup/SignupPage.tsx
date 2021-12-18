@@ -1,15 +1,14 @@
-import { InputModule } from 'src/webapp/common';
-import { COLOR_WHITE } from 'src/webapp/common/CCstyle/CCstyle';
-import { checkNull } from 'src/webapp/config/regExp/RegExp';
-import { ColoredButton } from 'src/webapp/container';
-import { signupState } from 'src/webapp/recoil/atom';
-import { signupSelector } from 'src/webapp/recoil/seletors';
-import { ISignupType } from 'src/webapp/recoil/types';
-import { css } from '@emotion/react';
+import { InputModule } from "src/webapp/common";
+import { COLOR_WHITE } from "src/webapp/common/CCstyle/CCstyle";
+import { checkNull } from "src/webapp/config/regExp/RegExp";
+import { ColoredButton } from "src/webapp/container";
+import { signupState } from "src/webapp/recoil/atom";
+import { signupSelector } from "src/webapp/recoil/seletors";
+import { ISignupType } from "src/webapp/recoil/types";
+import { css } from "@emotion/react";
 /** srcjsxImportSource srcemotion/react */
-import React, { MouseEvent, useState, useCallback, useEffect } from 'react';
-import { useHistory } from 'react-router';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React, { MouseEvent, useState, useCallback, useEffect } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 interface signupValType {
   username: string;
@@ -23,12 +22,12 @@ interface signupValType {
 
 const SignupPage = () => {
   const [signupVal, setSignupVal] = useState<signupValType>({
-    username: '',
-    password: '',
-    nickName: '',
-    phoneNum: '',
-    firstName: '',
-    lastName: '',
+    username: "",
+    password: "",
+    nickName: "",
+    phoneNum: "",
+    firstName: "",
+    lastName: "",
     gender: 0,
   });
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -61,27 +60,27 @@ const SignupPage = () => {
       >
         <label>이메일</label>
         <InputModule
-          type={'text'}
+          type={"text"}
           disabled={false}
-          placeholder={'Email'}
+          placeholder={"Email"}
           onChange={(value: string) =>
             setSignupVal({ ...signupVal, username: value })
           }
         />
         <label>닉네임</label>
         <InputModule
-          type={'nickName'}
+          type={"nickName"}
           disabled={false}
-          placeholder={'nickName'}
+          placeholder={"nickName"}
           onChange={(value: string) =>
             setSignupVal({ ...signupVal, nickName: value })
           }
         />
         <label>비밀번호</label>
         <InputModule
-          type={'password'}
+          type={"password"}
           disabled={false}
-          placeholder={'Password'}
+          placeholder={"Password"}
           onChange={(value: string) =>
             setSignupVal({ ...signupVal, password: value })
           }
@@ -89,27 +88,27 @@ const SignupPage = () => {
 
         <label>핸드폰 번호</label>
         <InputModule
-          type={'phoneNum'}
+          type={"phoneNum"}
           disabled={false}
-          placeholder={'phoneNum'}
+          placeholder={"phoneNum"}
           onChange={(value: string) =>
             setSignupVal({ ...signupVal, phoneNum: value })
           }
         />
         <label>성</label>
         <InputModule
-          type={'lastName'}
+          type={"lastName"}
           disabled={false}
-          placeholder={'lastName'}
+          placeholder={"lastName"}
           onChange={(value: string) =>
             setSignupVal({ ...signupVal, lastName: value })
           }
         />
         <label>이름</label>
         <InputModule
-          type={'firstName'}
+          type={"firstName"}
           disabled={false}
-          placeholder={'firstName'}
+          placeholder={"firstName"}
           onChange={(value: string) =>
             setSignupVal({ ...signupVal, firstName: value })
           }
@@ -118,9 +117,9 @@ const SignupPage = () => {
 
         <ColoredButton
           disabled={disabled}
-          btnLabel={'회원가입'}
-          color={''}
-          backgroundColor={''}
+          btnLabel={"회원가입"}
+          color={""}
+          backgroundColor={""}
           isWhite
           handleClick={handleClick}
         />
