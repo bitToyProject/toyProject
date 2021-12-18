@@ -2,14 +2,18 @@ package kr.bora.api.todo.service;
 
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.todo.dto.PageRequestDto;
+import kr.bora.api.todo.dto.PageResultDto;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.function.Function;
 
 @Log4j2
 @Service
@@ -19,11 +23,19 @@ public class TodoServiceImpl implements TodoService {
     private final TodoRepository repository;
     private final SubTaskRepository subTaskRepository;
 
-
     @Override
-    public List<Todo> getList() {
+    public PageResultDto getList(PageRequestDto pageRequestDto) {
 
-        return repository.getList();
+        Function<Object[], TodoDto> fn = (arr -> entityTodoDto(
+                (Todo) arr[0]));
+        Page<Object[]> result = repository.searchPage(
+                pageRequestDto.getType(),
+                pageRequestDto.getKeyword(),
+                pageRequestDto.getPageable(Sort.by("todoId").descending())
+        );
+
+
+        return new PageResultDto(result, fn);
     }
 
     @Override

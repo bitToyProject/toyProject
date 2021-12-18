@@ -7,8 +7,10 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.bora.api.todo.domain.QTodo;
 import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.todo.dto.SearchCondition;
 import kr.bora.api.user.domain.QUser;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -23,32 +25,38 @@ import java.util.stream.Collectors;
 
 @Log4j2
 public class SearchTodoRepositoryImpl extends QuerydslRepositorySupport implements SearchTodoRepository {
-
+//
+//    public final JPAQueryFactory queryFactory;
     public SearchTodoRepositoryImpl() {
         super(Todo.class);
     }
+//
+//    @Override
+//    public Todo search() {
+//        log.info("이게 서치인가");
+//
+//        QTodo todo = QTodo.todo;
+//        QUser user = QUser.user;
+//
+//        JPQLQuery<Todo> jpqlQuery = from(todo);
+//        jpqlQuery.leftJoin(user).on(todo.user.eq(user));
+//
+//        JPQLQuery<Tuple> tuple = jpqlQuery.select(todo, user.nickName, user.username);
+//        tuple.groupBy(todo);
+//
+//        log.info("======================");
+//        log.info(tuple);
+//        log.info("======================");
+//
+//        List<Tuple> result = tuple.fetch();
+//
+//        log.info(result);
+//
+//        return null;
+//    }
 
     @Override
-    public Todo search() {
-        log.info("이게 서치인가");
-
-        QTodo todo = QTodo.todo;
-        QUser user = QUser.user;
-
-        JPQLQuery<Todo> jpqlQuery = from(todo);
-        jpqlQuery.leftJoin(user).on(todo.user.eq(user));
-
-        JPQLQuery<Tuple> tuple = jpqlQuery.select(todo, user.nickName, user.username);
-        tuple.groupBy(todo);
-
-        log.info("======================");
-        log.info(tuple);
-        log.info("======================");
-
-        List<Tuple> result = tuple.fetch();
-
-        log.info(result);
-
+    public List<Todo> search(SearchCondition searchCondition) {
         return null;
     }
 

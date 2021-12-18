@@ -2,6 +2,7 @@ package kr.bora.api.common.aop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Log4j2
 public class ParameterAOP {
-    ObjectMapper objectMapper = new ObjectMapper();
 
     @Pointcut("execution(* kr.bora.api.*.controller..*.*(..))")
     private void cut() {
@@ -24,10 +24,10 @@ public class ParameterAOP {
     //파라미터 입력 값
     @Before("cut()")
     public void before(JoinPoint joinPoint) throws JsonProcessingException {
-        Object [] args = joinPoint.getArgs();
+        Object[] args = joinPoint.getArgs();
         for (Object obj : args) {
             log.info("type : " + obj.getClass().getSimpleName());
-            log.info("value : " + objectMapper.writeValueAsString(obj) );
+        log.info("value : " + new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(obj));
         }
     }
 
@@ -35,7 +35,7 @@ public class ParameterAOP {
     @AfterReturning(value = "cut()", returning = "returnObj")
     public void afterReturn(Object returnObj) throws JsonProcessingException {
         log.info("return obj");
-        log.info(objectMapper.writeValueAsString(returnObj));
+        log.info(new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(returnObj));
     }
 }
 
