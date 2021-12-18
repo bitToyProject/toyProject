@@ -1,11 +1,11 @@
-import { SignupPage } from '@/webapp/components';
+import { SignupPage } from 'src/webapp/components';
 
 const SignupApp = () => {
-    return (
-        <>
-            <SignupPage />
-        </>
-    );
+  return (
+    <>
+      <SignupPage />
+    </>
+  );
 };
 
 export default SignupApp;

@@ -1,12 +1,12 @@
-import { InputModule } from '@/webapp/common';
-import { COLOR_WHITE } from '@/webapp/common/CCstyle/CCstyle';
-import { checkNull } from '@/webapp/config/regExp/RegExp';
-import { ColoredButton } from '@/webapp/container';
-import { signupState } from '@/webapp/recoil/atom';
-import { signupSelector } from '@/webapp/recoil/seletors';
-import { ISignupType } from '@/webapp/recoil/types';
+import { InputModule } from 'src/webapp/common';
+import { COLOR_WHITE } from 'src/webapp/common/CCstyle/CCstyle';
+import { checkNull } from 'src/webapp/config/regExp/RegExp';
+import { ColoredButton } from 'src/webapp/container';
+import { signupState } from 'src/webapp/recoil/atom';
+import { signupSelector } from 'src/webapp/recoil/seletors';
+import { ISignupType } from 'src/webapp/recoil/types';
 import { css } from '@emotion/react';
-/** @jsxImportSource @emotion/react */
+/** srcjsxImportSource srcemotion/react */
 import React, { MouseEvent, useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useRecoilState, useRecoilValue } from 'recoil';

@@ -1,8 +1,8 @@
-import { useInput } from "@/webapp/hook/useInput";
-import { css } from "@emotion/react";
+import { useInput } from 'src/webapp/hook/useInput';
+import { css } from '@emotion/react';
 
-import React, { useEffect, useMemo } from "react";
-import { COLOR_BLACK } from "../CCstyle/CCstyle";
+import React, { useEffect, useMemo } from 'react';
+import { COLOR_BLACK } from '../CCstyle/CCstyle';
 interface PropTypes {
   input: {
     type: string;
@@ -13,8 +13,8 @@ interface PropTypes {
     onChange: (value: any) => void;
   };
 }
-const InputModule = (input: PropTypes["input"]) => {
-  const inputValue = useInput("");
+const InputModule = (input: PropTypes['input']) => {
+  const inputValue = useInput('');
 
   useEffect(() => {
     input.onChange(inputValue.value);
