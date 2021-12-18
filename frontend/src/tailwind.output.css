@@ -31,8 +31,15 @@
 3. Use a more readable tab size.
 4. Use the user's configured `sans` font-family by default.
 */
-
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 html {
+  font-size: 14px;
+  overflow-y: scroll;
+
   line-height: 1.5;
   /* 1 */
   -webkit-text-size-adjust: 100%;
@@ -49,8 +56,19 @@ html {
 1. Remove the margin in all browsers.
 2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
 */
+@import '@kfonts/neodgm';
+@font-face {
+  font-family: 'DisposableDroidBB';
+  src: url('./fonts/DisposableDroidBB.otf');
+}
+
+@import url('//cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@1.521/neodgm/style.css');
 
 body {
+  font-size: 14px;
+  font-family: 'DisposableDroidBB', 'NeoDunggeunmo';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   margin: 0;
   /* 1 */
   line-height: inherit;
