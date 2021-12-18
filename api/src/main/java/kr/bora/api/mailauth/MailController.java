@@ -13,7 +13,6 @@ import javax.validation.Valid;
 @RequestMapping("/mail")
 @RequiredArgsConstructor
 @CrossOrigin(origins ="*")
-
 public class MailController {
   @Autowired
   private MailSendService mss;

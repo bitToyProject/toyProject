@@ -21,11 +21,20 @@ public class AuthMail {
     private String authMailKey;
     @Column(name = "auth_mail")
     private String authMail;
+    @Column(name = "auth_status")
+    @Enumerated(value = EnumType.STRING)
+    private AuthStatus authStatus;
+
+    @Getter
+    enum AuthStatus{
+        CHECKED,UNCHECKED
+    }
 
     @Builder
-    public AuthMail(String authMailKey,String authMail){
+    public AuthMail(String authMailKey,String authMail,AuthStatus authStatus){
         this.authMailKey = authMailKey;
         this.authMail = authMail;
+        this.authStatus = authStatus;
     }
 
 

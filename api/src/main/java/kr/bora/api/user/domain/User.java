@@ -1,14 +1,22 @@
 package kr.bora.api.user.domain;
 
+import kr.bora.api.user.domain.reader.MailSender;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.AfterDomainEventPublication;
+import org.springframework.data.domain.DomainEvents;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
 @Entity
 @Table(name="users")
+@Slf4j
 public class User {
 //notnull : username , password , phonenum, fisrnma,lastname,gender
     @Id
@@ -58,5 +66,19 @@ public class User {
 
     public void changePassword(String password) {
         this.password = password;
+    }
+
+    @Transient
+    private MailSender mailSender;
+
+    @DomainEvents
+    public MailSender publishMailEvent(){
+        mailSender = new MailSender(this);
+        return mailSender;
+    }
+
+    @AfterDomainEventPublication
+    public void clearEvent(){
+        log.info("AuthMail Send Success");
     }
 }
