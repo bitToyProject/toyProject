@@ -5,7 +5,7 @@ import {
   checkNull,
   validateEmail,
   validateNumber,
-} from "@/webapp/config/regExp/RegExp";
+} from "src/webapp/config/regExp/RegExp";
 
 export const signupSelector = selectorFamily<IResStatus, Param>({
   key: "auth/signup",

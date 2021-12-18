@@ -1,5 +1,5 @@
-import { setCookies } from "@/webapp/config/cookie/Cookie";
-import { apiPost } from "@/webapp/service/login/Login.service";
+import { setCookies } from "src/webapp/config/cookie/Cookie";
+import { apiPost } from "src/webapp/service/login/Login.service";
 import { atom, selectorFamily } from "recoil";
 
 export interface ILoginType {

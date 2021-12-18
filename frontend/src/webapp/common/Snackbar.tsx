@@ -1,11 +1,11 @@
-/** @jsxImportSource @emotion/react */
+/** srcjsxImportSource srcemotion/react */
 import { css } from '@emotion/react';
 import {
   COLOR_SUCCESS,
   COLOR_FAIL,
   COLOR_WHITE,
-  COLOR_GRAY,
-} from '@/webapp/common/CCstyle/CCstyle';
+  BOX_SHADOW,
+} from 'src/webapp/common/CCstyle/CCstyle';
 
 interface PropTypes {
   snackbar: {
@@ -31,12 +31,12 @@ const Snackbar = (snackbar: PropTypes['snackbar']) => {
           padding: 1rem;
           float: right;
           border-radius: 1rem;
-          box-shadow: 0.5px 0.5px 0.5px 0.5px ${COLOR_GRAY};
+          box-shadow: ${BOX_SHADOW}
           color: ${COLOR_WHITE};
           visibility: ${snackbar.show ? `visible` : `hidden`};
-          background-color: ${snackbar.action
-            ? `${COLOR_SUCCESS}`
-            : `${COLOR_FAIL}`};
+          background-color: ${
+            snackbar.action ? `${COLOR_SUCCESS}` : `${COLOR_FAIL}`
+          };
         `}
       >
         {snackbar.msg}

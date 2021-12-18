@@ -1,2 +1,2 @@
-export { default as InputModule } from "@/webapp/common/input/InputModule";
-export * as CCstyle from "@/webapp/common/CCstyle/CCstyle";
+export { default as InputModule } from "src/webapp/common/input/InputModule";
+export * as CCstyle from "src/webapp/common/CCstyle/CCstyle";

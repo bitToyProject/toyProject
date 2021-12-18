@@ -1,40 +1,40 @@
 @import '@kfonts/neodgm';
 @font-face {
-    font-family: 'DisposableDroidBB';
-    src: url('./fonts/DisposableDroidBB.otf');
+  font-family: 'DisposableDroidBB';
+  src: url('./fonts/DisposableDroidBB.otf');
 }
 
 @import url('//cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@1.521/neodgm/style.css');
 
 body {
-    font-size: 13px;
-    display: block;
-    margin: 3.6rem 0 0;
-    font-family: 'DisposableDroidBB', 'NeoDunggeunmo';
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  display: block;
+  margin: 3.6rem 0 0;
+  font-family: 'DisposableDroidBB', 'NeoDunggeunmo';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 html {
-    overflow-y: scroll;
-    font-size: 13px;
-    /* background-color: hsl(0, 0%, 20%); */
+  overflow-y: scroll;
+  font-size: 14px;
+  /* background-color: hsl(0, 0%, 20%); */
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    font-family: 'DisposableDroidBB', 'NeoDunggeunmo';
+  margin: 0;
+  padding: 0;
+  font-family: 'DisposableDroidBB', 'NeoDunggeunmo';
 }
 
 /* code {

@@ -1,4 +1,4 @@
-import { LoginPage } from "@/webapp/components/index";
+import { LoginPage } from 'src/webapp/components/index';
 
 const LoginApp = () => {
   return (
