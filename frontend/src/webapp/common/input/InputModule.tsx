@@ -1,8 +1,5 @@
 import { useInput } from 'src/webapp/hook/useInput';
-import { css } from '@emotion/react';
-
-import React, { useEffect, useMemo } from 'react';
-import { COLOR_BLACK } from '../CCstyle/CCstyle';
+import { useEffect, useMemo } from 'react';
 interface PropTypes {
   input: {
     type: string;
@@ -23,6 +20,7 @@ const InputModule = (input: PropTypes['input']) => {
   return (
     <>
       <input
+        className="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"
         type={input.type}
         disabled={input.disabled}
         placeholder={input.placeholder}
@@ -33,9 +31,3 @@ const InputModule = (input: PropTypes['input']) => {
 };
 
 export default InputModule;
-
-const cssInput = css`
-  width: 100%;
-  height: 100%;
-  border: 0.5rem solid ${COLOR_BLACK};
-`;

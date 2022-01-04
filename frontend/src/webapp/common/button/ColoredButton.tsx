@@ -1,43 +1,27 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import React, { MouseEvent } from 'react';
-import { COLOR_BLACK } from '../CCstyle/CCstyle';
+import { MouseEvent } from 'react';
 
 interface PropTypes {
-    btn: {
-        disabled: boolean;
-        btnLabel: string;
-        color: string;
-        backgroundColor: string;
-        isWhite: boolean;
-        handleClick: (
-            e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>
-        ) => void;
-    };
+  btn: {
+    disabled: boolean;
+    btnLabel: string;
+    color: string;
+    backgroundColor: string;
+    isWhite: boolean;
+    handleClick: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+  };
 }
 const ColoredButton = (btn: PropTypes['btn']) => {
-    return (
-        <>
-            <button
-                disabled={btn.disabled}
-                onClick={(e) => btn.handleClick(e)}
-                css={css`
-                    width: 100%;
-                    height: 100%;
-                    color: ${btn.isWhite ? `${COLOR_BLACK}` : btn.color};
-                    border: ${btn.isWhite
-                        ? `0.15rem solid ${COLOR_BLACK} `
-                        : 0};
-                    border-radius: 10px;
-                    background-color: ${btn.isWhite
-                        ? ' #fffff'
-                        : btn.backgroundColor};
-                `}
-            >
-                {btn.btnLabel}
-            </button>
-        </>
-    );
+  return (
+    <>
+      <button
+        className="w-full inline-flex items-center justify-center px-4 py-2 bg-indigo-400 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-indigo-600 active:bg-indigo-600 focus:outline-none focus:bg-indigo-700 focus:ring focus:bg-indigo-200 disabled:opacity-25 transition"
+        disabled={btn.disabled}
+        onClick={(e) => btn.handleClick(e)}
+      >
+        {btn.btnLabel}
+      </button>
+    </>
+  );
 };
 
 export default ColoredButton;

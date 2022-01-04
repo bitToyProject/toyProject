@@ -46,6 +46,24 @@ export const signupSelector = selectorFamily<IResStatus, Param>({
   },
 });
 
+export const emailCheckSelector = selectorFamily<IResStatus, Param>({
+  key : "auth/check",
+  get : (data: ISignupType) => async () => {
+
+    console.log(data);
+
+    try {
+      // const response = await apiPost("/auth/check", data);
+      // console.log("data", data);
+      // if (response.status === 200) {
+      //   return response.data;
+      // }
+    } catch (e: any) {
+      return e.response.data;
+    }
+  } 
+})
+
 export const editorSelector = selectorFamily<any, any>({
   key: "editor",
   get: (data: IEditorType) => async () => {
