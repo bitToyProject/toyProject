@@ -1,5 +1,7 @@
 package kr.bora.api.todo.dto;
 
+import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.UserRequestDto;
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -44,6 +46,8 @@ public class TodoDto {
         this.modDate = modDate;
     }
 
-
+    public Todo saveId(TodoDto dto) {
+        return Todo.builder().todoId(dto.todoId).build();
+    }
 
 }

@@ -5,25 +5,25 @@ import kr.bora.api.subtask.dto.SubTaskDto;
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class SubTaskServiceImpl implements SubTaskService {
 
     private final SubTaskRepository subTaskRepository;
 
-    @Transactional
     @Override
     public Long save(SubTaskDto subTaskDto) {
 
-        SubTask subTaskSave = dtoToEntity(subTaskDto);
+        SubTask subTask = dtoToEntity(subTaskDto);
 
-        subTaskRepository.save(subTaskSave);
+        subTaskRepository.save(subTask);
 
         return subTaskDto.getSubTaskId();
     }
@@ -42,9 +42,14 @@ public class SubTaskServiceImpl implements SubTaskService {
         subTaskRepository.deleteById(subTaskId);
     }
 
+    @Transactional
     @Override
-    public void modify(SubTaskDto subTaskDto) {
-        SubTask subTask = dtoToEntity(subTaskDto);
+    public void modify(Long subTaskId, SubTaskDto subTaskDto) {
+        SubTask subTask = subTaskRepository.getById(subTaskId);
+        subTask.changeTitle(subTaskDto.getTitle());
+        subTask.changeStart(subTaskDto.getStart());
+        subTask.changeEnd(subTaskDto.getEnd());
+        subTask.changeAssignee(subTaskDto.getAssignee());
 
         subTaskRepository.save(subTask);
     }

@@ -1,6 +1,8 @@
 package kr.bora.api.subtask.dto;
 
 import kr.bora.api.subtask.domain.SubTask;
+import kr.bora.api.todo.dto.TodoDto;
+import kr.bora.api.user.dto.UserRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,9 +17,9 @@ public class SubTaskDto {
 
     private Long subTaskId;
 
-    private Long todoId;
+    private UserRequestDto userId;
 
-    private Long userId;
+    private TodoDto todoId;
 
     private String title;
 
@@ -31,14 +33,16 @@ public class SubTaskDto {
     private LocalDateTime modDate;
 
     @Builder
-    public SubTaskDto(Long subTaskId, Long todoId, Long userId, String title, String start, String end, String assignee) {
+
+    public SubTaskDto(Long subTaskId, UserRequestDto userId, TodoDto todoId, String title, String start, String end, String assignee, LocalDateTime regDate, LocalDateTime modDate) {
         this.subTaskId = subTaskId;
-        this.todoId = todoId;
         this.userId = userId;
+        this.todoId = todoId;
         this.title = title;
         this.start = start;
         this.end = end;
         this.assignee = assignee;
+        this.regDate = regDate;
+        this.modDate = modDate;
     }
-
 }

@@ -3,7 +3,10 @@ package kr.bora.api.todo.controller;
 //import kr.bora.api.common.response.CommonResponse;
 //import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.todo.dto.PageRequestDto;
+import kr.bora.api.todo.dto.PageResultDto;
 import kr.bora.api.todo.dto.TodoDto;
+import kr.bora.api.todo.service.TodoService;
 import kr.bora.api.todo.service.TodoServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,12 +24,11 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class TodoController {
 
-    private final TodoServiceImpl service;
+    private final TodoService service;
 
-    @GetMapping("/list")
-    public ResponseEntity<List<Todo>> todoList() {
-
-        return ResponseEntity.ok(service.getList());
+    @GetMapping("/list/pages")
+    public ResponseEntity<PageResultDto<TodoDto, Object[]>> todoList(PageRequestDto pageRequestDto) {
+        return ResponseEntity.ok(service.getList(pageRequestDto));
     }
 
     @PostMapping("/save")

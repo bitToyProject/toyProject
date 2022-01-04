@@ -1,7 +1,9 @@
 package kr.bora.api.subtask.controller;
 
 import kr.bora.api.subtask.dto.SubTaskDto;
+import kr.bora.api.subtask.service.SubTaskService;
 import kr.bora.api.subtask.service.SubTaskServiceImpl;
+import kr.bora.api.todo.controller.TodoRequestCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -19,15 +21,15 @@ import java.util.Map;
 @RequestMapping("/subtasks")
 public class SubTaskController {
 
-    private final SubTaskServiceImpl service;
+    private final SubTaskService service;
 
     @PostMapping("/save")
-    public ResponseEntity<Map<String, Object>> subTaskSave(SubTaskDto subTaskDto) {
+    public ResponseEntity<Map<String, Object>> subTaskSave(@RequestBody SubTaskRequestCommand.SubTaskRequest subTaskDto) {
 
-        Map<String, Long> result = new HashMap<>();
-        result.put("result", service.save(subTaskDto));
+        Map<String, Object> result = new HashMap<>();
+        result.put("Save Success SubTask", service.save(subTaskDto.toDto()));
 
-        return new ResponseEntity(result, HttpStatus.OK);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/list/{todoId}")
@@ -37,11 +39,11 @@ public class SubTaskController {
     }
 
     @PutMapping("/modify/{subTaskId}")
-    public ResponseEntity<String> subTaskModify(SubTaskDto subTaskDto) {
+    public ResponseEntity<String> subTaskModify(@PathVariable("subTaskId") Long subTaskId, @RequestBody SubTaskDto subTaskDto) {
 
-        service.modify(subTaskDto);
+        service.modify(subTaskId, subTaskDto);
 
-        return ResponseEntity.ok(subTaskDto.getSubTaskId() + "번이 수정되었습니다.");
+        return ResponseEntity.ok(subTaskId + "번이 수정되었습니다.");
     }
 
     @DeleteMapping("/remove/{subTaskId}")

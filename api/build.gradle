@@ -44,6 +44,8 @@ dependencies {
     implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+// https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.0'
 
     implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
     implementation 'org.springframework:spring-context-support:5.3.12'

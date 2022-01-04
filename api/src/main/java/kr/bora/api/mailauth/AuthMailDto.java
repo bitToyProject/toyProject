@@ -1,22 +1,24 @@
 package kr.bora.api.mailauth;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public class AuthMailDto {
 
     private String authMail;
     private String key;
-
     @Builder
+    public AuthMailDto(String authMail,String key){
+        this.authMail = authMail;
+        this.key = key;
+    }
+
     public AuthMail toAuthMail(String authMail, String key){
         return AuthMail.builder()
                 .authMail(authMail)
                 .authMailKey(key)
+                .authStatus(AuthMail.AuthStatus.UNCHECKED)
                 .build();
     }
 }

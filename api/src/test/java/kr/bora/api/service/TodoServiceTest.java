@@ -1,66 +1,33 @@
 package kr.bora.api.service;
 
+import kr.bora.api.todo.dto.PageRequestDto;
+import kr.bora.api.todo.dto.PageResultDto;
+import kr.bora.api.todo.dto.TodoDto;
+import kr.bora.api.todo.service.TodoService;
+import kr.bora.api.user.util.SecurityUtil;
+import lombok.extern.log4j.Log4j;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class TodoServiceTest {
 
-//    @Autowired
-//    private TodoService todoService;
-//
-//    @Test
-//    public void testGetList() {
-//        List<Todo> list = todoService.getList();
-//
-//        System.out.println(list);
-//
-//    }
-//
-//    @Test
-//    public void testGet() {
-//        Long todoId = 10L;
-//
-//        TodoDto todoDto = todoService.get(todoId);
-//
-//        System.out.println(todoDto);
-//    }
-//
-//    @Test
-//    public void testRemove() {
-//        Long todoId = 10L;
-//
-//        todoService.todoRemove(todoId);
-//    }
+    @Autowired
+    private TodoService todoService;
 
-//    @Test
-//    public void testRegister() {
-//        TodoDto dto = TodoDto.builder()
-//                .title("testad;fk;laks")
-//                .description("testasfasfasf")
-//                .start("asfasfas")
-//                .end("dasfasfasf")
-//                .priority(1)
-//                .viewer("tasfasf")
-//                .userId(1L)
-//                .build();
-//        todoService.TodoSave(dto);
-//    }
-//
-//    @Transactional
-//    @Test
-//    @Commit
-//    public void testModify() {
-//        TodoDto dto = TodoDto.builder()
-//                .todoId(36L)
-//                .title("변경")
-//                .description("변경2")
-//                .viewer("변3경")
-//                .priority(2)
-//                .start("23")
-//                .end("2")
-//                .userId(1L)
-//                .build();
-//
-//        todoService.modify(dto);
-//    }
+    @Test
+    public void testGetList() {
+        PageRequestDto pageRequestDto = new PageRequestDto(1, 10, "t", "1");
+
+        PageResultDto<TodoDto, Object[]> result = todoService.getList(pageRequestDto);
+
+        System.out.println(result.getDtoList());
+
+        for (TodoDto todoDto : result.getDtoList()) {
+            System.out.println(todoDto);
+        }
+
+    }
+
 }
