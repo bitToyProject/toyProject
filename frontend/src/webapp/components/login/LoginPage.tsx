@@ -75,7 +75,14 @@ const LoginPage = () => {
             />
           </div>
           <div className="mt-6 text-center">
-            <p className="text-sm">비밀번호 찾기</p>
+            <p
+              className="text-sm"
+              onClick={() => {
+                navigate('/member/findPassword');
+              }}
+            >
+              비밀번호 찾기
+            </p>
             <p
               className="text-sm"
               onClick={() => {
