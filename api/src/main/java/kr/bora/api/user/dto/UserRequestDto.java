@@ -1,19 +1,21 @@
 package kr.bora.api.user.dto;
 
-import kr.bora.api.mailauth.AuthMail;
 import kr.bora.api.user.domain.Authority;
 import kr.bora.api.user.domain.User;
-import lombok.*;
-import org.apache.commons.lang3.StringUtils;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.validation.constraints.*;
-import java.security.InvalidParameterException;
+import javax.validation.constraints.Email;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Log4j2
 public class UserRequestDto {
 
     private Long userId;
@@ -99,6 +101,8 @@ public class UserRequestDto {
 //        this.authority = authority;
 //    }
     public User saveId(UserRequestDto dto) {
+
+        log.info("asdasdsa" + dto.userId);
         return User.builder().userId(dto.userId).build();
     }
 }

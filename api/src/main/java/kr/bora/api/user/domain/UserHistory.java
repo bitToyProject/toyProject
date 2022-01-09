@@ -1,14 +1,15 @@
 package kr.bora.api.user.domain;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@NoArgsConstructor
 @Table(name = "user_history")
-@Builder
+@Entity
+@Getter
+@NoArgsConstructor
 public class UserHistory {
 
     @Id
@@ -40,4 +41,16 @@ public class UserHistory {
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
 
+    @Builder
+    public UserHistory(Long userId, String username, String password, String lastName, String firstName, String nickName, String phoneNum, int gender, Authority authority) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.nickName = nickName;
+        this.phoneNum = phoneNum;
+        this.gender = gender;
+        this.authority = authority;
+    }
 }

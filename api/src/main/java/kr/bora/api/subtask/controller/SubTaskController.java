@@ -2,11 +2,8 @@ package kr.bora.api.subtask.controller;
 
 import kr.bora.api.subtask.dto.SubTaskDto;
 import kr.bora.api.subtask.service.SubTaskService;
-import kr.bora.api.subtask.service.SubTaskServiceImpl;
-import kr.bora.api.todo.controller.TodoRequestCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +20,11 @@ public class SubTaskController {
 
     private final SubTaskService service;
 
-    @PostMapping("/save")
-    public ResponseEntity<Map<String, Object>> subTaskSave(@RequestBody SubTaskRequestCommand.SubTaskRequest subTaskDto) {
+    @PostMapping("/save/{todoId}")
+    public ResponseEntity<Map<String, Object>> subTaskSave(@RequestBody SubTaskRequestCommand.SubTaskRequest subTaskDto, @PathVariable Long todoId) {
 
         Map<String, Object> result = new HashMap<>();
-        result.put("Save Success SubTask", service.save(subTaskDto.toDto()));
+        result.put("Save Success SubTask", service.save(subTaskDto.toDto(todoId), todoId));
 
         return ResponseEntity.ok(result);
     }

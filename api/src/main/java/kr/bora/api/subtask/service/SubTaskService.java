@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface SubTaskService {
 
-    Long save(SubTaskDto subTaskDto);
+    Long save(SubTaskDto subTaskDto, Long TodoId);
 
     void remove(Long subTaskId);
 
@@ -38,7 +38,7 @@ public interface SubTaskService {
                 .start(dto.getStart())
                 .end(dto.getEnd())
                 .assignee(dto.getAssignee())
-                .todo((dto.getTodoId()).saveId(dto.getTodoId()))
+                .todo(Todo.builder().todoId(dto.getTodoId()).build())
                 .user((dto.getUserId()).saveId(dto.getUserId()))
                 .build();
     }
@@ -55,7 +55,7 @@ public interface SubTaskService {
                 .assignee(subTask.getAssignee())
                 .regDate(subTask.getRegDate())
                 .modDate(subTask.getModDate())
-                .todoId(todos.toDto().getTodoId())
+//                .todoId(todos.toDto().getTodoId())
                 .build();
     }
 
