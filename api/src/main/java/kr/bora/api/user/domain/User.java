@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.reader.MailSender;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +24,7 @@ import org.springframework.data.domain.DomainEvents;
 @Table(name="users")
 @Slf4j
 @Audited(withModifiedFlag = true)
-public class User extends BaseEntity {
+public class User{
 //notnull : username , password , phonenum, fisrnma,lastname,gender
     @Id
     @Column(name = "user_id")

@@ -21,7 +21,7 @@ public class AuthMail {
     @Id
     @Column(name = "mail_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mailID;
+    private Long mailId;
     @Column(name = "auth_mail_key")
     private String authMailKey;
     @Column(name = "auth_mail")
