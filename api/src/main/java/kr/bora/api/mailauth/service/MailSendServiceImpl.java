@@ -1,7 +1,6 @@
 package kr.bora.api.mailauth.service;
 
 import javax.mail.MessagingException;
-
 import kr.bora.api.mailauth.MailUtil;
 import kr.bora.api.mailauth.domain.dto.AuthMailDto;
 import kr.bora.api.mailauth.domain.entity.AuthMail;
