@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Log4j2
 @Service
 @RequiredArgsConstructor
@@ -25,10 +26,6 @@ public class SubTaskServiceImpl implements SubTaskService {
     public Long save(SubTaskDto subTaskDto, Long todoId) {
 
         SubTask subTask = dtoToEntity(subTaskDto);
-        Todo todo = todoRepository.findByTodoId(todoId);
-        log.info(subTask);
-        log.info(todo);
-
         subTaskRepository.save(subTask);
 
         return subTaskDto.getSubTaskId();
@@ -36,16 +33,9 @@ public class SubTaskServiceImpl implements SubTaskService {
 
     @Override
     public List<SubTaskDto> getList(Long todoId) {
-
         List<SubTask> result = subTaskRepository.getSubTasksByTodoOrderByRegDate(Todo.builder().todoId(todoId).build());
 
         return result.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public void remove(Long subTaskId) {
-
-        subTaskRepository.deleteById(subTaskId);
     }
 
     @Transactional
@@ -59,5 +49,12 @@ public class SubTaskServiceImpl implements SubTaskService {
 
         subTaskRepository.save(subTask);
     }
+
+    @Override
+    public void remove(Long subTaskId) {
+
+        subTaskRepository.deleteById(subTaskId);
+    }
+
 
 }
