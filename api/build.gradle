@@ -51,6 +51,7 @@ dependencies {
     implementation 'org.springframework:spring-context-support:5.3.12'
     implementation 'org.springframework.data:spring-data-commons:2.6.0'
     implementation 'com.querydsl:querydsl-jpa'
+    implementation 'org.springframework.data:spring-data-envers'
 }
 
 test {

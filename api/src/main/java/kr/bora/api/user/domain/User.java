@@ -1,10 +1,12 @@
 package kr.bora.api.user.domain;
 
+import kr.bora.api.common.domain.AbstractEntity;
 import kr.bora.api.user.domain.reader.MailSender;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.envers.Audited;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,7 +19,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="users")
 @Slf4j
-public class User {
+@Audited(withModifiedFlag = true)
+public class User extends AbstractEntity {
 //notnull : username , password , phonenum, fisrnma,lastname,gender
     @Id
     @Column(name = "user_id")
