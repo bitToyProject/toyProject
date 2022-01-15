@@ -1,4 +1,4 @@
-package kr.bora.api.mailauth;
+package kr.bora.api.mailauth.domain.entity;
 
 import kr.bora.api.user.domain.User;
 import lombok.Builder;

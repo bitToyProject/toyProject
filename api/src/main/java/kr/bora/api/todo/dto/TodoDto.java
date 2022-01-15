@@ -32,6 +32,8 @@ public class TodoDto {
 
     private int priority;
 
+
+
     private LocalDateTime regDate;
     private LocalDateTime modDate;
 

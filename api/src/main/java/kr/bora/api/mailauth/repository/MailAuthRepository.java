@@ -1,5 +1,6 @@
-package kr.bora.api.mailauth;
+package kr.bora.api.mailauth.repository;
 
+import kr.bora.api.mailauth.domain.entity.AuthMail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

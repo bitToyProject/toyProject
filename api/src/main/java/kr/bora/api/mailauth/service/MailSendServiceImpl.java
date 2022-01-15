@@ -1,15 +1,13 @@
-package kr.bora.api.mailauth;
+package kr.bora.api.mailauth.service;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Random;
 import javax.mail.MessagingException;
 
-import kr.bora.api.user.dto.UserRequestDto;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import kr.bora.api.mailauth.MailUtil;
+import kr.bora.api.mailauth.domain.dto.AuthMailDto;
+import kr.bora.api.mailauth.domain.entity.AuthMail;
+import kr.bora.api.mailauth.repository.MailAuthRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class MailSendService{
+public class MailSendServiceImpl implements MailSendService{
 
   private final MailAuthRepository repository;
   private final JavaMailSender mailSender;
@@ -35,6 +33,7 @@ public class MailSendService{
 //    buffer.append(num);
 //    return buffer.toString();
 //  }
+  @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW)
   public void sendAuthMail(AuthMailDto authMailDto){
 //    String authKey = getAuthCode();
@@ -60,6 +59,7 @@ public class MailSendService{
     repository.save(authMail);
   }
 
+  @Override
   public boolean checkMailAuthKey(AuthMailDto authMailDto) {
     log.info(authMailDto.getAuthMail());
 

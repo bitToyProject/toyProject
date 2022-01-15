@@ -1,12 +1,10 @@
 package kr.bora.api.user.domain.reader;
 
-import kr.bora.api.mailauth.AuthMailDto;
-import kr.bora.api.mailauth.MailSendService;
+import kr.bora.api.mailauth.domain.dto.AuthMailDto;
+import kr.bora.api.mailauth.service.MailSendServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
 
@@ -14,7 +12,7 @@ import java.util.Random;
 @Service
 public class UserAuthMailSendEvent {
 
-    private final MailSendService mailSendService;
+    private final MailSendServiceImpl mailSendService;
 
     private String getAuthCode(){
         Random random = new Random();

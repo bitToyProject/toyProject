@@ -12,14 +12,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
     private final TodoRepository todoRepository;
-    private final UserHistoryFactory userHistoryFactory;
 
     public UserResponseDto getUserInfo(String email) {
         return repository.findByusername(email)
@@ -55,7 +56,6 @@ public class UserServiceImpl implements UserService {
     public CommonResponse<UserResponseDto> deleteUser(UserRequestDto dto) {
         User user = dto.toUserEntity(dto);
         deleteUserRelate(dto);
-        userHistoryFactory.storeHistory(user);
         try {
             repository.deleteById(user.getUserId());
         } catch (Exception e) {
@@ -63,7 +63,6 @@ public class UserServiceImpl implements UserService {
             return CommonResponse.fail(Status.JPACONDUCTERROR);
         }
         return CommonResponse.success();
-
     }
 
 

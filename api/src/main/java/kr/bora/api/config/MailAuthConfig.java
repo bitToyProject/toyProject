@@ -1,4 +1,4 @@
-package kr.bora.api.mailauth;
+package kr.bora.api.config;
 
 import java.util.Properties;
 import org.springframework.context.annotation.Bean;

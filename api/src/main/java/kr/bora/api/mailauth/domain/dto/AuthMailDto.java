@@ -1,5 +1,6 @@
-package kr.bora.api.mailauth;
+package kr.bora.api.mailauth.domain.dto;
 
+import kr.bora.api.mailauth.domain.entity.AuthMail;
 import lombok.*;
 
 @RequiredArgsConstructor
