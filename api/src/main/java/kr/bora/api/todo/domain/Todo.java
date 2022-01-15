@@ -1,7 +1,10 @@
 package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
+import kr.bora.api.todo.dto.TodoDto;
+import kr.bora.api.todo.dto.TodoRespondDto;
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.UserRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -72,5 +75,20 @@ public class Todo extends BaseEntity {
     public void changePriority(int priority) {
         this.priority = priority;
     }
+
+    public TodoRespondDto toDtoRespond(Todo todo){
+        return TodoRespondDto.builder()
+            .todoId(todo.getTodoId())
+            .title(todo.getTitle())
+            .start(todo.start)
+            .end(todo.end)
+            .description(todo.getDescription())
+            .viewer(todo.getViewer())
+            .priority(todo.getPriority())
+            .user(todo.getUser().getUserId())
+            .build();
+    }
+
+
 
 }
