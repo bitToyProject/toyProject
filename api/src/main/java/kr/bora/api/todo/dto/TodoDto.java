@@ -1,6 +1,5 @@
 package kr.bora.api.todo.dto;
 
-import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.dto.UserRequestDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,13 +31,14 @@ public class TodoDto {
 
     private int priority;
 
+    private UserRequestDto username;
 
 
     private LocalDateTime regDate;
     private LocalDateTime modDate;
 
     @Builder
-    public TodoDto(Long todoId, UserRequestDto userId, String title, String start, String end, String description, String viewer, int priority, LocalDateTime regDate, LocalDateTime modDate) {
+    public TodoDto(Long todoId, UserRequestDto userId, String title, String start, String end, String description, String viewer, int priority, UserRequestDto username, LocalDateTime regDate, LocalDateTime modDate) {
         this.todoId = todoId;
         this.userId = userId;
         this.title = title;
@@ -47,14 +47,9 @@ public class TodoDto {
         this.description = description;
         this.viewer = viewer;
         this.priority = priority;
+        this.username = username;
         this.regDate = regDate;
         this.modDate = modDate;
-    }
-
-
-    public Todo saveId(TodoDto dto) {
-        log.info("asdasdsa" + dto.todoId);
-        return Todo.builder().todoId(dto.todoId).build();
     }
 
 }

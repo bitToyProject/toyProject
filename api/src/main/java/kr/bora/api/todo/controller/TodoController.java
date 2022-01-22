@@ -32,7 +32,8 @@ public class TodoController {
     @PostMapping("/save")
     public ResponseEntity<Map<String, Object>> todoSave(@RequestBody TodoRequestCommand.TodoRequest todoDto) {
         Map<String, Object> obj = new HashMap<>();
-        obj.put("Save Success Todo", service.save(todoDto.toDto()));
+        obj.put("Save Success Todo", todoDto.toDto().getUserId().getUserId() + "번 유저가 todo를 등록");
+        service.save(todoDto.toDto());
         return ResponseEntity.ok(obj);
     }
 

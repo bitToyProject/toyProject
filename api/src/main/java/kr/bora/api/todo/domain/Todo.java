@@ -1,14 +1,13 @@
 package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
-import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.TodoRespondDto;
 import kr.bora.api.user.domain.User;
-import kr.bora.api.user.dto.UserRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -17,6 +16,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @ToString(exclude = {"user"})
+@Audited(withModifiedFlag=true)
 public class Todo extends BaseEntity {
 
     @Id
@@ -52,6 +52,7 @@ public class Todo extends BaseEntity {
         this.user = user;
     }
 
+    // == Todo 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
         this.title = title;
     }

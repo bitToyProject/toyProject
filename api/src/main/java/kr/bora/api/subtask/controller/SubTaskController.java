@@ -24,8 +24,8 @@ public class SubTaskController {
     public ResponseEntity<Map<String, Object>> subTaskSave(@RequestBody SubTaskRequestCommand.SubTaskRequest subTaskDto, @PathVariable Long todoId) {
 
         Map<String, Object> result = new HashMap<>();
-        result.put("Save Success SubTask", service.save(subTaskDto.toDto(todoId), todoId));
-
+        result.put("Save Success SubTask", subTaskDto.toDto(todoId).getTodoId() + "번 Todo의 Subtask가 등록되었습니다.");
+        service.save(subTaskDto.toDto(todoId), todoId);
         return ResponseEntity.ok(result);
     }
 
@@ -40,13 +40,13 @@ public class SubTaskController {
 
         service.modify(subTaskId, subTaskDto);
 
-        return ResponseEntity.ok(subTaskId + "번이 수정되었습니다.");
+        return ResponseEntity.ok(subTaskId + "번 SubTask가 수정되었습니다.");
     }
 
     @DeleteMapping("/remove/{subTaskId}")
     public ResponseEntity<String> subTaskRemove(@PathVariable("subTaskId") Long subTaskId) {
         service.remove(subTaskId);
 
-        return ResponseEntity.ok("SubTask가 성공적으로 삭제되었습니다.");
+        return ResponseEntity.ok(subTaskId + "번 SubTask가 성공적으로 삭제되었습니다.");
     }
 }
