@@ -1,8 +1,6 @@
 package kr.bora.api.user.controller;
 
 import kr.bora.api.common.response.CommonResponse;
-import kr.bora.api.common.response.Status;
-import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserServiceImpl userServiceImpl;
-
 
 
     @GetMapping("/me")

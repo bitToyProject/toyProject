@@ -14,7 +14,7 @@ public interface SubTaskRepository extends JpaRepository<SubTask, Long> {
     @Query("select a from SubTask a order by a.subTaskId desc")
     List<SubTask> subTaskFindAll();
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("delete from SubTask sb where sb.todo.todoId = :todoId")
     void subTaskDelete(@Param("todoId") Long todoId);
 

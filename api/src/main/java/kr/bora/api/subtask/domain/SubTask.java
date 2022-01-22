@@ -3,7 +3,11 @@ package kr.bora.api.subtask.domain;
 import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -12,6 +16,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @ToString(exclude = "todo")
+@Audited(withModifiedFlag = true)
 public class SubTask extends BaseEntity {
 
     @Id
@@ -46,6 +51,7 @@ public class SubTask extends BaseEntity {
         this.user = user;
     }
 
+    // == Subtask 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
         this.title = title;
     }
