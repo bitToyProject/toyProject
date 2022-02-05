@@ -1,14 +1,10 @@
 import { InputModule } from 'src/webapp/common';
 import React, { useState, ChangeEvent, MouseEvent } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  apiLogin,
-  ILoginType,
-  IResStatus,
-  loginState,
-} from 'src/webapp/recoil/login/login';
 import { ColoredButton } from 'src/webapp/container';
 import { useNavigate } from 'react-router';
+import { ILoginType } from 'src/webapp/types/loginTypes';
+import { loginState } from 'src/webapp/recoil/login/atoms';
 
 interface loginValType {
   email: string;
