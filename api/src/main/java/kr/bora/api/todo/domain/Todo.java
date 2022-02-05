@@ -3,10 +3,7 @@ package kr.bora.api.todo.domain;
 import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.todo.dto.TodoRespondDto;
 import kr.bora.api.user.domain.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -14,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "todos")
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(exclude = {"user"})
 @Audited(withModifiedFlag=true)
 public class Todo extends BaseEntity {

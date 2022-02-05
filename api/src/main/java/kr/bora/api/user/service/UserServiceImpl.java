@@ -42,6 +42,8 @@ public class UserServiceImpl implements UserService {
 
         user.changePassword(passwordEncoder.encode(userRequestDto.getPassword()));
 
+        user.changeNickname(userRequestDto.getNickName());
+
         repository.save(user);
 
         UserRequestDto dtoEntity = entityDto(user, passwordEncoder);

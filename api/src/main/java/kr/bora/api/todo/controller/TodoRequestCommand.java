@@ -21,11 +21,14 @@ public class TodoRequestCommand {
         private String description;
         private String viewer;
         private int priority;
+        private String username;
 
         public TodoDto toDto() {
             Long userId = SecurityUtil.getCurrentUserId();
+
             return TodoDto.builder()
                     .userId(UserRequestDto.builder().userId(userId).build())
+                    .username(UserRequestDto.builder().username(username).build())
                     .title(title)
                     .start(start)
                     .end(end)

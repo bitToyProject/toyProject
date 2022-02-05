@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class SubTaskServiceImpl implements SubTaskService {
 
