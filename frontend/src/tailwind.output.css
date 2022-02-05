@@ -442,6 +442,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   position: fixed;
 }
 
+.relative {
+  position: relative;
+}
+
 .z-30 {
   z-index: 30;
 }
@@ -473,6 +477,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mt-6 {
   margin-top: 1.5rem;
+}
+
+.ml-3 {
+  margin-left: 0.75rem;
 }
 
 .block {
@@ -515,6 +523,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   min-height: 100vh;
 }
 
+.min-h-0 {
+  min-height: 0px;
+}
+
 .w-16 {
   width: 4rem;
 }
@@ -539,6 +551,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   max-width: 28rem;
 }
 
+.flex-1 {
+  flex: 1 1 0%;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -559,8 +575,30 @@ Ensure the default browser behavior of the `hidden` attribute.
   justify-content: space-between;
 }
 
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
+.divide-y > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+}
+
 .self-center {
   align-self: center;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 .whitespace-nowrap {
@@ -581,6 +619,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .border-b {
   border-bottom-width: 1px;
+}
+
+.border-r {
+  border-right-width: 1px;
 }
 
 .p-5 {
@@ -614,6 +656,22 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pt-6 {
   padding-top: 1.5rem;
+}
+
+.pt-0 {
+  padding-top: 0px;
+}
+
+.pt-5 {
+  padding-top: 1.25rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
 }
 
 .text-center {
