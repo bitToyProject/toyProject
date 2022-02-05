@@ -1,14 +1,5 @@
 package kr.bora.api.user.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import kr.bora.api.user.domain.reader.MailSender;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.envers.Audited;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
+
+import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
@@ -74,6 +67,11 @@ public class User{
     public void changePassword(String password) {
         this.password = password;
     }
+
+    public void changeNickname(String nickName) {
+        this.nickName = nickName;
+    }
+
 
     @Transient
     private MailSender mailSender;

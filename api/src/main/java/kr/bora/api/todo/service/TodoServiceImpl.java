@@ -17,7 +17,6 @@ import java.util.function.Function;
 
 @Log4j2
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class TodoServiceImpl implements TodoService {
 

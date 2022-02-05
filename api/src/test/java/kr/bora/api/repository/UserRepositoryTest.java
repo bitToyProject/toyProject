@@ -19,7 +19,7 @@ public class UserRepositoryTest {
 
     @Test
     public void insertUser() {
-        IntStream.rangeClosed(1, 100).forEach(i->{
+        IntStream.rangeClosed(1, 10).forEach(i->{
             User user = User.builder()
                     .username("user" + i + "@naver.com")
                     .password(passwordEncoder.encode("woals1212!"))
