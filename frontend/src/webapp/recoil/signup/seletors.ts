@@ -1,44 +1,10 @@
-import { atom, selector, selectorFamily } from "recoil";
+import { selector, selectorFamily } from "recoil";
+import { IResStatus, ISignupType } from "src/webapp/types/signupTypes";
 import { checkNull, validateEmail, validateNumber } from "src/webapp/config/regExp/RegExp";
 import { apiPost } from "src/webapp/service/login/Login.service";
+import { emailState } from "src/webapp/recoil/signup/atoms";
 
-export interface ISignupType {
-  username: string;
-  password: string;
-  nickName: string;
-  phoneNum: string;
-  firstName: string;
-  lastName: string;
-  gender: number;
-}
-
-export interface IResStatus {
-  result: string;
-}
-
-export interface Param extends ISignupType {
-  [key: string]: any;
-}
-
-export const emailState = atom<String>({
-  key: "email",
-  default: ""
-})
-
-export const signupState = atom<ISignupType>({
-  key: "signup",
-  default: {
-    username: "",
-    password: "",
-    nickName: "",
-    phoneNum: "",
-    firstName: "",
-    lastName: "",
-    gender: 0,
-  },
-});
-
-export const signupSelector = selectorFamily<IResStatus, Param>({
+export const signupSelector = selectorFamily<IResStatus, ISignupType>({
   key: "auth/signup",
   get: (data: ISignupType) => async () => {
     console.log("data", data);

@@ -1,5 +1,5 @@
+import { IEditorType } from "src/webapp/types/editorTypes";
 import { selectorFamily } from "recoil";
-import { IEditorType } from "./types";
 
 export const editorSelector = selectorFamily<any, any>({
   key: "editor",

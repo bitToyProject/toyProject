@@ -5,15 +5,15 @@ import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw } from 'draft-js';
 import { COLOR_GRAY } from 'src/webapp/common/CCstyle/CCstyle';
 import { ColoredButton } from 'src/webapp/container';
-import { IEditorType } from 'src/webapp/recoil/types';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { editorSelector } from 'src/webapp/recoil/seletors';
-import { contentsState } from 'src/webapp/recoil/atom';
 import draftToHtml from 'draftjs-to-html';
 import { useFileUpload } from 'src/webapp/hook/useFileUpload';
 import Snackbar from 'src/webapp/common/snackbar/Snackbar';
 import { useSnackbar } from 'src/webapp/hook/useSnackbar';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { IEditorType } from 'src/webapp/types/editorTypes';
+import { contentsState } from 'src/webapp/recoil/editor/atoms';
+import { editorSelector } from 'src/webapp/recoil/editor/selectors';
 
 const TextEditor = () => {
   const [contents, setContents] = useRecoilState<IEditorType>(contentsState);
