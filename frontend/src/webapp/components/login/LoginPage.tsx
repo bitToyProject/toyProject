@@ -1,21 +1,13 @@
 import { InputModule } from "src/webapp/common";
 import React, { useState, ChangeEvent, MouseEvent } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  apiLogin,
-  ILoginType,
-  IResStatus,
-  loginState,
-} from "src/webapp/recoil/login/login";
 import { ColoredButton } from "src/webapp/container";
 import { useNavigate } from "react-router";
+import { ILoginType, ILoginValType } from "src/webapp/types/loginTypes";
+import { loginState } from "src/webapp/recoil/login/atoms";
 
-interface loginValType {
-  username: string;
-  password: string;
-}
 const LoginPage = () => {
-  const [loginVal, setLoginVal] = useState<loginValType>({
+  const [loginVal, setLoginVal] = useState<ILoginValType>({
     username: "",
     password: "",
   });

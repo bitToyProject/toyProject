@@ -2,28 +2,17 @@ import { InputModule } from "src/webapp/common";
 import { ColoredButton } from "src/webapp/container";
 import { MouseEvent, useState, useCallback, useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { emailState, signupState } from "src/webapp/recoil/signup/atoms";
 import {
   emailCheckSelector,
-  emailState,
-  ISignupType,
   signupSelector,
-  signupState,
-} from "src/webapp/recoil/signup/signup";
+} from "src/webapp/recoil/signup/seletors";
+import { ISignupType, ISignupValType } from "src/webapp/types/signupTypes";
 import { useQuery } from "react-query";
-import { useAsyncService } from "src/webapp/hook/useAsyncService";
-
-interface signupValType {
-  username: string;
-  password: string;
-  nickName: string;
-  phoneNum: string;
-  firstName: string;
-  lastName: string;
-  gender: number;
-}
+import { useAxios } from "src/webapp/hook/useAxios";
 
 const SignupPage = () => {
-  const [signupVal, setSignupVal] = useState<signupValType>({
+  const [signupVal, setSignupVal] = useState<ISignupValType>({
     username: "",
     password: "",
     nickName: "",
@@ -32,32 +21,20 @@ const SignupPage = () => {
     lastName: "",
     gender: 0,
   });
-  // const [disabled, setDisabled] = useState<boolean>(false);
-  // const [signup, setSignup] = useRecoilState<ISignupType>(signupState);
-
-  // const setEmail = useSetRecoilState<String>(emailState);
-
-  // const data = useRecoilValue(signupSelector(signup));
-
-  // useRecoilValue(emailCheckSelector);
-
-  const service = useAsyncService("post", "/auth/signup", signupVal);
-
-  const apiSignup = async () => {
-    try {
-      const response = await service;
-      return response.status;
-    } catch (e: any) {
-      return e.response.status;
-    }
-  };
-
-  const usePost = useQuery("signup", () => apiSignup);
+  const { response, error, loading, request } = useAxios({
+    method: "post",
+    url: "auth/login",
+    data: { username: "user1@naver.com", password: "woals1212!" },
+    headers: {
+      accept: "*/*",
+    },
+  });
 
   const handleClick = useCallback(
     (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
       e.preventDefault();
       e.stopPropagation();
+      request();
     },
     [signupVal]
   );
