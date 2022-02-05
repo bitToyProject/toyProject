@@ -1,9 +1,10 @@
 package kr.bora.api.todo.dto;
 
-import kr.bora.api.todo.domain.Todo;
-import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.UserRequestDto;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Component
 @Getter
 @NoArgsConstructor
+@Log4j2
 public class TodoDto {
 
     private Long todoId;
@@ -29,11 +31,14 @@ public class TodoDto {
 
     private int priority;
 
+    private UserRequestDto username;
+
+
     private LocalDateTime regDate;
     private LocalDateTime modDate;
 
     @Builder
-    public TodoDto(Long todoId, UserRequestDto userId, String title, String start, String end, String description, String viewer, int priority, LocalDateTime regDate, LocalDateTime modDate) {
+    public TodoDto(Long todoId, UserRequestDto userId, String title, String start, String end, String description, String viewer, int priority, UserRequestDto username, LocalDateTime regDate, LocalDateTime modDate) {
         this.todoId = todoId;
         this.userId = userId;
         this.title = title;
@@ -42,12 +47,9 @@ public class TodoDto {
         this.description = description;
         this.viewer = viewer;
         this.priority = priority;
+        this.username = username;
         this.regDate = regDate;
         this.modDate = modDate;
-    }
-
-    public Todo saveId(TodoDto dto) {
-        return Todo.builder().todoId(dto.todoId).build();
     }
 
 }

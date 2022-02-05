@@ -5,10 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.envers.Audited;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -17,7 +16,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="users")
 @Slf4j
-public class User {
+@Audited(withModifiedFlag = true)
+public class User{
 //notnull : username , password , phonenum, fisrnma,lastname,gender
     @Id
     @Column(name = "user_id")
@@ -67,6 +67,11 @@ public class User {
     public void changePassword(String password) {
         this.password = password;
     }
+
+    public void changeNickname(String nickName) {
+        this.nickName = nickName;
+    }
+
 
     @Transient
     private MailSender mailSender;

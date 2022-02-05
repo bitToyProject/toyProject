@@ -1,8 +1,6 @@
 package kr.bora.api.subtask.controller;
 
 import kr.bora.api.subtask.dto.SubTaskDto;
-import kr.bora.api.todo.controller.TodoRequestCommand;
-import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.util.SecurityUtil;
@@ -22,14 +20,13 @@ public class SubTaskRequestCommand {
         private String start;
         private String end;
         private String assignee;
-        private String viewer;
+        private TodoDto todo;
 
-        public SubTaskDto toDto() {
+        public SubTaskDto toDto(Long todoId) {
             Long userId = SecurityUtil.getCurrentUserId();
-            Long todoId = TodoDto.builder().build().getTodoId();
             return SubTaskDto.builder()
                     .userId(UserRequestDto.builder().userId(userId).build())
-                    .todoId(TodoDto.builder().todoId(todoId).build())
+                    .todoId(todoId)
                     .title(title)
                     .start(start)
                     .end(end)

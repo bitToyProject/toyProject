@@ -1,7 +1,9 @@
-package kr.bora.api.mailauth;
+package kr.bora.api.mailauth.api;
 
 import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.common.response.Status;
+import kr.bora.api.mailauth.service.MailSendServiceImpl;
+import kr.bora.api.mailauth.domain.dto.AuthMailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,7 @@ import javax.validation.Valid;
 @CrossOrigin(origins ="*")
 public class MailController {
   @Autowired
-  private MailSendService mss;
+  private MailSendServiceImpl mss;
 
   @PostMapping("/authMail")
   public ResponseEntity<CommonResponse> authMail(@Valid @RequestBody AuthMailDto authMailDto){

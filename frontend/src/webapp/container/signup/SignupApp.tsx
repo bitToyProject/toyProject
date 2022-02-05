@@ -1,5 +1,5 @@
-import { Header } from 'src/webapp/common';
-import { SignupPage } from 'src/webapp/components';
+import { Header } from "src/webapp/common";
+import { SignupPage } from "src/webapp/components";
 
 const SignupApp = () => {
   return (

@@ -45,15 +45,6 @@ public class TodoServiceImpl implements TodoService {
         return todoDto.getTodoId();
     }
 
-//
-//    public CommonResponse<TodoDto> TodoSave(TodoDto todoDto) {
-//
-//        Todo todo = toEntitySaveUserId(todoDto);
-//        repository.save(todo);
-//
-//        return CommonResponse.success(todoDto);
-//    }
-
     @Override
     public TodoDto get(Long todoId) {
         Todo result = repository.getTodo(todoId);

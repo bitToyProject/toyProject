@@ -4,8 +4,6 @@ import kr.bora.api.todo.dto.PageRequestDto;
 import kr.bora.api.todo.dto.PageResultDto;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.service.TodoService;
-import kr.bora.api.user.util.SecurityUtil;
-import lombok.extern.log4j.Log4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,5 +27,6 @@ public class TodoServiceTest {
         }
 
     }
+
 
 }

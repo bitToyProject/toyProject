@@ -39,18 +39,19 @@ dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'//이게 없으면 decoders.base64,keys 사용 불가
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-//embedded-redis
-    implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-// https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.0'
 
     implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
     implementation 'org.springframework:spring-context-support:5.3.12'
     implementation 'org.springframework.data:spring-data-commons:2.6.0'
     implementation 'com.querydsl:querydsl-jpa'
+    implementation 'org.springframework.data:spring-data-envers'
 }
 
 test {

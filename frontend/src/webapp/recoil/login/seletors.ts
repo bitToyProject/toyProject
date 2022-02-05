@@ -24,7 +24,7 @@ export const apiLogin = selectorFamily<IResStatus, ILoginType>({
       }
 
       return response;
-    } catch (e:any) {
+    } catch (e: any) {
       return e.response.status;
     }
   },

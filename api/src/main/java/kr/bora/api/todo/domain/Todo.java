@@ -1,21 +1,24 @@
 package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
+import kr.bora.api.todo.dto.TodoRespondDto;
 import kr.bora.api.user.domain.User;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Table(name = "todos")
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(exclude = {"user"})
+@Audited(withModifiedFlag=true)
 public class Todo extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "todo_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long todoId;
 
     private String title;
@@ -46,6 +49,7 @@ public class Todo extends BaseEntity {
         this.user = user;
     }
 
+    // == Todo 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
         this.title = title;
     }
@@ -69,5 +73,20 @@ public class Todo extends BaseEntity {
     public void changePriority(int priority) {
         this.priority = priority;
     }
+
+    public TodoRespondDto toDtoRespond(Todo todo){
+        return TodoRespondDto.builder()
+            .todoId(todo.getTodoId())
+            .title(todo.getTitle())
+            .start(todo.start)
+            .end(todo.end)
+            .description(todo.getDescription())
+            .viewer(todo.getViewer())
+            .priority(todo.getPriority())
+            .user(todo.getUser().getUserId())
+            .build();
+    }
+
+
 
 }

@@ -7,6 +7,7 @@ import axios from 'axios';
 import './index.css';
 import 'src/tailwind.output.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 axios.defaults.baseURL = 'http://192.168.0.8:8080';
 
 const queryClient = new QueryClient();
@@ -15,6 +16,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={true} />
         <RecoilRoot>
           <App />
         </RecoilRoot>

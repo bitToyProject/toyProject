@@ -10,32 +10,35 @@ import lombok.NoArgsConstructor;
 
 public class TodoRequestCommand {
 
-  @Getter
-  @NoArgsConstructor
-  @AllArgsConstructor
-  @Builder
-  public static class TodoRequest{
-    private String title;
-    private String start;
-    private String end;
-    private String description;
-    private String viewer;
-    private int priority;
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class TodoRequest {
+        private String title;
+        private String start;
+        private String end;
+        private String description;
+        private String viewer;
+        private int priority;
+        private String username;
 
-    public TodoDto toDto(){
-      Long userId = SecurityUtil.getCurrentUserId();
-      return  TodoDto.builder()
-          .userId(UserRequestDto.builder().userId(userId).build())
-          .title(title)
-          .start(start)
-          .end(end)
-          .description(description)
-          .viewer(viewer)
-          .priority(priority)
-          .build();
+        public TodoDto toDto() {
+            Long userId = SecurityUtil.getCurrentUserId();
+
+            return TodoDto.builder()
+                    .userId(UserRequestDto.builder().userId(userId).build())
+                    .username(UserRequestDto.builder().username(username).build())
+                    .title(title)
+                    .start(start)
+                    .end(end)
+                    .description(description)
+                    .viewer(viewer)
+                    .priority(priority)
+                    .build();
+
+        }
 
     }
-
-  }
 
 }

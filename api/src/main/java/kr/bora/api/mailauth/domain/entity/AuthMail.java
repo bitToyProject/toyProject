@@ -1,11 +1,16 @@
-package kr.bora.api.mailauth;
+package kr.bora.api.mailauth.domain.entity;
 
-import kr.bora.api.user.domain.User;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Entity
 @Getter
@@ -16,7 +21,7 @@ public class AuthMail {
     @Id
     @Column(name = "mail_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mailID;
+    private Long mailId;
     @Column(name = "auth_mail_key")
     private String authMailKey;
     @Column(name = "auth_mail")
@@ -26,7 +31,7 @@ public class AuthMail {
     private AuthStatus authStatus;
 
     @Getter
-    enum AuthStatus{
+    public enum AuthStatus{
         CHECKED,UNCHECKED
     }
 

@@ -4,14 +4,16 @@ import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Table(name = "subtasks")
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(exclude = "todo")
+@Audited(withModifiedFlag = true)
 public class SubTask extends BaseEntity {
 
     @Id
@@ -46,6 +48,7 @@ public class SubTask extends BaseEntity {
         this.user = user;
     }
 
+    // == Subtask 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
         this.title = title;
     }

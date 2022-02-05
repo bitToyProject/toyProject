@@ -23,7 +23,7 @@ const LoginPage = () => {
   const handleClick = (
     e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => {
-    e.preventDefault();
+    // e.preventDefault();
     e.stopPropagation();
 
     doLogin.mutate(loginVal, {
@@ -39,7 +39,6 @@ const LoginPage = () => {
       onError: (err) => {},
     });
   };
-
   return (
     <>
       <div className="w-full min-h-screen bg-gray-50 flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
@@ -50,9 +49,9 @@ const LoginPage = () => {
           <div className="mb-4">
             <label className="block mb-1">이메일:</label>
             <InputModule
-              type={'text'}
+              type={"text"}
               disabled={false}
-              placeholder={'Email'}
+              placeholder={"Email"}
               onChange={(value: string) =>
                 setLoginVal({ ...loginVal, username: value })
               }
@@ -61,9 +60,9 @@ const LoginPage = () => {
           <div className="mb-4">
             <label className="block mb-1">비밀번호:</label>
             <InputModule
-              type={'password'}
+              type={"password"}
               disabled={false}
-              placeholder={'Password'}
+              placeholder={"Password"}
               onChange={(value: string) =>
                 setLoginVal({ ...loginVal, password: value })
               }
@@ -72,9 +71,9 @@ const LoginPage = () => {
           <div className="mt-6">
             <ColoredButton
               disabled={disabled}
-              btnLabel={'로그인'}
-              color={''}
-              backgroundColor={''}
+              btnLabel={"로그인"}
+              color={""}
+              backgroundColor={""}
               isWhite
               handleClick={handleClick}
             />
