@@ -3,10 +3,7 @@ package kr.bora.api.subtask.domain;
 import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -14,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "subtasks")
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(exclude = "todo")
 @Audited(withModifiedFlag = true)
 public class SubTask extends BaseEntity {

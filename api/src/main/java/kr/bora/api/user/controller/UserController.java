@@ -39,6 +39,6 @@ public class UserController {
         var dto = command.toDto();
         userServiceImpl.modify(dto);
 
-        return ResponseEntity.ok("비번 변경 성공");
+        return ResponseEntity.ok("비밀번호 변경이 성공적으로 완료되었습니다.");
     }
 }

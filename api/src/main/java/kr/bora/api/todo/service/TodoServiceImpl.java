@@ -17,6 +17,7 @@ import java.util.function.Function;
 
 @Log4j2
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class TodoServiceImpl implements TodoService {
 
@@ -44,15 +45,6 @@ public class TodoServiceImpl implements TodoService {
         repository.save(todo);
         return todoDto.getTodoId();
     }
-
-//
-//    public CommonResponse<TodoDto> TodoSave(TodoDto todoDto) {
-//
-//        Todo todo = toEntitySaveUserId(todoDto);
-//        repository.save(todo);
-//
-//        return CommonResponse.success(todoDto);
-//    }
 
     @Override
     public TodoDto get(Long todoId) {
