@@ -4,6 +4,11 @@ export interface ILoginType {
   password: string;
 }
 
+export interface ILoginValType {
+  email: string;
+  password: string;
+}
+
 export interface IResStatus {
   status: number;
 }

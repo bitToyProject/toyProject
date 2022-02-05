@@ -3,15 +3,11 @@ import React, { useState, ChangeEvent, MouseEvent } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { ColoredButton } from 'src/webapp/container';
 import { useNavigate } from 'react-router';
-import { ILoginType } from 'src/webapp/types/loginTypes';
+import { ILoginType, ILoginValType } from 'src/webapp/types/loginTypes';
 import { loginState } from 'src/webapp/recoil/login/atoms';
 
-interface loginValType {
-  email: string;
-  password: string;
-}
 const LoginPage = () => {
-  const [loginVal, setLoginVal] = useState<loginValType>({
+  const [loginVal, setLoginVal] = useState<ILoginValType>({
     email: '',
     password: '',
   });

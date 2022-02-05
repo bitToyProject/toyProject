@@ -2,26 +2,15 @@ import { InputModule } from 'src/webapp/common';
 import { ColoredButton } from 'src/webapp/container';
 import { MouseEvent, useState, useCallback, useEffect } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { emailState, signupState } from 'src/webapp/recoil/signup/atoms';
 import {
   emailCheckSelector,
-  emailState,
-  ISignupType,
   signupSelector,
-  signupState,
-} from 'src/webapp/recoil/signup/signup';
-
-interface signupValType {
-  username: string;
-  password: string;
-  nickName: string;
-  phoneNum: string;
-  firstName: string;
-  lastName: string;
-  gender: number;
-}
+} from 'src/webapp/recoil/signup/seletors';
+import { ISignupType, ISignupValType } from 'src/webapp/types/signupTypes';
 
 const SignupPage = () => {
-  const [signupVal, setSignupVal] = useState<signupValType>({
+  const [signupVal, setSignupVal] = useState<ISignupValType>({
     username: '',
     password: '',
     nickName: '',

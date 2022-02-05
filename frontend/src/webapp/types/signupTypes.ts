@@ -9,6 +9,16 @@ export interface ISignupType {
   gender: number;
 }
 
+export interface ISignupValType {
+  username: string;
+  password: string;
+  nickName: string;
+  phoneNum: string;
+  firstName: string;
+  lastName: string;
+  gender: number;
+}
+
 export interface IResStatus {
   result: string;
 }
