@@ -1,14 +1,16 @@
-import { InputModule } from 'src/webapp/common';
-import { ColoredButton } from 'src/webapp/container';
-import { MouseEvent, useState, useCallback, useEffect } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { InputModule } from "src/webapp/common";
+import { ColoredButton } from "src/webapp/container";
+import { MouseEvent, useState, useCallback, useEffect } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   emailCheckSelector,
   emailState,
   ISignupType,
   signupSelector,
   signupState,
-} from 'src/webapp/recoil/signup/signup';
+} from "src/webapp/recoil/signup/signup";
+import { useQuery } from "react-query";
+import { useAsyncService } from "src/webapp/hook/useAsyncService";
 
 interface signupValType {
   username: string;
@@ -22,27 +24,40 @@ interface signupValType {
 
 const SignupPage = () => {
   const [signupVal, setSignupVal] = useState<signupValType>({
-    username: '',
-    password: '',
-    nickName: '',
-    phoneNum: '',
-    firstName: '',
-    lastName: '',
+    username: "",
+    password: "",
+    nickName: "",
+    phoneNum: "",
+    firstName: "",
+    lastName: "",
     gender: 0,
   });
-  const [disabled, setDisabled] = useState<boolean>(false);
-  const [signup, setSignup] = useRecoilState<ISignupType>(signupState);
+  // const [disabled, setDisabled] = useState<boolean>(false);
+  // const [signup, setSignup] = useRecoilState<ISignupType>(signupState);
 
-  const setEmail = useSetRecoilState<String>(emailState);
+  // const setEmail = useSetRecoilState<String>(emailState);
 
-  const data = useRecoilValue(signupSelector(signup));
-  useRecoilValue(emailCheckSelector);
+  // const data = useRecoilValue(signupSelector(signup));
+
+  // useRecoilValue(emailCheckSelector);
+
+  const service = useAsyncService("post", "/auth/signup", signupVal);
+
+  const apiSignup = async () => {
+    try {
+      const response = await service;
+      return response.status;
+    } catch (e: any) {
+      return e.response.status;
+    }
+  };
+
+  const usePost = useQuery("signup", () => apiSignup);
 
   const handleClick = useCallback(
     (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
       e.preventDefault();
       e.stopPropagation();
-      setSignup(signupVal);
     },
     [signupVal]
   );
@@ -51,7 +66,7 @@ const SignupPage = () => {
     (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
       e.preventDefault();
       e.stopPropagation();
-      setEmail(signupVal.username);
+      // setEmail(signupVal.username);
     },
     [signupVal]
   );
@@ -64,18 +79,18 @@ const SignupPage = () => {
             <label className="block mb-1">이메일</label>
             <div className="flex">
               <InputModule
-                type={'text'}
+                type={"text"}
                 disabled={false}
-                placeholder={'Email'}
+                placeholder={"Email"}
                 onChange={(value: string) =>
                   setSignupVal({ ...signupVal, username: value })
                 }
               />
               <ColoredButton
-                disabled={disabled}
-                btnLabel={'이메일 중복검사'}
-                color={''}
-                backgroundColor={''}
+                disabled={false}
+                btnLabel={"이메일 중복검사"}
+                color={""}
+                backgroundColor={""}
                 isWhite
                 handleClick={handleEmailCheck}
               />
@@ -84,9 +99,9 @@ const SignupPage = () => {
           <div className="mb-4">
             <label className="block mb-1">닉네임</label>
             <InputModule
-              type={'nickName'}
+              type={"nickName"}
               disabled={false}
-              placeholder={'nickName'}
+              placeholder={"nickName"}
               onChange={(value: string) =>
                 setSignupVal({ ...signupVal, nickName: value })
               }
@@ -95,9 +110,9 @@ const SignupPage = () => {
           <div className="mb-4">
             <label className="block mb-1">비밀번호</label>
             <InputModule
-              type={'password'}
+              type={"password"}
               disabled={false}
-              placeholder={'Password'}
+              placeholder={"Password"}
               onChange={(value: string) =>
                 setSignupVal({ ...signupVal, password: value })
               }
@@ -106,9 +121,9 @@ const SignupPage = () => {
           <div className="mb-4">
             <label className="block mb-1">핸드폰 번호</label>
             <InputModule
-              type={'phoneNum'}
+              type={"phoneNum"}
               disabled={false}
-              placeholder={'phoneNum'}
+              placeholder={"phoneNum"}
               onChange={(value: string) =>
                 setSignupVal({ ...signupVal, phoneNum: value })
               }
@@ -117,9 +132,9 @@ const SignupPage = () => {
           <div className="mb-4">
             <label className="block mb-1">성</label>
             <InputModule
-              type={'lastName'}
+              type={"lastName"}
               disabled={false}
-              placeholder={'lastName'}
+              placeholder={"lastName"}
               onChange={(value: string) =>
                 setSignupVal({ ...signupVal, lastName: value })
               }
@@ -128,9 +143,9 @@ const SignupPage = () => {
           <div className="mb-4">
             <label className="block mb-1">이름</label>
             <InputModule
-              type={'firstName'}
+              type={"firstName"}
               disabled={false}
-              placeholder={'firstName'}
+              placeholder={"firstName"}
               onChange={(value: string) =>
                 setSignupVal({ ...signupVal, firstName: value })
               }
@@ -138,10 +153,10 @@ const SignupPage = () => {
           </div>
           <div className="mt-6">
             <ColoredButton
-              disabled={disabled}
-              btnLabel={'회원가입'}
-              color={''}
-              backgroundColor={''}
+              disabled={false}
+              btnLabel={"회원가입"}
+              color={""}
+              backgroundColor={""}
               isWhite
               handleClick={handleClick}
             />

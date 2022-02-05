@@ -3,7 +3,7 @@ import { apiPost } from "src/webapp/service/login/Login.service";
 import { atom, selectorFamily } from "recoil";
 
 export interface ILoginType {
-  email: string;
+  username: string;
   password: string;
 }
 export interface IResStatus {
@@ -11,7 +11,7 @@ export interface IResStatus {
 }
 export const loginState = atom<ILoginType>({
   key: "login",
-  default: { email: "", password: "" },
+  default: { username: "", password: "" },
 });
 
 interface Param extends ILoginType {
@@ -21,9 +21,14 @@ interface Param extends ILoginType {
 export const apiLogin = selectorFamily<IResStatus, Param>({
   key: "auth/login",
   get: (data: ILoginType) => async () => {
-    if (!data) return;
+    console.log("data", data);
+    if (!data) {
+      console.log("data", data);
+      return;
+    }
     try {
       const response = await apiPost("/auth/login", data);
+      console.log("data", data);
       if (response.status === 200) {
         const accessToken = await response.data.data.accessToken;
         console.log("accessToken", accessToken);
@@ -34,7 +39,7 @@ export const apiLogin = selectorFamily<IResStatus, Param>({
         });
       }
       return response;
-    } catch (e:any) {
+    } catch (e: any) {
       return e.response.status;
     }
   },

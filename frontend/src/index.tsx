@@ -6,14 +6,20 @@ import { RecoilRoot } from "recoil";
 import axios from "axios";
 import "./index.css";
 import "src/tailwind.output.css";
-axios.defaults.baseURL = "http://192.168.0.9:8080";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
+axios.defaults.baseURL = "http://192.168.0.4:8080";
+const queryClient = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <RecoilRoot>
-        <App />
-      </RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={true} />
+        <RecoilRoot>
+          <App />
+        </RecoilRoot>
+      </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
