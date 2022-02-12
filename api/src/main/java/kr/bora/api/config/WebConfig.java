@@ -16,7 +16,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     /**
      * xss 방지 처리(json) bean등록
-     * @return
      */
 
     @Bean
