@@ -42,6 +42,8 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
     implementation 'io.springfox:springfox-swagger2:3.0.0'
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat:2.5.3'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -52,6 +54,8 @@ dependencies {
     implementation 'org.springframework.data:spring-data-commons:2.6.0'
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'org.springframework.data:spring-data-envers'
+    testImplementation 'org.springframework.security:spring-security-test:5.5.2'
+
 }
 
 test {
