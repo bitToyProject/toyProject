@@ -1,5 +1,6 @@
 package kr.bora.api.user.domain;
 
+import kr.bora.api.team.domain.entity.Team;
 import kr.bora.api.user.domain.reader.MailSender;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,6 +49,10 @@ public class User{
     @Column(name="authority")
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
+
+    @ManyToOne
+    @JoinColumn(name = "team")
+    private Team team;
 
 
     @Builder

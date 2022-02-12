@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/roots?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/roots?serverTimezone=UTC&characterEncoding=UTF-8&autoReconnection=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
@@ -9,7 +9,7 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
@@ -36,6 +36,7 @@ logging:
     max-history: 10
   level:
     kr.bora.api: info
+
 
 
 # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.

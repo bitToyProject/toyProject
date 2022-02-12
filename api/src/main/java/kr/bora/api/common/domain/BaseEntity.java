@@ -2,6 +2,8 @@ package kr.bora.api.common.domain;
 
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import kr.bora.api.team.domain.dto.TeamResponseDto;
+import kr.bora.api.team.domain.entity.Team;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -25,5 +27,5 @@ public abstract class BaseEntity{
     @LastModifiedDate
     @Column(name = "mod_date")
     private LocalDateTime modDate;
-    
+
 }
