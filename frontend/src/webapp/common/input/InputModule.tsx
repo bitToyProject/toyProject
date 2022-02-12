@@ -1,5 +1,5 @@
-import { useInput } from 'src/webapp/hook/useInput';
-import { useEffect, useMemo } from 'react';
+import { useInput } from "src/webapp/hook/useInput";
+import { useEffect, useMemo } from "react";
 interface PropTypes {
   input: {
     type: string;
@@ -10,8 +10,8 @@ interface PropTypes {
     onChange: (value: any) => void;
   };
 }
-const InputModule = (input: PropTypes['input']) => {
-  const inputValue = useInput('');
+const InputModule = (input: PropTypes["input"]) => {
+  const inputValue = useInput("");
 
   useEffect(() => {
     input.onChange(inputValue.value);

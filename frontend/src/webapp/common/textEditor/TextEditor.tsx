@@ -1,19 +1,19 @@
-import React, { MouseEvent, useCallback, useState } from 'react';
+import React, { MouseEvent, useCallback, useState } from "react";
 /** srcjsxImportSource srcemotion/react */
-import { css } from '@emotion/react';
-import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw } from 'draft-js';
-import { COLOR_GRAY } from 'src/webapp/common/CCstyle/CCstyle';
-import { ColoredButton } from 'src/webapp/container';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import draftToHtml from 'draftjs-to-html';
-import { useFileUpload } from 'src/webapp/hook/useFileUpload';
-import Snackbar from 'src/webapp/common/snackbar/Snackbar';
-import { useSnackbar } from 'src/webapp/hook/useSnackbar';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { IEditorType } from 'src/webapp/types/editorTypes';
-import { contentsState } from 'src/webapp/recoil/editor/atoms';
-import { editorSelector } from 'src/webapp/recoil/editor/selectors';
+import { css } from "@emotion/react";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw } from "draft-js";
+import { COLOR_GRAY } from "src/webapp/common/CCstyle/CCstyle";
+import { ColoredButton } from "src/webapp/container";
+import { useRecoilState, useRecoilValue } from "recoil";
+import draftToHtml from "draftjs-to-html";
+import { useFileUpload } from "src/webapp/hook/useFileUpload";
+import Snackbar from "src/webapp/common/snackbar/Snackbar";
+import { useSnackbar } from "src/webapp/hook/useSnackbar";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { IEditorType } from "src/webapp/types/editorTypes";
+import { contentsState } from "src/webapp/recoil/editor/atoms";
+import { editorSelector } from "src/webapp/recoil/editor/selectors";
 
 const TextEditor = () => {
   const [contents, setContents] = useRecoilState<IEditorType>(contentsState);
@@ -42,7 +42,7 @@ const TextEditor = () => {
       console.log(editorToHtml);
 
       // status가 200인 경우 이런식으로 작성하기
-      openSnackbar(true, '글이 작성되었습니다.');
+      openSnackbar(true, "글이 작성되었습니다.");
     },
     [editorState]
   );
@@ -51,19 +51,19 @@ const TextEditor = () => {
     <>
       <div
         css={css`
-        height: 350px;
-        border: 1px solid ${COLOR_GRAY};
-        padding: 5px;
-        border-radius: 2px;
-        font-family sans-serif important!;
-    `}
+          height: 350px;
+          border: 1px solid ${COLOR_GRAY};
+          padding: 5px;
+          border-radius: 2px;
+          font-family: sans-serif important!;
+        `}
       >
         <Editor
           wrapperClassName="wrapper-class"
           editorClassName="editor-class"
           toolbarClassName="toolbar-class"
           localization={{
-            locale: 'ko',
+            locale: "ko",
           }}
           toolbar={{
             inline: { inDropdown: true },
@@ -78,11 +78,11 @@ const TextEditor = () => {
               uploadEnabled: true,
               uploadCallback: useFileUpload,
               previewImage: true,
-              inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
+              inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
               alt: { present: false, mandatory: false },
               defaultSize: {
-                height: 'auto',
-                width: 'auto',
+                height: "auto",
+                width: "auto",
               },
             },
           }}
@@ -91,9 +91,9 @@ const TextEditor = () => {
       </div>
       <ColoredButton
         disabled={false}
-        btnLabel={'저장'}
-        color={''}
-        backgroundColor={''}
+        btnLabel={"저장"}
+        color={""}
+        backgroundColor={""}
         isWhite
         handleClick={handleClick}
       />

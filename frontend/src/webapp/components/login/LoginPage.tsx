@@ -1,32 +1,44 @@
 import { InputModule } from 'src/webapp/common';
-import React, { useState, ChangeEvent, MouseEvent } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React, { useState, MouseEvent } from 'react';
 import { ColoredButton } from 'src/webapp/container';
-import { useNavigate } from 'react-router';
-import { ILoginType, ILoginValType } from 'src/webapp/types/loginTypes';
-import { loginState } from 'src/webapp/recoil/login/atoms';
+import { ILoginValType } from 'src/webapp/types/loginTypes';
+import { useMutation } from 'react-query';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { setCookies } from 'src/webapp/config/cookie/Cookie';
 
 const LoginPage = () => {
   const [loginVal, setLoginVal] = useState<ILoginValType>({
-    email: '',
+    username: '',
     password: '',
   });
   const [disabled, setDisabled] = useState<boolean>(false);
-  const [loginInfo, setLoginInfo] = useRecoilState<ILoginType>(loginState);
 
   const navigate = useNavigate();
 
-  // const apiLoginCall = useRecoilValue(apiLogin(loginInfo));
-  // console.log(apiLoginCall);
+  const doLogin = useMutation((data: ILoginValType) =>
+    axios.post('/auth/login', data)
+  );
+
   const handleClick = (
     e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => {
-    e.preventDefault();
+    // e.preventDefault();
     e.stopPropagation();
-    setLoginInfo(loginVal);
-  };
 
-  console.log('loginVal', loginVal);
+    doLogin.mutate(loginVal, {
+      onSuccess: async (response) => {
+        const accessToken = await response.data.data.accessToken;
+        setCookies('loginToken', accessToken, {
+          path: '/',
+          // httpOnly: true,
+          maxAge: 60 * 60 * 24 * 7,
+        });
+        navigate('/task/todo');
+      },
+      onError: (err) => {},
+    });
+  };
   return (
     <>
       <div className="w-full min-h-screen bg-gray-50 flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
@@ -37,20 +49,20 @@ const LoginPage = () => {
           <div className="mb-4">
             <label className="block mb-1">이메일:</label>
             <InputModule
-              type={'text'}
+              type={"text"}
               disabled={false}
-              placeholder={'Email'}
+              placeholder={"Email"}
               onChange={(value: string) =>
-                setLoginVal({ ...loginVal, email: value })
+                setLoginVal({ ...loginVal, username: value })
               }
             />
           </div>
           <div className="mb-4">
             <label className="block mb-1">비밀번호:</label>
             <InputModule
-              type={'password'}
+              type={"password"}
               disabled={false}
-              placeholder={'Password'}
+              placeholder={"Password"}
               onChange={(value: string) =>
                 setLoginVal({ ...loginVal, password: value })
               }
@@ -59,29 +71,24 @@ const LoginPage = () => {
           <div className="mt-6">
             <ColoredButton
               disabled={disabled}
-              btnLabel={'로그인'}
-              color={''}
-              backgroundColor={''}
+              btnLabel={"로그인"}
+              color={""}
+              backgroundColor={""}
               isWhite
               handleClick={handleClick}
             />
           </div>
           <div className="mt-6 text-center">
-            <p
-              className="text-sm"
-              onClick={() => {
-                navigate('/member/findPassword');
-              }}
-            >
-              비밀번호 찾기
+            <p>
+              <Link to="/member/findPassword" className="text-sm">
+                {' '}
+                비밀번호 찾기
+              </Link>
             </p>
-            <p
-              className="text-sm"
-              onClick={() => {
-                navigate('/member/signup');
-              }}
-            >
-              회원가입
+            <p>
+              <Link to="/member/signup" className="text-sm">
+                회원가입
+              </Link>
             </p>
           </div>
         </div>
