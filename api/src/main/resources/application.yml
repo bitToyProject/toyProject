@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/toy?serverTimezone=UTC&characterEncoding=UTF-8&autoReconnection=true
+    url: jdbc:mysql://localhost:3306/roots?serverTimezone=UTC&characterEncoding=UTF-8&autoReconnection=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
