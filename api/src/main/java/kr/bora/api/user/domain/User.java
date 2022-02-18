@@ -11,6 +11,7 @@ import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -50,10 +51,6 @@ public class User{
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
 
-    @ManyToOne
-    @JoinColumn(name = "team")
-    private Team team;
-
 
     @Builder
     public User(Long userId, String username, String password, String lastName, String firstName
@@ -76,7 +73,6 @@ public class User{
     public void changeNickname(String nickName) {
         this.nickName = nickName;
     }
-
 
     @Transient
     private MailSender mailSender;

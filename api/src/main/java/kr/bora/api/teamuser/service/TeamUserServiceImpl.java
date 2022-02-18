@@ -1,11 +1,13 @@
 package kr.bora.api.teamuser.service;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.stream.Collectors;
 import kr.bora.api.team.domain.entity.Team;
 import kr.bora.api.teamuser.domain.dto.TeamUserDto;
 import kr.bora.api.teamuser.domain.dto.TeamUserResponse;
 import kr.bora.api.teamuser.domain.dto.TeamUsersDto;
+import kr.bora.api.teamuser.domain.dto.TeamUsersResponseDto;
 import kr.bora.api.teamuser.domain.entity.TeamUser;
 import kr.bora.api.teamuser.repository.TeamUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +39,14 @@ public class TeamUserServiceImpl implements TeamUserService{
         List<TeamUser> result = repository.saveAll(entity);
         log.info("생성된 팀 : {}",result);
         return result.stream().map(TeamUser::toResponseList).collect(Collectors.toList());
+    }
+
+    @Override
+    public TeamUsersResponseDto findTeamUsers(Long teamId) {
+        log.info("팀, 팀원 조회시작");
+        List<TeamUser> teamUserEntityList = repository.findTeamUsersByTeamId(teamId);
+        TeamUsersResponseDto result = TeamUser.toTeamUsersResponse(teamUserEntityList);
+        log.info("조회된 팀, 팀원 : {}",result);
+        return result;
     }
 }

@@ -7,9 +7,7 @@ import kr.bora.api.teamuser.domain.dto.TeamUsersDto;
 import kr.bora.api.teamuser.service.TeamUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/team")
@@ -27,5 +25,9 @@ public class TeamUserController {
     public ResponseEntity<List<TeamUserResponse>> saveTeamUsers(CommandDto.CommanderSaveUsers command) {
         TeamUsersDto dto = command.toDto();
         return ResponseEntity.ok(service.saveTeamUsers(dto));
+    }
+    @GetMapping("/find/team/{teamId}")
+    public ResponseEntity<TeamUserResponse> findTeamUsers(@PathVariable Long teamId) {
+        return ResponseEntity.ok(service.findTeamUsers(teamId));
     }
 }
