@@ -9,6 +9,7 @@ import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
