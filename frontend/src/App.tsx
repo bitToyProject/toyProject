@@ -1,11 +1,14 @@
-import { LoginApp, SignupApp, MailApp, TodoApp } from "src/webapp/container";
 import { Suspense } from "react";
-import Loading from "./webapp/common/Loading";
-import TextEditor from "src/webapp/common/textEditor/TextEditor";
 import "src/tailwind.output.css";
 import { Route } from "react-router";
 import { Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import Header from "./layouts/header/Header";
+import Loading from "./components/common/loading/Loading";
+import LoginContainer from "./components/user/login/LoginContainer";
+import SignupContainer from "./components/user/signup/SignupContainer";
+import MailContainer from "./components/user/mail/MailContainer";
+import TodoContainer from "./components/todo/TodoContainer";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -14,14 +17,15 @@ const App = () => {
     <>
       <QueryClientProvider client={queryClient}>
         <Suspense fallback={<Loading />}>
+          <Header />
           <Routes>
-            <Route path="/" element={<LoginApp />}></Route>
-            <Route path={"member/signup"} element={<SignupApp />}></Route>
-            <Route path={"member/mail_auth"} element={<MailApp />}></Route>
-            <Route path={"member/find-password"} element={<MailApp />}></Route>
-            <Route path={"member/myPage"} element={<MailApp />}></Route>
-            <Route path={"task/todo"} element={<TodoApp />}></Route>
-            <Route path={"task/editorTest"} element={<TextEditor />}></Route>
+            <Route path="/" element={<LoginContainer />}></Route>
+            <Route path={"member/signup"} element={<SignupContainer />}></Route>
+            <Route path={"member/mail_auth"} element={<MailContainer />}></Route>
+            <Route path={"member/find-password"} element={<MailContainer />}></Route>
+            <Route path={"member/myPage"} element={<MailContainer />}></Route>
+            <Route path={"task/todo"} element={<TodoContainer />}></Route>
+            {/* <Route path={"task/editorTest"} element={<TextEditor />}></Route> */}
           </Routes>
         </Suspense>
       </QueryClientProvider>
