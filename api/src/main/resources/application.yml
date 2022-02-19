@@ -1,7 +1,12 @@
 spring:
   datasource:
+<<<<<<< HEAD
     url:  jdbc:log4jdbc:mysql://localhost:3306/roots?serverTimezone=UTC&characterEncoding=UTF-8&autoReconnection=true
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+=======
+    url: jdbc:mysql://localhost:3306/roots?serverTimezone=UTC&characterEncoding=UTF-8&autoReconnection=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+>>>>>>> b9959a1fdc994c3ef6a9602236c0c66498824c7c
     username: root
     password: root
   jpa:
@@ -9,24 +14,12 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
         envers:
           audit_table_suffix: _TOYHISTORY
-
-  kafka:
-    consumer:
-      bootstrap-servers: localhost:9092
-      group-id: group_id
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-serializer: org.apache.kafka.common.serialization.StringDeserializer
 server:
   port: 8080
 logging:
@@ -36,6 +29,7 @@ logging:
     max-history: 10
   level:
     kr.bora.api: info
+
 
 
 # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.

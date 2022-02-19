@@ -1,5 +1,6 @@
 package kr.bora.api.user.domain;
 
+import kr.bora.api.team.domain.entity.Team;
 import kr.bora.api.user.domain.reader.MailSender;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -71,7 +73,6 @@ public class User{
     public void changeNickname(String nickName) {
         this.nickName = nickName;
     }
-
 
     @Transient
     private MailSender mailSender;
