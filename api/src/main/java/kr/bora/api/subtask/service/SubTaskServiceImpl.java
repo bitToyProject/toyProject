@@ -47,7 +47,7 @@ public class SubTaskServiceImpl implements SubTaskService {
         subTask.changeStart(subTaskDto.getStart());
         subTask.changeEnd(subTaskDto.getEnd());
         subTask.changeAssignee(subTaskDto.getAssignee());
-
+        subTask.changeDone(subTaskDto.getDone());
         subTaskRepository.save(subTask);
     }
 

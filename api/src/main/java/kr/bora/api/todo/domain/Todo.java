@@ -1,19 +1,20 @@
 package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
-import kr.bora.api.todo.dto.TodoRespondDto;
 import kr.bora.api.user.domain.User;
 import lombok.*;
 import org.hibernate.envers.Audited;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Table(name = "todos")
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(exclude = {"user"})
-@Audited(withModifiedFlag=true)
+@Audited(withModifiedFlag = true)
 public class Todo extends BaseEntity {
 
     @Id
@@ -31,6 +32,11 @@ public class Todo extends BaseEntity {
 
     private String viewer;
 
+    private Boolean done;
+
+    @LastModifiedDate
+    private LocalDateTime doneTime;
+
     private int priority;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,16 +44,19 @@ public class Todo extends BaseEntity {
     private User user;
 
     @Builder
-    public Todo(Long todoId, String title, String start, String end, String description, String viewer, int priority, User user) {
+    public Todo(Long todoId, String title, String start, String end, String description, String viewer, Boolean done, LocalDateTime doneTime, int priority, User user) {
         this.todoId = todoId;
         this.title = title;
         this.start = start;
         this.end = end;
         this.description = description;
         this.viewer = viewer;
+        this.done = done;
+        this.doneTime = doneTime;
         this.priority = priority;
         this.user = user;
     }
+
 
     // == Todo 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
@@ -74,17 +83,8 @@ public class Todo extends BaseEntity {
         this.priority = priority;
     }
 
-    public TodoRespondDto toDtoRespond(Todo todo){
-        return TodoRespondDto.builder()
-            .todoId(todo.getTodoId())
-            .title(todo.getTitle())
-            .start(todo.start)
-            .end(todo.end)
-            .description(todo.getDescription())
-            .viewer(todo.getViewer())
-            .priority(todo.getPriority())
-            .user(todo.getUser().getUserId())
-            .build();
+    public void changeDone(Boolean done) {
+        this.done = done;
     }
 
 

@@ -5,9 +5,6 @@ import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.PageRequestDto;
 import kr.bora.api.todo.dto.PageResultDto;
 import kr.bora.api.todo.dto.TodoDto;
-import kr.bora.api.user.domain.User;
-
-import java.util.List;
 
 public interface TodoService {
 
@@ -35,11 +32,13 @@ public interface TodoService {
                 .priority(todo.getPriority())
                 .regDate(todo.getRegDate())
                 .modDate(todo.getModDate())
+                .done(todo.getDone())
+                .doneTime(todo.getDoneTime())
                 .build();
     }
 
 
-    default Todo toEntitySaveUserId(TodoDto dto) {
+    default Todo toEntitySaveTodo(TodoDto dto) {
         return Todo.builder()
                 .title(dto.getTitle())
                 .start(dto.getStart())
@@ -47,6 +46,8 @@ public interface TodoService {
                 .priority(dto.getPriority())
                 .viewer(dto.getViewer())
                 .description(dto.getDescription())
+                .done(dto.isDone())
+                .doneTime(dto.getDoneTime())
                 .user((dto.getUserId()).saveId(dto.getUserId()))
                 .build();
     }

@@ -33,14 +33,6 @@ public class TodoReplyServiceImpl implements TodoReplyService {
         return result.stream().map(this::entityTodoReplyDto).collect(Collectors.toList());
     }
 
-    @Override
-    @Transactional
-    public void modify(Long todoReplyId, TodoReplyDto todoReplyDto) {
-        TodoReply todoReply = todoReplyRepository.getById(todoReplyId);
-        todoReply.changeText(todoReplyDto.getText());
-
-        todoReplyRepository.save(todoReply);
-    }
 
 
     @Override

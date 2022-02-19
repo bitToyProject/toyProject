@@ -1,10 +1,11 @@
 package kr.bora.api.subtask.dto;
 
-import kr.bora.api.user.dto.UserRequestDto;
+import kr.bora.api.todo.dto.TodoUserDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -17,7 +18,7 @@ public class SubTaskDto {
 
     private Long subTaskId;
 
-    private UserRequestDto userId;
+    private TodoUserDto userId;
 
     private Long todoId;
 
@@ -29,11 +30,16 @@ public class SubTaskDto {
 
     private String assignee;
 
+    private Boolean done;
+
+    @LastModifiedDate
+    private LocalDateTime doneTime;
+
     private LocalDateTime regDate;
     private LocalDateTime modDate;
 
     @Builder
-    public SubTaskDto(Long subTaskId, UserRequestDto userId, Long todoId, String title, String start, String end, String assignee, LocalDateTime regDate, LocalDateTime modDate) {
+    public SubTaskDto(Long subTaskId, TodoUserDto userId, Long todoId, String title, String start, String end, String assignee, Boolean done, LocalDateTime doneTime, LocalDateTime regDate, LocalDateTime modDate) {
         this.subTaskId = subTaskId;
         this.userId = userId;
         this.todoId = todoId;
@@ -41,6 +47,8 @@ public class SubTaskDto {
         this.start = start;
         this.end = end;
         this.assignee = assignee;
+        this.done = done;
+        this.doneTime = doneTime;
         this.regDate = regDate;
         this.modDate = modDate;
     }

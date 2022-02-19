@@ -40,7 +40,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public Long save(TodoDto todoDto) {
-        Todo todo = toEntitySaveUserId(todoDto);
+        Todo todo = toEntitySaveTodo(todoDto);
         repository.save(todo);
         return todoDto.getTodoId();
     }
@@ -63,6 +63,7 @@ public class TodoServiceImpl implements TodoService {
         todo.changeEnd(todoDto.getEnd());
         todo.changeViewer(todoDto.getViewer());
         todo.changePriority(todoDto.getPriority());
+        todo.changeDone(todoDto.isDone());
 
         repository.save(todo);
     }

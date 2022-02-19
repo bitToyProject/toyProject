@@ -31,15 +31,6 @@ public class TodoReplyController {
         return ResponseEntity.ok(obj);
     }
 
-
-    @PutMapping("/modify/{todoReplyId}")
-    public ResponseEntity<String> todoModify(@PathVariable("todoReplyId") Long todoReplyId, @RequestBody TodoReplyDto todoReplyDto) {
-        todoReplyService.modify(todoReplyId, todoReplyDto);
-
-        return ResponseEntity.ok(todoReplyId + "번 댓글이 수정되었습니다.");
-
-    }
-
     @DeleteMapping("/remove/{todoReplyId}")
     public ResponseEntity<Map<String, Object>> todoReplyRemove(@PathVariable Long todoReplyId) {
         Map<String, Object> resultMap = new HashMap<>();

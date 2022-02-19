@@ -1,6 +1,5 @@
 package kr.bora.api.todo.dto;
 
-import kr.bora.api.user.dto.UserRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +15,7 @@ import java.time.LocalDateTime;
 public class TodoDto {
 
     private Long todoId;
-
-    private UserRequestDto userId;
-
+    private TodoUserDto userId;
     private String title;
 
     private String start;
@@ -29,16 +26,19 @@ public class TodoDto {
 
     private String viewer;
 
+    private TodoUserDto nickname;
+
     private int priority;
 
-    private UserRequestDto username;
+    private boolean done;
 
+    private LocalDateTime doneTime;
 
     private LocalDateTime regDate;
     private LocalDateTime modDate;
 
     @Builder
-    public TodoDto(Long todoId, UserRequestDto userId, String title, String start, String end, String description, String viewer, int priority, UserRequestDto username, LocalDateTime regDate, LocalDateTime modDate) {
+    public TodoDto(Long todoId, TodoUserDto userId, String title, String start, String end, String description, String viewer, TodoUserDto nickname, int priority, boolean done, LocalDateTime doneTime, LocalDateTime regDate, LocalDateTime modDate) {
         this.todoId = todoId;
         this.userId = userId;
         this.title = title;
@@ -46,10 +46,11 @@ public class TodoDto {
         this.end = end;
         this.description = description;
         this.viewer = viewer;
+        this.nickname = nickname;
         this.priority = priority;
-        this.username = username;
+        this.done = done;
+        this.doneTime = doneTime;
         this.regDate = regDate;
         this.modDate = modDate;
     }
-
 }

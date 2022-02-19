@@ -22,6 +22,8 @@ public interface SubTaskService {
                 .start(dto.getStart())
                 .end(dto.getEnd())
                 .assignee(dto.getAssignee())
+                .done(dto.getDone())
+                .doneTime(dto.getDoneTime())
                 .todo(Todo.builder().todoId(dto.getTodoId()).build())
                 .user((dto.getUserId()).saveId(dto.getUserId()))
                 .build();
@@ -38,6 +40,8 @@ public interface SubTaskService {
                 .assignee(subTask.getAssignee())
                 .regDate(subTask.getRegDate())
                 .modDate(subTask.getModDate())
+                .done(subTask.isDone())
+                .doneTime(subTask.getDoneTime())
                 .todoId(subTask.getTodo().getTodoId())
                 .build();
 

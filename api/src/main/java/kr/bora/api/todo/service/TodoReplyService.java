@@ -12,8 +12,6 @@ public interface TodoReplyService {
 
     void delete(Long todoRno);
 
-    void modify(Long todoReplyId, TodoReplyDto todoReplyDto);
-
     List<TodoReplyDto> getList(Long todoId);
 
     default TodoReplyDto entityTodoReplyDto(TodoReply todoReply) {

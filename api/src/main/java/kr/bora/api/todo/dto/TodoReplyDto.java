@@ -1,6 +1,5 @@
 package kr.bora.api.todo.dto;
 
-import kr.bora.api.user.dto.UserRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ public class TodoReplyDto {
 
     private Long todoReplyId;
 
-    private UserRequestDto userId;
+    private TodoUserDto userId;
 
     private Long todoId;
 
@@ -26,7 +25,7 @@ public class TodoReplyDto {
     private LocalDateTime modDate;
 
     @Builder
-    public TodoReplyDto(Long todoReplyId, UserRequestDto userId, Long todoId, String text, String todoReplyer, LocalDateTime regDate, LocalDateTime modDate) {
+    public TodoReplyDto(Long todoReplyId, TodoUserDto userId, Long todoId, String text, String todoReplyer, LocalDateTime regDate, LocalDateTime modDate) {
         this.todoReplyId = todoReplyId;
         this.userId = userId;
         this.todoId = todoId;

@@ -5,8 +5,10 @@ import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.*;
 import org.hibernate.envers.Audited;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Table(name = "subtasks")
 @Entity
@@ -29,6 +31,11 @@ public class SubTask extends BaseEntity {
 
     private String assignee;
 
+    private boolean done;
+
+    @LastModifiedDate
+    private LocalDateTime doneTime;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "todo_id")
     private Todo todo;
@@ -38,12 +45,14 @@ public class SubTask extends BaseEntity {
     private User user;
 
     @Builder
-    public SubTask(Long subTaskId, String title, String start, String end, String assignee, Todo todo, User user) {
+    public SubTask(Long subTaskId, String title, String start, String end, String assignee, boolean done, LocalDateTime doneTime, Todo todo, User user) {
         this.subTaskId = subTaskId;
         this.title = title;
         this.start = start;
         this.end = end;
         this.assignee = assignee;
+        this.done = done;
+        this.doneTime = doneTime;
         this.todo = todo;
         this.user = user;
     }
@@ -63,5 +72,9 @@ public class SubTask extends BaseEntity {
 
     public void changeAssignee(String assignee) {
         this.assignee = assignee;
+    }
+
+    public void changeDone(Boolean done) {
+        this.done = done;
     }
 }

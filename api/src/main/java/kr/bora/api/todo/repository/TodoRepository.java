@@ -2,6 +2,7 @@ package kr.bora.api.todo.repository;
 
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.repository.search.SearchTodoRepository;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +20,8 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, SearchTodoRep
     Todo getTodo(@Param("todoId") Long todoId);
 
     /*JPA N+1문제 해결 방안 JOIN FETCH 또는 Entity Graph */
-    @Query(value = "SELECT a FROM Todo a join fetch a.user")
+    @EntityGraph(attributePaths = "user")
+    @Query(value = "SELECT a FROM Todo a")
     List<Todo> getList();
 
     // User 삭제 시 Todo 데이터도 삭제
@@ -27,5 +29,4 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, SearchTodoRep
     @Query("DELETE FROM Todo t where t.user.userId =:userId")
     void deleteTodoUserId(@Param("userId") long userId);
 
-    Todo findByTodoId(Long todoId);
 }
