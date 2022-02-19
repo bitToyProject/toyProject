@@ -1,4 +1,5 @@
 package kr.bora.api.user.config;
+
 import kr.bora.api.user.jwt.JwtAccessDeniedHandler;
 import kr.bora.api.user.jwt.JwtAuthenticationEntryPoint;
 import kr.bora.api.user.jwt.TokenProvider;
@@ -36,30 +37,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
-
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
-                .authorizeRequests()
+                .authorizeRequests()             
+                .antMatchers("/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/oauth/**",
+                        "/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/reply/**/**",
 
-
-<<<<<<< HEAD
-                .antMatchers("/auth/**", "/user/**/**", "/chat/**", "/todos/**/**","/mail/**","/oauth/**")
-=======
-                .antMatchers("/auth/**", "/user/**/**", "/chat/**", "/todos/**/**","/mail/**",
                         "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
->>>>>>> 4a3649915525453f0fc692fffe0932a8bde5bf1f
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
-
-
     }
 }

@@ -3,6 +3,7 @@ package kr.bora.api.repository;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.util.SecurityUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,7 @@ public class TodoRepositoryTest {
 //    public void insertTodo() {
 //        IntStream.rangeClosed(1, 10).forEach(i -> {
 //            User user = User.builder()
-//                    .userId((long) i)
+//                    .userId(SecurityUtil.getCurrentUserId())
 //                    .build();
 //
 //            Todo todo = Todo.builder()
