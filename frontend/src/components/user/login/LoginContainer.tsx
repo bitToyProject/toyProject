@@ -1,23 +1,23 @@
-import React, { useState, MouseEvent } from 'react';
-import { useMutation } from 'react-query';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { ILoginValType } from 'src/types/loginTypes';
-import { setCookies } from 'src/utils/cookie/Cookie';
-import InputModule from 'src/components/common/input/InputModule';
-import ColoredButton from 'src/components/common/button/ColoredButton';
+import React, { useState, MouseEvent } from "react";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { ILoginValType } from "src/types/loginTypes";
+import { setCookies } from "src/utils/cookie/Cookie";
+import InputModule from "src/components/common/input/InputModule";
+import ColoredButton from "src/components/common/button/ColoredButton";
 
-const LoginPage = () => {
+const LoginContainer = () => {
   const [loginVal, setLoginVal] = useState<ILoginValType>({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
   const [disabled, setDisabled] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const doLogin = useMutation((data: ILoginValType) =>
-    axios.post('/auth/login', data)
+    axios.post("/auth/login", data)
   );
 
   const handleClick = (
@@ -29,12 +29,12 @@ const LoginPage = () => {
     doLogin.mutate(loginVal, {
       onSuccess: async (response) => {
         const accessToken = await response.data.data.accessToken;
-        setCookies('loginToken', accessToken, {
-          path: '/',
+        setCookies("loginToken", accessToken, {
+          path: "/",
           // httpOnly: true,
           maxAge: 60 * 60 * 24 * 7,
         });
-        navigate('/task/todo');
+        navigate("/task/todo");
       },
       onError: (err) => {},
     });
@@ -80,13 +80,13 @@ const LoginPage = () => {
           </div>
           <div className="mt-6 text-center">
             <p>
-              <Link to="/member/findPassword" className="text-sm">
-                {' '}
+              <Link to="/user/findPassword" className="text-sm">
+                {" "}
                 비밀번호 찾기
               </Link>
             </p>
             <p>
-              <Link to="/member/signup" className="text-sm">
+              <Link to="/user/signup" className="text-sm">
                 회원가입
               </Link>
             </p>
@@ -97,4 +97,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginContainer;

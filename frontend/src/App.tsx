@@ -19,7 +19,7 @@ const App = () => {
         <Suspense fallback={<Loading />}>
           <Header />
           <Routes>
-            <Route path="/" element={<LoginContainer />}></Route>
+            <Route path="" element={<LoginContainer />}></Route>
             <Route path={"user/signup"} element={<SignupContainer />}></Route>
             <Route path={"user/mail_auth"} element={<MailContainer />}></Route>
             <Route
