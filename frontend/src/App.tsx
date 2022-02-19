@@ -20,10 +20,13 @@ const App = () => {
           <Header />
           <Routes>
             <Route path="/" element={<LoginContainer />}></Route>
-            <Route path={"member/signup"} element={<SignupContainer />}></Route>
-            <Route path={"member/mail_auth"} element={<MailContainer />}></Route>
-            <Route path={"member/find-password"} element={<MailContainer />}></Route>
-            <Route path={"member/myPage"} element={<MailContainer />}></Route>
+            <Route path={"user/signup"} element={<SignupContainer />}></Route>
+            <Route path={"user/mail_auth"} element={<MailContainer />}></Route>
+            <Route
+              path={"user/find-password"}
+              element={<MailContainer />}
+            ></Route>
+            <Route path={"user/myPage"} element={<MailContainer />}></Route>
             <Route path={"task/todo"} element={<TodoContainer />}></Route>
             {/* <Route path={"task/editorTest"} element={<TextEditor />}></Route> */}
           </Routes>
