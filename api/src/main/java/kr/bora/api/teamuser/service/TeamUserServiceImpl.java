@@ -49,4 +49,13 @@ public class TeamUserServiceImpl implements TeamUserService{
         log.info("조회된 팀, 팀원 : {}",result);
         return result;
     }
+
+    @Override
+    public TeamUsersResponseDto addTeamUsers(Long teamId, TeamUsersDto dto) {
+        log.info("팀원 추가 시작");
+        List<TeamUser> teamUserEntityList = dto.toEntityList(teamId, dto);
+        TeamUsersResponseDto result = TeamUser.toTeamUsersResponse(teamUserEntityList);
+        log.info("추가된 팀원 : {}",result);
+        return result;
+    }
 }

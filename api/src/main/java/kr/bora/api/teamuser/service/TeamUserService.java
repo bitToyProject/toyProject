@@ -14,4 +14,6 @@ public interface TeamUserService {
     List<TeamUserResponse> saveTeamUsers(TeamUsersDto dto);
 
     TeamUsersResponseDto findTeamUsers(Long teamId);
+
+    TeamUsersResponseDto addTeamUsers(Long teamId, TeamUsersDto dto);
 }

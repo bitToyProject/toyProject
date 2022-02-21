@@ -40,5 +40,16 @@ public class CommandDto {
 
         }
     }
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class CommanderAddUsers{
+        private List<Long> user;
+        TeamUsersDto toDto(){
+            return TeamUsersDto.builder()
+                .users(user)
+                .build();
+        }
+    }
 
 }
