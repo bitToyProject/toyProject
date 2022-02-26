@@ -47,6 +47,9 @@ public class User{
     @Column(name = "gender",nullable = false)
     private int gender;
 
+    @Column(name = "indi_title",nullable = false)
+    private Title title;
+
     @Column(name="authority")
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
@@ -54,7 +57,7 @@ public class User{
 
     @Builder
     public User(Long userId, String username, String password, String lastName, String firstName
-        , String nickName, String phoneNum, int gender, Authority authority) {
+        , String nickName, String phoneNum, int gender, Authority authority, Title title) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -64,6 +67,7 @@ public class User{
         this.phoneNum = phoneNum;
         this.gender = gender;
         this.authority = authority;
+        this.title = title;
     }
 
     public void changePassword(String password) {

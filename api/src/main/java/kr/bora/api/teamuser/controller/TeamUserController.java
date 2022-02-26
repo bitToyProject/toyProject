@@ -1,6 +1,5 @@
 package kr.bora.api.teamuser.controller;
 
-import java.util.List;
 import kr.bora.api.teamuser.domain.dto.TeamUserDto;
 import kr.bora.api.teamuser.domain.dto.TeamUserResponse;
 import kr.bora.api.teamuser.domain.dto.TeamUsersDto;
@@ -9,6 +8,8 @@ import kr.bora.api.teamuser.service.TeamUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/team")
