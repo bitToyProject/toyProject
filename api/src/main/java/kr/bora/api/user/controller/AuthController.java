@@ -35,10 +35,10 @@ public class AuthController {
     }
     @ApiOperation(value="로그인", notes="로그인을 진행합니다.")
     @PostMapping("/login")
-    public ResponseEntity<CommonResponse> login(@RequestBody LoginRequestDto userRequestDto) {
-        boolean dup = mailService.isCheckedAuthMail(userRequestDto.getUsername());
+    public ResponseEntity<CommonResponse> login(@RequestBody LoginRequestDto loginRequestDto) {
+        boolean dup = mailService.isCheckedAuthMail(loginRequestDto.getUsername());
         Assert.isTrue(dup,"mail's confirmed");
-        return ResponseEntity.ok(authService.login(userRequestDto));
+        return ResponseEntity.ok(authService.login(loginRequestDto));
 
     }
 

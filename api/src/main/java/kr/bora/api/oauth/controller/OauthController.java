@@ -11,16 +11,9 @@ import org.springframework.web.bind.annotation.*;
 public class OauthController {
     private final OauthService service;
 
-    @GetMapping ("/code")
-    public String getCode(){
-        String code = service.getAuthCode();
-        log.info("code ====={}",code);
-        return code;
-    }
-
-    @GetMapping("/accesstoken")
+    @GetMapping("/get/code")
     public String getAccessToken(String code){
-        service.getKakaoAccessToken(code);
+//        service.getKakaoAccessToken(code);
         return "kakao auth server code :" + code;
     }
     //redirect_url
@@ -28,5 +21,10 @@ public class OauthController {
     public @ResponseBody String kakaoCallBack(@RequestParam String code){
         return "kakao auth server code :" + code;
     }
+//    @GetMapping("/get/accesstoken")
+//    public String getKakaoAccessToken(@RequestParam String authorizeCode) {
+////        service.get
+//    }
+
 
 }

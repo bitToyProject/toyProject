@@ -18,7 +18,7 @@ Content-Type: application/json
 
 {
   "authMail": "wkdgothf@gmail.com",
-  "key": "XFI5749"
+  "key": "IKX510"
 }
 
 ###
@@ -28,10 +28,5 @@ Content-Type: application/json
 
 {
   "username": "wkdgothf@gmail.com",
-  "password": "haesol2",
-  "lastName": "정",
-  "firstName": "해솔",
-  "nickname": "ssols",
-  "phoneNum": "01049380425",
-  "gender": "1"
+  "password": "haesol2"
 }

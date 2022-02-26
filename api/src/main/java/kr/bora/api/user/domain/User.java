@@ -58,6 +58,12 @@ public class User{
     @Column(name="authority")
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
+    @Column(name = "department")
+    @Enumerated(EnumType.STRING)
+    private Department department;
+    @Column(name = "part")
+    @Enumerated(EnumType.STRING)
+    private Part part;
 
 
 
