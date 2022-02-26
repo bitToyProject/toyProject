@@ -8,13 +8,13 @@ import kr.bora.api.todo.domain.Todo;
 import java.util.List;
 public interface SubTaskService {
 
-    Long save(SubTaskDto subTaskDto, Long TodoId);
+    Long subTaskSave(SubTaskDto subTaskDto, Long TodoId);
 
-    void remove(Long subTaskId);
+    void subTaskRemove(Long subTaskId);
 
-    void modify(Long subTaskId, SubTaskDto subTaskDto);
+    void subTaskModify(Long subTaskId, SubTaskDto subTaskDto);
 
-    List<SubTaskDto> getList(Long todoId);
+    List<SubTaskDto> subTaskList(Long todoId);
 
     default SubTask dtoToEntity(SubTaskDto dto) {
         return SubTask.builder()

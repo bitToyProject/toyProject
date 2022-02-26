@@ -22,9 +22,15 @@ public class SubTaskServiceImpl implements SubTaskService {
     private final SubTaskRepository subTaskRepository;
     private final TodoRepository todoRepository;
 
+    /**
+     * SubTask 등록
+     * @param subTaskDto
+     * @param todoId
+     * @return
+     */
     @Override
     @Transactional
-    public Long save(SubTaskDto subTaskDto, Long todoId) {
+    public Long subTaskSave(SubTaskDto subTaskDto, Long todoId) {
 
         SubTask subTask = dtoToEntity(subTaskDto);
         subTaskRepository.save(subTask);
@@ -32,16 +38,26 @@ public class SubTaskServiceImpl implements SubTaskService {
         return subTaskDto.getSubTaskId();
     }
 
+    /**
+     * SubTask 리스트
+     * @param todoId
+     * @return
+     */
     @Override
-    public List<SubTaskDto> getList(Long todoId) {
+    public List<SubTaskDto> subTaskList(Long todoId) {
         List<SubTask> result = subTaskRepository.getSubTasksByTodoOrderByRegDate(Todo.builder().todoId(todoId).build());
 
         return result.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 
+    /**
+     * SubTask 수정
+     * @param subTaskId
+     * @param subTaskDto
+     */
     @Transactional
     @Override
-    public void modify(Long subTaskId, SubTaskDto subTaskDto) {
+    public void subTaskModify(Long subTaskId, SubTaskDto subTaskDto) {
         SubTask subTask = subTaskRepository.getById(subTaskId);
         subTask.changeTitle(subTaskDto.getTitle());
         subTask.changeStart(subTaskDto.getStart());
@@ -51,8 +67,12 @@ public class SubTaskServiceImpl implements SubTaskService {
         subTaskRepository.save(subTask);
     }
 
+    /**
+     * SubTask 삭제
+     * @param subTaskId
+     */
     @Override
-    public void remove(Long subTaskId) {
+    public void subTaskRemove(Long subTaskId) {
 
         subTaskRepository.deleteById(subTaskId);
     }

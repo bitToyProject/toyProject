@@ -15,16 +15,27 @@ import java.util.List;
 @Repository
 @Transactional(rollbackFor = Exception.class)
 public interface TodoRepository extends JpaRepository<Todo, Long>, SearchTodoRepository {
-
+    /**
+     * Todo 상세 글
+     * @param todoId
+     * @return
+     */
     @Query("SELECT to, w FROM Todo to LEFT JOIN to.user w where to.todoId = :todoId")
     Todo getTodo(@Param("todoId") Long todoId);
 
+    /**
+     * Todo 목록
+     * @return
+     */
     /*JPA N+1문제 해결 방안 JOIN FETCH 또는 Entity Graph */
     @EntityGraph(attributePaths = "user")
     @Query(value = "SELECT a FROM Todo a")
     List<Todo> getList();
 
-    // User 삭제 시 Todo 데이터도 삭제
+    /**
+     * 사용자 삭제 시 Todo 데이터 삭제
+     * @param userId
+     */
     @Modifying(clearAutomatically = true)
     @Query("DELETE FROM Todo t where t.user.userId =:userId")
     void deleteTodoUserId(@Param("userId") long userId);

@@ -32,13 +32,15 @@ public class TodoDto {
 
     private boolean done;
 
+    private int point;
+
     private LocalDateTime doneTime;
 
     private LocalDateTime regDate;
     private LocalDateTime modDate;
 
     @Builder
-    public TodoDto(Long todoId, TodoUserDto userId, String title, String start, String end, String description, String viewer, TodoUserDto nickname, int priority, boolean done, LocalDateTime doneTime, LocalDateTime regDate, LocalDateTime modDate) {
+    public TodoDto(Long todoId, TodoUserDto userId, String title, String start, String end, String description, String viewer, TodoUserDto nickname, int priority, boolean done, int point, LocalDateTime doneTime, LocalDateTime regDate, LocalDateTime modDate) {
         this.todoId = todoId;
         this.userId = userId;
         this.title = title;
@@ -49,6 +51,7 @@ public class TodoDto {
         this.nickname = nickname;
         this.priority = priority;
         this.done = done;
+        this.point = point;
         this.doneTime = doneTime;
         this.regDate = regDate;
         this.modDate = modDate;

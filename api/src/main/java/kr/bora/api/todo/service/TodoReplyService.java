@@ -8,11 +8,11 @@ import kr.bora.api.todo.dto.TodoReplyDto;
 import java.util.List;
 
 public interface TodoReplyService {
-    Long save(TodoReplyDto todoReplyDto, Long todoId);
+    Long todoReplySave(TodoReplyDto todoReplyDto, Long todoId);
 
-    void delete(Long todoRno);
+    void todoReplyRemove(Long todoRno);
 
-    List<TodoReplyDto> getList(Long todoId);
+    List<TodoReplyDto> todoReplyList(Long todoId);
 
     default TodoReplyDto entityTodoReplyDto(TodoReply todoReply) {
         TodoRequestCommand.TodoRequest users = TodoRequestCommand.TodoRequest.builder().build();

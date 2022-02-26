@@ -1,10 +1,6 @@
 spring:
   datasource:
-<<<<<<< HEAD
-    url: jdbc:log4jdbc:mysql://localhost:3306/roots?serverTimezone=UTC&characterEncoding=UTF-8&autoReconnection=true
-=======
-    url:  jdbc:log4jdbc:mysql://localhost:3306/roots?serverTimezone=UTC&characterEncoding=UTF-8&autoReconnection=true
->>>>>>> ca1660da70a4c16ce4f368d7a194db4a9988d890
+    url: jdbc:log4jdbc:mysql://localhost:3306/roots?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&autoReconnection=true
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: root
     password: root
