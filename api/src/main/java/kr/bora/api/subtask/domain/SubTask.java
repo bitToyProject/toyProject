@@ -31,7 +31,9 @@ public class SubTask extends BaseEntity {
 
     private String assignee;
 
-    private boolean done;
+    private Boolean done;
+
+    private Integer point;
 
     @LastModifiedDate
     private LocalDateTime doneTime;
@@ -45,17 +47,20 @@ public class SubTask extends BaseEntity {
     private User user;
 
     @Builder
-    public SubTask(Long subTaskId, String title, String start, String end, String assignee, boolean done, LocalDateTime doneTime, Todo todo, User user) {
+    public SubTask(Long subTaskId, String title, String start, String end, String assignee, Boolean done, Integer point, LocalDateTime doneTime, Todo todo, User user) {
         this.subTaskId = subTaskId;
         this.title = title;
         this.start = start;
         this.end = end;
         this.assignee = assignee;
         this.done = done;
+        this.point = point;
         this.doneTime = doneTime;
         this.todo = todo;
         this.user = user;
     }
+
+
 
     // == Subtask 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
@@ -76,5 +81,9 @@ public class SubTask extends BaseEntity {
 
     public void changeDone(Boolean done) {
         this.done = done;
+    }
+
+    public void changePoint(Integer point) {
+        this.point = point;
     }
 }

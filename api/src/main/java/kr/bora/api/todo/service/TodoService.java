@@ -47,7 +47,7 @@ public interface TodoService {
                 .priority(dto.getPriority())
                 .viewer(dto.getViewer())
                 .description(dto.getDescription())
-                .done(dto.isDone())
+                .done(dto.getDone())
                 .doneTime(dto.getDoneTime())
                 .point(dto.getPoint())
                 .user((dto.getUserId()).saveId(dto.getUserId()))
