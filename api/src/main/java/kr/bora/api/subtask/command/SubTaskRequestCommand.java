@@ -1,5 +1,6 @@
-package kr.bora.api.todo.controller;
+package kr.bora.api.subtask.command;
 
+import kr.bora.api.subtask.dto.SubTaskDto;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.TodoUserDto;
 import kr.bora.api.user.util.SecurityUtil;
@@ -10,38 +11,36 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-public class TodoRequestCommand {
+public class SubTaskRequestCommand {
 
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class TodoRequest {
+    public static class SubTaskRequest {
         private String title;
         private String start;
         private String end;
-        private String description;
-        private String viewer;
-        private int priority;
-        private String username;
+        private String assignee;
+
         private Boolean done;
+
         private LocalDateTime doneTime;
 
-        public TodoDto toDto() {
-            Long userId = SecurityUtil.getCurrentUserId();
+        private TodoDto todo;
 
-            return TodoDto.builder()
+        public SubTaskDto toDto(Long todoId) {
+            Long userId = SecurityUtil.getCurrentUserId();
+            return SubTaskDto.builder()
                     .userId(TodoUserDto.builder().userId(userId).build())
+                    .todoId(todoId)
                     .title(title)
                     .start(start)
                     .end(end)
-                    .description(description)
-                    .viewer(viewer)
-                    .priority(priority)
+                    .assignee(assignee)
                     .done(false)
                     .doneTime(doneTime)
                     .build();
-
         }
 
     }

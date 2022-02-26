@@ -1,7 +1,7 @@
 package kr.bora.api.todo.repository.search;
 
 import kr.bora.api.todo.domain.Todo;
-import kr.bora.api.todo.dto.SearchCondition;
+import kr.bora.api.todo.dto.searchPageDto.SearchCondition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

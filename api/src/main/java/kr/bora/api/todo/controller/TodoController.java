@@ -6,9 +6,10 @@ package kr.bora.api.todo.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import kr.bora.api.todo.dto.PageRequestDto;
-import kr.bora.api.todo.dto.PageResultDto;
+import kr.bora.api.todo.command.TodoRequestCommand;
 import kr.bora.api.todo.dto.TodoDto;
+import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
+import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 import kr.bora.api.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -35,11 +36,9 @@ public class TodoController {
 
     @ApiOperation(value="Todo 등록", notes="Todo 리스트를 등록합니다.")
     @PostMapping("/save")
-    public ResponseEntity<Map<String, Object>> todoSave(@RequestBody TodoRequestCommand.TodoRequest todoDto) {
-        Map<String, Object> obj = new HashMap<>();
-        obj.put("Save Success Todo", todoDto.toDto().getUserId().getUserId() + "번 유저가 todo를 등록");
+    public ResponseEntity<String> todoSave(@RequestBody TodoRequestCommand.TodoRequest todoDto) {
         service.save(todoDto.toDto());
-        return ResponseEntity.ok(obj);
+        return ResponseEntity.ok("ToDo가 정상적으로 등록되었습니다.");
     }
 
     @ApiOperation(value="Todo 확인", notes="Todo를 확인합니다.")
@@ -67,5 +66,7 @@ public class TodoController {
 
         return ResponseEntity.ok(resultMap);
     }
+
+
 
 }

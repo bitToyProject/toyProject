@@ -1,10 +1,10 @@
 package kr.bora.api.todo.service;
 
-import kr.bora.api.todo.controller.TodoRequestCommand;
+import kr.bora.api.todo.command.TodoRequestCommand;
 import kr.bora.api.todo.domain.Todo;
-import kr.bora.api.todo.dto.PageRequestDto;
-import kr.bora.api.todo.dto.PageResultDto;
 import kr.bora.api.todo.dto.TodoDto;
+import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
+import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 
 public interface TodoService {
 

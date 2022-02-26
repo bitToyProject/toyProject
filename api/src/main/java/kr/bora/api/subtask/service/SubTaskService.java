@@ -2,7 +2,7 @@ package kr.bora.api.subtask.service;
 
 import kr.bora.api.subtask.domain.SubTask;
 import kr.bora.api.subtask.dto.SubTaskDto;
-import kr.bora.api.todo.controller.TodoRequestCommand;
+import kr.bora.api.todo.command.TodoRequestCommand;
 import kr.bora.api.todo.domain.Todo;
 
 import java.util.List;

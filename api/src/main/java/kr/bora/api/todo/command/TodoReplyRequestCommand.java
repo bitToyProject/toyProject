@@ -1,4 +1,4 @@
-package kr.bora.api.todo.controller;
+package kr.bora.api.todo.command;
 
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.TodoReplyDto;

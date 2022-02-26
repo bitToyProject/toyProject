@@ -39,6 +39,8 @@ public class Todo extends BaseEntity {
 
     private int priority;
 
+    private int viewCount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

@@ -7,6 +7,7 @@ import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @Api(tags={"4. User"})
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 @CrossOrigin("*")
+@Log4j2
 public class UserController {
 
     private final UserServiceImpl userServiceImpl;
@@ -47,5 +49,6 @@ public class UserController {
 
         return ResponseEntity.ok("회원정보 변경이 성공적으로 완료되었습니다.");
     }
+
 
 }
