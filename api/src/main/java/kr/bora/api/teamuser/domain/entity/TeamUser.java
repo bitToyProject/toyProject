@@ -36,6 +36,12 @@ public class TeamUser {
     @JoinColumn(name = "team")
     private Team team;
 
+    private TeamResponseDto toTeamResponseDto(TeamUser entity) {
+        return TeamResponseDto.builder()
+            .id(entity.getTeam().getId())
+            .teamName(entity.getTeam().getTeamName())
+            .build();
+    }
 
     public TeamUserResponse toResponse(TeamUser result) {
         return TeamUserResponse.builder()

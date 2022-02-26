@@ -1,11 +1,8 @@
 package kr.bora.api.team.controller;
 
-import java.util.List;
 import kr.bora.api.team.domain.dto.TeamRequestDto;
 import kr.bora.api.team.domain.dto.TeamResponseDto;
 import kr.bora.api.team.service.TeamService;
-import kr.bora.api.user.dto.UserRequestDto;
-import kr.bora.api.user.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

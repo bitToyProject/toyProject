@@ -21,40 +21,49 @@ repositories {
 }
 
 dependencies {
+// ##########################################SPRING###################################################################
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.5.3'
-    implementation 'org.projectlombok:lombok:1.18.20'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat:2.5.3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework:spring-context-support:5.3.12'
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    implementation 'org.springframework.data:spring-data-envers'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.0'
+
+// ##########################################JPA, QUERY DSL###########################################################
+    implementation 'com.querydsl:querydsl-jpa'
+
+// ###############################################LOMBOK##############################################################
+    implementation 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+    
+// ###############################################DATABASE############################################################
+    implementation 'org.springframework.data:spring-data-commons:2.6.0'
     runtimeOnly 'mysql:mysql-connector-java'
+
+// ###############################################SECURITY############################################################
     implementation 'org.apache.commons:commons-lang3:3.9'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.5.4'
-
-    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '3.0.0'
-
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'//이게 없으면 decoders.base64,keys 사용 불가
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1'
+    testImplementation 'org.springframework.security:spring-security-test:5.5.2'
+
+// ###############################################SWAGGER############################################################
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
     implementation 'io.springfox:springfox-swagger2:3.0.0'
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
-    implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1'
-    implementation 'org.springframework.boot:spring-boot-starter-tomcat:2.5.3'
-    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.0'
 
+// ###############################################MAIL############################################################
     implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
-    implementation 'org.springframework:spring-context-support:5.3.12'
-    implementation 'org.springframework.data:spring-data-commons:2.6.0'
-    implementation 'com.querydsl:querydsl-jpa'
-    implementation 'org.springframework.data:spring-data-envers'
-    testImplementation 'org.springframework.security:spring-security-test:5.5.2'
 
 }
 
