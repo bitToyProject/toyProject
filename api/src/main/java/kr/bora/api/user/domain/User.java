@@ -1,6 +1,7 @@
 package kr.bora.api.user.domain;
 
 import kr.bora.api.user.domain.reader.MailSender;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.DomainEvents;
 import javax.persistence.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 @Entity
 @Table(name="users")
@@ -45,24 +48,17 @@ public class User{
     @Column(name = "gender",nullable = false)
     private int gender;
 
+    @Column(name = "indi_title",nullable = false)
+    private Title title;
+
+    @Column(name = "mail_authentication",nullable = false)
+    private boolean mailChecked;
+
     @Column(name="authority")
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
 
 
-    @Builder
-    public User(Long userId, String username, String password, String lastName, String firstName
-        , String nickName, String phoneNum, int gender, Authority authority) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.nickName = nickName;
-        this.phoneNum = phoneNum;
-        this.gender = gender;
-        this.authority = authority;
-    }
 
 
     public void changePassword(String password) {

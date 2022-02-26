@@ -1,6 +1,8 @@
 package kr.bora.api.mailauth.service;
 
 import javax.mail.MessagingException;
+
+import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.mailauth.MailUtil;
 import kr.bora.api.mailauth.domain.dto.AuthMailDto;
 import kr.bora.api.mailauth.domain.entity.AuthMail;
@@ -66,8 +68,17 @@ public class MailSendServiceImpl implements MailSendService{
       repository.updateMailCheckStatus(authMailDto.getAuthMail());
       return true;
     }
-
-
     return false;
   }
+
+  @Override
+  public boolean isCheckedAuthMail(String username) {
+    AuthMail authMail = repository.findByAuthMailEquals(username);
+    if(authMail.getAuthStatus().equals(AuthMail.AuthStatus.CHECKED)){
+      return true;
+    }
+    return false;
+  }
+
+
 }

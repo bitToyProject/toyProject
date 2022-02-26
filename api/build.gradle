@@ -44,7 +44,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
-    
+
 // ###############################################DATABASE############################################################
     implementation 'org.springframework.data:spring-data-commons:2.6.0'
     runtimeOnly 'mysql:mysql-connector-java'

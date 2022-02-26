@@ -2,6 +2,7 @@ package kr.bora.api.user.service;
 
 
 import kr.bora.api.common.response.CommonResponse;
+import kr.bora.api.mailauth.repository.MailAuthRepository;
 import kr.bora.api.mailauth.service.MailSendServiceImpl;
 import kr.bora.api.user.domain.RefreshToken;
 import kr.bora.api.user.domain.User;
@@ -31,9 +32,9 @@ public class AuthServiceImpl implements AuthService{
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final MailSendServiceImpl mailSendService;
 
-//    private final MailAuthRepository mailAuthRepository;
+
+    private final MailAuthRepository mailAuthRepository;
 
 
     @Override
@@ -46,7 +47,6 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public CommonResponse<TokenDto> login(UserRequestDto userRequestDto) {
 
-//        mailAuthRepository.findbyMaidId();
 
         UsernamePasswordAuthenticationToken authenticationToken = userRequestDto.toAuthentication();
 

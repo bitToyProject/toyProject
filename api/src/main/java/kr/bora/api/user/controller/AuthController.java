@@ -1,5 +1,6 @@
 package kr.bora.api.user.controller;
 
+import com.mysema.commons.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -25,6 +26,7 @@ public class AuthController {
     private final AuthServiceImpl authService;
     private final MailSendServiceImpl mailService;
 
+
     @ApiOperation(value="회원 가입", notes="회원을 등록합니다.")
     @PostMapping("/signup")
     public ResponseEntity<CommonResponse> signup(@Valid @RequestBody UserRequestDto userRequestDto) {
@@ -33,7 +35,8 @@ public class AuthController {
     @ApiOperation(value="로그인", notes="로그인을 진행합니다.")
     @PostMapping("/login")
     public ResponseEntity<CommonResponse> login(@RequestBody UserRequestDto userRequestDto) {
-
+        boolean dup = mailService.isCheckedAuthMail(userRequestDto.getUsername());
+        Assert.isTrue(dup,"mail's confirmed");
         return ResponseEntity.ok(authService.login(userRequestDto));
 
     }

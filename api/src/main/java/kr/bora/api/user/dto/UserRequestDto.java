@@ -1,11 +1,9 @@
 package kr.bora.api.user.dto;
 
 import kr.bora.api.user.domain.Authority;
+import kr.bora.api.user.domain.Title;
 import kr.bora.api.user.domain.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,8 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.validation.constraints.Email;
 
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Log4j2
 public class UserRequestDto {
 
@@ -36,31 +35,10 @@ public class UserRequestDto {
     private int gender;
     private Authority authority;
 
+    private Title title;
+
     private String authKey;
 
-    @Builder
-    public UserRequestDto(
-            Long userId,
-            String username,
-            String password,
-            String lastName,
-            String firstName,
-            String nickName,
-            String phoneNum,
-            int gender,
-            Authority authority,
-            String authKey) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.nickName = nickName;
-        this.phoneNum = phoneNum;
-        this.gender = gender;
-        this.authority = authority;
-        this.authKey = authKey;
-    }
 
     public User toUserforSave(PasswordEncoder passwordEncoder) {
         return User.builder()
@@ -72,6 +50,7 @@ public class UserRequestDto {
                 .nickName(nickName)
                 .phoneNum(phoneNum)
                 .gender(gender)
+                .title(Title.STARTER)
                 .authority(Authority.ROLE_USER)
                 .build();
     }
@@ -93,13 +72,6 @@ public class UserRequestDto {
         return new UsernamePasswordAuthenticationToken(username, password);
     }
 
-    //    @Builder
-//    public UserRequestDto(Long userId, String username, String password,Authority authority) {
-//        this.userId = userId;
-//        this.username = username;
-//        this.password = password;
-//        this.authority = authority;
-//    }
     public User saveId(UserRequestDto dto) {
 
         log.info("asdasdsa" + dto.userId);

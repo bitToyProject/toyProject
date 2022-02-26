@@ -14,8 +14,11 @@ public interface MailAuthRepository extends JpaRepository<AuthMail,Long> {
     @Query(value = "SELECT a.authMailKey FROM AuthMail a WHERE a.authMail =:authmail")
     String findAuthMailKeyByAuthMail(@Param("authmail") String authmail);
 
+
     @Transactional(rollbackFor = Exception.class)
     @Modifying
     @Query(value = "update AuthMail a set a.authStatus ='CHECKED' where a.authMail=:authmail")
     void updateMailCheckStatus(@Param("authmail")String authmail);
+
+    AuthMail findByAuthMailEquals(String mail);
 }
