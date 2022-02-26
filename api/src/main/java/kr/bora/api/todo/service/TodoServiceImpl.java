@@ -80,8 +80,6 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public void todoModify(Long todoId, TodoDto todoDto) {
 
-        int defaultVal = 10;
-
         Todo todo = repository.getById(todoId);
         todo.changeTitle(todoDto.getTitle());
         todo.changeDescription(todoDto.getDescription());
@@ -89,9 +87,9 @@ public class TodoServiceImpl implements TodoService {
         todo.changeEnd(todoDto.getEnd());
         todo.changeViewer(todoDto.getViewer());
         todo.changePriority(todoDto.getPriority());
-        todo.changeDone(todoDto.isDone());
+        todo.changeDone(todoDto.getDone());
 
-        todo.changePoint(todoDto.isDone() == true ? todoDto.getPoint() + 10 : 0);
+        todo.changePoint(todoDto.getDone() == true ? todoDto.getPoint() + 10 : 0);
 
         repository.save(todo);
     }

@@ -16,16 +16,17 @@ public interface SubTaskService {
 
     List<SubTaskDto> subTaskList(Long todoId);
 
-    default SubTask dtoToEntity(SubTaskDto dto) {
+    default SubTask dtoToEntity(SubTaskDto subTaskDto) {
         return SubTask.builder()
-                .title(dto.getTitle())
-                .start(dto.getStart())
-                .end(dto.getEnd())
-                .assignee(dto.getAssignee())
-                .done(dto.getDone())
-                .doneTime(dto.getDoneTime())
-                .todo(Todo.builder().todoId(dto.getTodoId()).build())
-                .user((dto.getUserId()).saveId(dto.getUserId()))
+                .title(subTaskDto.getTitle())
+                .start(subTaskDto.getStart())
+                .end(subTaskDto.getEnd())
+                .assignee(subTaskDto.getAssignee())
+                .done(subTaskDto.getDone())
+                .doneTime(subTaskDto.getDoneTime())
+                .point(subTaskDto.getPoint())
+                .todo(Todo.builder().todoId(subTaskDto.getTodoId()).build())
+                .user((subTaskDto.getUserId()).saveId(subTaskDto.getUserId()))
                 .build();
     }
 
@@ -40,8 +41,9 @@ public interface SubTaskService {
                 .assignee(subTask.getAssignee())
                 .regDate(subTask.getRegDate())
                 .modDate(subTask.getModDate())
-                .done(subTask.isDone())
+                .done(subTask.getDone())
                 .doneTime(subTask.getDoneTime())
+                .point(subTask.getPoint())
                 .todoId(subTask.getTodo().getTodoId())
                 .build();
 

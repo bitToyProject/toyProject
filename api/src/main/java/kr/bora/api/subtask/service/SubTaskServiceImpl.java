@@ -24,6 +24,7 @@ public class SubTaskServiceImpl implements SubTaskService {
 
     /**
      * SubTask 등록
+     *
      * @param subTaskDto
      * @param todoId
      * @return
@@ -40,6 +41,7 @@ public class SubTaskServiceImpl implements SubTaskService {
 
     /**
      * SubTask 리스트
+     *
      * @param todoId
      * @return
      */
@@ -52,6 +54,7 @@ public class SubTaskServiceImpl implements SubTaskService {
 
     /**
      * SubTask 수정
+     *
      * @param subTaskId
      * @param subTaskDto
      */
@@ -64,11 +67,15 @@ public class SubTaskServiceImpl implements SubTaskService {
         subTask.changeEnd(subTaskDto.getEnd());
         subTask.changeAssignee(subTaskDto.getAssignee());
         subTask.changeDone(subTaskDto.getDone());
+
+        subTask.changePoint(subTaskDto.getDone() == true ? subTask.getPoint() + 10 : 0);
+
         subTaskRepository.save(subTask);
     }
 
     /**
      * SubTask 삭제
+     *
      * @param subTaskId
      */
     @Override
