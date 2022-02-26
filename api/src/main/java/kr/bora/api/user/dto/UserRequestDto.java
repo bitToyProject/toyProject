@@ -67,11 +67,6 @@ public class UserRequestDto {
                 .username(dto.getUsername())
                 .build();
     }
-
-    public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(username, password);
-    }
-
     public User saveId(UserRequestDto dto) {
 
         log.info("asdasdsa" + dto.userId);

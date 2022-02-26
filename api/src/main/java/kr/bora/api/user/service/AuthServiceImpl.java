@@ -6,10 +6,7 @@ import kr.bora.api.mailauth.repository.MailAuthRepository;
 import kr.bora.api.mailauth.service.MailSendServiceImpl;
 import kr.bora.api.user.domain.RefreshToken;
 import kr.bora.api.user.domain.User;
-import kr.bora.api.user.dto.TokenDto;
-import kr.bora.api.user.dto.TokenRequestDto;
-import kr.bora.api.user.dto.UserRequestDto;
-import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.dto.*;
 import kr.bora.api.user.jwt.TokenProvider;
 import kr.bora.api.user.repository.RefreshTokenRepository;
 import kr.bora.api.user.repository.UserRepository;
@@ -45,10 +42,10 @@ public class AuthServiceImpl implements AuthService{
         return response;
     }
     @Override
-    public CommonResponse<TokenDto> login(UserRequestDto userRequestDto) {
+    public CommonResponse<TokenDto> login(LoginRequestDto loginRequestDto) {
 
 
-        UsernamePasswordAuthenticationToken authenticationToken = userRequestDto.toAuthentication();
+        UsernamePasswordAuthenticationToken authenticationToken = loginRequestDto.toAuthentication();
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 

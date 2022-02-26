@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.mailauth.service.MailSendServiceImpl;
+import kr.bora.api.user.dto.LoginRequestDto;
 import kr.bora.api.user.dto.TokenRequestDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.service.AuthServiceImpl;
@@ -34,7 +35,7 @@ public class AuthController {
     }
     @ApiOperation(value="로그인", notes="로그인을 진행합니다.")
     @PostMapping("/login")
-    public ResponseEntity<CommonResponse> login(@RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<CommonResponse> login(@RequestBody LoginRequestDto userRequestDto) {
         boolean dup = mailService.isCheckedAuthMail(userRequestDto.getUsername());
         Assert.isTrue(dup,"mail's confirmed");
         return ResponseEntity.ok(authService.login(userRequestDto));

@@ -1,10 +1,6 @@
 spring:
   datasource:
-<<<<<<< HEAD
     url: jdbc:log4jdbc:mysql://localhost:3306/roots?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&autoReconnection=true
-=======
-    url:  jdbc:log4jdbc:mysql://localhost:3306/roots?serverTimezone=UTC&characterEncoding=UTF-8&autoReconnection=true
->>>>>>> d7ac03e164e50c83a078b634fa30fb8102bc649c
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: root
     password: root
@@ -36,3 +32,11 @@ logging:
 # $ echo 'spring-boot-security-jwt-tutorial-jiwoon-spring-boot-security-jwt-tutorial' | base64
 jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+
+oauth:
+  granttype: authorization_code
+  clientid: 5501273f1cc12271bbecc0183e5c77f4
+  redirecturi: http://localhost:8080/oauth/kakao
+  code: GhhXcHaLH0ESJgUvjYGf8bAtz9A6pLDOitRmxSIsv9wgnVWw1hRWNHdiZnHQOmK-vnn-Two9dNsAAAF-XJlP7Q
+  clientsecret: nfSzoJ9ny0CxHr3z0qFZzSxCBvjlENF8
+  headervalue: application/x-www-form-urlencoded;charset=utf-8

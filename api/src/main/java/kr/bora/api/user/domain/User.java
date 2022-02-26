@@ -49,6 +49,7 @@ public class User{
     private int gender;
 
     @Column(name = "indi_title",nullable = false)
+    @Enumerated(EnumType.STRING)
     private Title title;
 
     @Column(name = "mail_authentication",nullable = false)
