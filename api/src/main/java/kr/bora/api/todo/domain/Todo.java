@@ -34,19 +34,19 @@ public class Todo extends BaseEntity {
 
     private Boolean done;
 
+    private int point;
+
     @LastModifiedDate
     private LocalDateTime doneTime;
 
     private int priority;
-
-    private int viewCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    public Todo(Long todoId, String title, String start, String end, String description, String viewer, Boolean done, LocalDateTime doneTime, int priority, User user) {
+    public Todo(Long todoId, String title, String start, String end, String description, String viewer, Boolean done, int point, LocalDateTime doneTime, int priority, User user) {
         this.todoId = todoId;
         this.title = title;
         this.start = start;
@@ -54,11 +54,11 @@ public class Todo extends BaseEntity {
         this.description = description;
         this.viewer = viewer;
         this.done = done;
+        this.point = point;
         this.doneTime = doneTime;
         this.priority = priority;
         this.user = user;
     }
-
 
     // == Todo 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
@@ -86,8 +86,21 @@ public class Todo extends BaseEntity {
     }
 
     public void changeDone(Boolean done) {
+        if (done==true) {
+            point +=10;
+        } else{
+            point -=10;
+        }
+
         this.done = done;
     }
+
+    public void changePoint(int point) {
+
+        this.point = point;
+    }
+
+
 
 
 

@@ -5,7 +5,6 @@ import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
-import kr.bora.api.todo.repository.TodoLikeRepository;
 import kr.bora.api.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,10 +23,14 @@ public class TodoServiceImpl implements TodoService {
     private final TodoRepository repository;
     private final SubTaskRepository subTaskRepository;
 
-    private final TodoLikeRepository todoLikeRepository;
-
+    /**
+     * Todo 리스트
+     *
+     * @param pageRequestDto
+     * @return
+     */
     @Override
-    public PageResultDto getList(PageRequestDto pageRequestDto) {
+    public PageResultDto todoList(PageRequestDto pageRequestDto) {
 
         Function<Object[], TodoDto> fn = (arr -> entityTodoDto(
                 (Todo) arr[0]));
@@ -41,23 +44,43 @@ public class TodoServiceImpl implements TodoService {
         return new PageResultDto(result, fn);
     }
 
+    /**
+     * Todo 저장
+     *
+     * @param todoDto
+     * @return
+     */
     @Override
-    public Long save(TodoDto todoDto) {
+    public Long todoSave(TodoDto todoDto) {
         Todo todo = toEntitySaveTodo(todoDto);
         repository.save(todo);
         return todoDto.getTodoId();
     }
 
+    /**
+     * Todo 상세 읽기
+     *
+     * @param todoId
+     * @return
+     */
     @Override
-    public TodoDto get(Long todoId) {
+    public TodoDto todoRead(Long todoId) {
         Todo result = repository.getTodo(todoId);
 
         return entityTodoDto(result);
     }
 
+    /**
+     * Todo 수정
+     *
+     * @param todoId
+     * @param todoDto
+     */
     @Transactional
     @Override
-    public void modify(Long todoId, TodoDto todoDto) {
+    public void todoModify(Long todoId, TodoDto todoDto) {
+
+        int defaultVal = 10;
 
         Todo todo = repository.getById(todoId);
         todo.changeTitle(todoDto.getTitle());
@@ -68,9 +91,16 @@ public class TodoServiceImpl implements TodoService {
         todo.changePriority(todoDto.getPriority());
         todo.changeDone(todoDto.isDone());
 
+        todo.changePoint(todoDto.isDone() == true ? todoDto.getPoint() + 10 : 0);
+
         repository.save(todo);
     }
 
+    /**
+     * Todo 삭제
+     *
+     * @param todoId
+     */
     @Transactional
     @Override
     public void todoRemove(Long todoId) {

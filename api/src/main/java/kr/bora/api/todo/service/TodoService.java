@@ -8,13 +8,13 @@ import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 
 public interface TodoService {
 
-    PageResultDto<TodoDto, Object[]> getList(PageRequestDto pageRequestDto);
+    PageResultDto<TodoDto, Object[]> todoList(PageRequestDto pageRequestDto);
 
-    Long save(TodoDto todoDto);
+    Long todoSave(TodoDto todoDto);
 
-    TodoDto get(Long todoId);
+    TodoDto todoRead(Long todoId);
 
-    void modify(Long todoId, TodoDto todoDto);
+    void todoModify(Long todoId, TodoDto todoDto);
 
     void todoRemove(Long todoId);
 
@@ -34,6 +34,7 @@ public interface TodoService {
                 .modDate(todo.getModDate())
                 .done(todo.getDone())
                 .doneTime(todo.getDoneTime())
+                .point(todo.getPoint())
                 .build();
     }
 
@@ -48,6 +49,7 @@ public interface TodoService {
                 .description(dto.getDescription())
                 .done(dto.isDone())
                 .doneTime(dto.getDoneTime())
+                .point(dto.getPoint())
                 .user((dto.getUserId()).saveId(dto.getUserId()))
                 .build();
     }

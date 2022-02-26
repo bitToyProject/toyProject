@@ -28,35 +28,61 @@ public class TodoController {
 
     private final TodoService service;
 
+    /**
+     * Todo 목록
+     * @param pageRequestDto
+     * @return
+     */
     @ApiOperation(value="Todo 리스트", notes="Todo 리스트를 보여줍니다.")
     @GetMapping("/list/pages")
     public ResponseEntity<PageResultDto<TodoDto, Object[]>> todoList(PageRequestDto pageRequestDto) {
-        return ResponseEntity.ok(service.getList(pageRequestDto));
+        return ResponseEntity.ok(service.todoList(pageRequestDto));
     }
 
+    /**
+     * Todo 등록
+     * @param todoDto
+     * @return
+     */
     @ApiOperation(value="Todo 등록", notes="Todo 리스트를 등록합니다.")
     @PostMapping("/save")
     public ResponseEntity<String> todoSave(@RequestBody TodoRequestCommand.TodoRequest todoDto) {
-        service.save(todoDto.toDto());
+        service.todoSave(todoDto.toDto());
         return ResponseEntity.ok("ToDo가 정상적으로 등록되었습니다.");
     }
 
+    /**
+     * Todo 상세 읽기
+     * @param todoId
+     * @return
+     */
     @ApiOperation(value="Todo 확인", notes="Todo를 확인합니다.")
     @GetMapping("/read/{todoId}")
     public ResponseEntity<TodoDto> todoRead(@ApiParam(value="Todo 번호", required=true) @PathVariable("todoId") Long todoId) {
 
-        return ResponseEntity.ok(service.get(todoId));
+        return ResponseEntity.ok(service.todoRead(todoId));
     }
 
+    /**
+     * Todo 변경
+     * @param todoId
+     * @param todoDto
+     * @return
+     */
     @ApiOperation(value="Todo 변경", notes=" Todo를 변경합니다.")
     @PutMapping("/modify/{todoId}")
     public ResponseEntity<String> todoModify(@ApiParam(value="Todo 번호", required=true) @PathVariable("todoId") Long todoId, @RequestBody TodoDto todoDto) {
 
-        service.modify(todoId, todoDto);
+        service.todoModify(todoId, todoDto);
 
         return ResponseEntity.ok(todoId + "번 TODO가 수정되었습니다.");
     }
 
+    /**
+     * Todo 삭제
+     * @param todoId
+     * @return
+     */
     @ApiOperation(value="Todo 삭제", notes="Todo를 삭제합니다.")
     @DeleteMapping("/remove/{todoId}")
     public ResponseEntity<Map<String, Object>> todoRemove(@ApiParam(value="Todo 번호", required=true) @PathVariable("todoId") Long todoId) {
