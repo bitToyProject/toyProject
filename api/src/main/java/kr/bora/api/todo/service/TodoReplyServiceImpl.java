@@ -34,7 +34,6 @@ public class TodoReplyServiceImpl implements TodoReplyService {
     }
 
 
-
     @Override
     public void delete(Long todoRno) {
         todoReplyRepository.deleteById(todoRno);

@@ -12,25 +12,25 @@ import java.util.stream.IntStream;
 
 @SpringBootTest
 public class UserRepositoryTest {
-//    @Autowired
-//    private UserRepository userRepository;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-//
-//    @Test
-//    public void insertUser() {
-//        IntStream.rangeClosed(1, 10).forEach(i->{
-//            User user = User.builder()
-//                    .username("user" + i + "@naver.com")
-//                    .password(passwordEncoder.encode("woals1212!"))
-//                    .lastName("park"+i)
-//                    .firstName("jaemin"+i)
-//                    .gender(1)
-//                    .nickName("nick"+i)
-//                    .phoneNum("0506560"+i)
-//                    .authority(Authority.ROLE_USER)
-//                    .build();
-//            userRepository.save(user);
-//        });
-//    }
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Test
+    public void insertUser() {
+        IntStream.rangeClosed(1, 10).forEach(i->{
+            User user = User.builder()
+                    .username("user" + i + "@naver.com")
+                    .password(passwordEncoder.encode("woals1212!"))
+                    .lastName("park"+i)
+                    .firstName("jaemin"+i)
+                    .gender(1)
+                    .nickName("nick"+i)
+                    .phoneNum("0506560"+i)
+                    .authority(Authority.ROLE_USER)
+                    .build();
+            userRepository.save(user);
+        });
+    }
 }

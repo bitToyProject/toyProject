@@ -1,4 +1,4 @@
-package kr.bora.api.todo.dto;
+package kr.bora.api.todo.dto.searchPageDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package kr.bora.api.todo.service;
 
-import kr.bora.api.todo.controller.TodoRequestCommand;
+import kr.bora.api.todo.command.TodoRequestCommand;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoReply;
 import kr.bora.api.todo.dto.TodoReplyDto;

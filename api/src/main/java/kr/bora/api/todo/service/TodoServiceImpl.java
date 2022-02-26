@@ -2,9 +2,10 @@ package kr.bora.api.todo.service;
 
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
-import kr.bora.api.todo.dto.PageRequestDto;
-import kr.bora.api.todo.dto.PageResultDto;
 import kr.bora.api.todo.dto.TodoDto;
+import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
+import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
+import kr.bora.api.todo.repository.TodoLikeRepository;
 import kr.bora.api.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +23,8 @@ public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository repository;
     private final SubTaskRepository subTaskRepository;
+
+    private final TodoLikeRepository todoLikeRepository;
 
     @Override
     public PageResultDto getList(PageRequestDto pageRequestDto) {
