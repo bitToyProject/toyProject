@@ -1,4 +1,4 @@
-package kr.bora.api.oauth.entity;
+package kr.bora.api.oauth.domain.entity;
 
 import lombok.Data;
 
