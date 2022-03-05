@@ -22,7 +22,7 @@ public class OauthServiceImpl implements OauthService{
 
 
     @Override
-    public String getKakaoAccessToken(String code) {
+    public String getAuthorizeCode(String code) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -45,27 +45,5 @@ public class OauthServiceImpl implements OauthService{
             return responseEntity.getBody();
         }
         return "error";
-    }
-
-    @Override
-    public String getAuthCode() {
-//        https://kauth.kakao.com/oauth/authorize?client_id={위에서 받은 restapi키}&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        HttpEntity request = new HttpEntity(headers);
-
-        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(AUTH_URL)
-                .queryParam("client_id", CLIENT_ID)
-                .queryParam("redirect_uri", REDIRECT_URL)
-                .queryParam("response_type","code");
-//                .queryParam("client_secret", CLIENT_SECRET);
-        ResponseEntity<String> responseEntity = restTemplate.exchange(
-                uriComponentsBuilder.toUriString(),
-                HttpMethod.GET,
-                request,
-                String.class
-        );
-        return responseEntity.getBody();
     }
 }

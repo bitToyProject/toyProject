@@ -1,0 +1,7 @@
+###
+//카카오 서버로 부터 코드 받아오기
+GET http://localhost:8080/oauth/code
+
+###
+//카카오 서버로 부터 accessToken 받아오기
+GET http://localhost:8080/oauth/accesstoken

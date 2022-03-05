@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 public interface OauthService {
 
-    String getKakaoAccessToken(String code);
+    String getAuthorizeCode(String code);
 
-    String getAuthCode();
 }

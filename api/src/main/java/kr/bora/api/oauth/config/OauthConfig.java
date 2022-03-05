@@ -1,5 +1,6 @@
 package kr.bora.api.oauth.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -10,18 +11,34 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 @Component
 public class OauthConfig {
+    @Value("${oauth.granttype}")
+    private String grantType;
 
-    public static HttpEntity<MultiValueMap<String, String>> kakaoHttpEntity() {
+    @Value("${oauth.clientid}")
+    private String clientId;
+
+    @Value("${oauth.redirecturi}")
+    private String redirectUri;
+
+    @Value("${oauth.code}")
+    private String code;
+
+    @Value("${oauth.clientsecret}")
+    private String clientsecret;
+
+    @Value("${oauth.headervalue")
+    private String headerValue;
+
+    public HttpEntity<MultiValueMap<String, String>> kakaoHttpEntity() {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type","authorization_code");
-        params.add("client_id","5501273f1cc12271bbecc0183e5c77f4");
-        params.add("redirect_uri","http://localhost:8080/oauth/kakao");
-        params.add("code",
-            "GhhXcHaLH0ESJgUvjYGf8bAtz9A6pLDOitRmxSIsv9wgnVWw1hRWNHdiZnHQOmK-vnn-Two9dNsAAAF-XJlP7Q");
-        params.add("client_secret","nfSzoJ9ny0CxHr3z0qFZzSxCBvjlENF8");
+        params.add("grant_type", grantType);
+        params.add("client_id",clientId);
+        params.add("redirect_uri",redirectUri);
+        params.add("code", code);
+        params.add("client_secret",clientsecret);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-type","application/x-www-form-urlencoded;charset=utf-8");
+        headers.add("Content-type",headerValue);
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params,headers);
         return kakaoTokenRequest;
@@ -33,17 +50,16 @@ public class OauthConfig {
      * Content-type: application/x-www-form-urlencoded;charset=utf-8
      * 이 형실으로 카카오 쪽으로 key-value post 요청
      */
-    public static ResponseEntity<String> requestKakaoAccessToken() {
+    public ResponseEntity<String> requestKakaoAccessToken() {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type","authorization_code");
-        params.add("client_id","5501273f1cc12271bbecc0183e5c77f4");
-        params.add("redirect_uri","http://localhost:8080/oauth/kakao");
-        params.add("code",
-            "GhhXcHaLH0ESJgUvjYGf8bAtz9A6pLDOitRmxSIsv9wgnVWw1hRWNHdiZnHQOmK-vnn-Two9dNsAAAF-XJlP7Q");
-        params.add("client_secret","nfSzoJ9ny0CxHr3z0qFZzSxCBvjlENF8");
+        params.add("grant_type",grantType);
+        params.add("client_id",clientId);
+        params.add("redirect_uri",redirectUri);
+        params.add("code", code);
+        params.add("client_secret",clientsecret);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-type","application/x-www-form-urlencoded;charset=utf-8");
+        headers.add("Content-type",headerValue);
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params,headers);
 
