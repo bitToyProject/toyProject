@@ -22,9 +22,10 @@ public class TodoRequestCommand {
         private String end;
         private String description;
         private String viewer;
-        private int priority;
+        private Integer priority;
         private String username;
         private Boolean done;
+        private Integer point;
         private LocalDateTime doneTime;
 
         public TodoDto toDto() {
@@ -37,6 +38,7 @@ public class TodoRequestCommand {
                     .description(description)
                     .viewer(viewer)
                     .priority(priority)
+                    .point(point)
                     .done(false)
                     .doneTime(doneTime)
                     .build();

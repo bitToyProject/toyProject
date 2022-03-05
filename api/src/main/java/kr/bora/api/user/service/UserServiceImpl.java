@@ -22,13 +22,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final TodoRepository todoRepository;
 
-    public UserResponseDto getUserInfo(String email) {
-        return repository.findByusername(email)
-                .map(UserResponseDto::of)
-                .orElseThrow(() -> new RuntimeException("사용자 정보가 없습니다."));
-    }
-
-
     public UserResponseDto getMyInfo() {
         return repository.findById(SecurityUtil.getCurrentUserId())
                 .map(UserResponseDto::of)
@@ -45,13 +38,22 @@ public class UserServiceImpl implements UserService {
 
         user.changeNickname(userRequestDto.getNickName());
 
+        user.changeLastName(userRequestDto.getLastName());
+
+        user.changeFirstName(userRequestDto.getFirstName());
+
+        user.changeGender(userRequestDto.getGender());
+
+        user.changePhoneNum(userRequestDto.getPhoneNum());
+
         repository.save(user);
 
         UserRequestDto dtoEntity = entityDto(user, passwordEncoder);
 
         return dtoEntity;
     }
-    public void deleteUserRelate(UserRequestDto dto){
+
+    public void deleteUserRelate(UserRequestDto dto) {
         User user = dto.toUserEntity(dto);
         todoRepository.deleteTodoUserId(user.getUserId());
     }

@@ -15,9 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 @Api(tags={"2. Todo"})
 @RestController
 @Log4j2
@@ -85,12 +82,11 @@ public class TodoController {
      */
     @ApiOperation(value="Todo 삭제", notes="Todo를 삭제합니다.")
     @DeleteMapping("/remove/{todoId}")
-    public ResponseEntity<Map<String, Object>> todoRemove(@ApiParam(value="Todo 번호", required=true) @PathVariable("todoId") Long todoId) {
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("Result", todoId + " 번 Todo 삭제");
+    public ResponseEntity<String> todoRemove(@ApiParam(value="Todo 번호", required=true) @PathVariable("todoId") Long todoId) {
+
         service.todoRemove(todoId);
 
-        return ResponseEntity.ok(resultMap);
+        return ResponseEntity.ok("Todo가 정상적으로 삭제 되었습니다.");
     }
 
 

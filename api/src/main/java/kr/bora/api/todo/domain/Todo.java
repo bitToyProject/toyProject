@@ -95,7 +95,4 @@ public class Todo extends BaseEntity {
     }
 
 
-
-
-
 }

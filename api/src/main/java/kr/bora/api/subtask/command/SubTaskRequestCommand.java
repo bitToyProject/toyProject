@@ -24,7 +24,7 @@ public class SubTaskRequestCommand {
         private String assignee;
 
         private Boolean done;
-
+        private Integer point = 0;
         private LocalDateTime doneTime;
 
         private TodoDto todo;
@@ -39,6 +39,7 @@ public class SubTaskRequestCommand {
                     .end(end)
                     .assignee(assignee)
                     .done(false)
+                    .point(point)
                     .doneTime(doneTime)
                     .build();
         }

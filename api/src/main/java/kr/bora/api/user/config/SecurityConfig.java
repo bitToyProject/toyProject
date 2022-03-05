@@ -31,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-                .antMatchers("/h2-console/**", "/favicon.ico");
+                .antMatchers("/h2-console/**", "/favicon.ico", "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger*/**");
+
     }
 
     @Override
@@ -45,14 +46,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
-                .authorizeRequests()             
+                .authorizeRequests()
                 .antMatchers("/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/oauth/**",
-                        "/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/reply/**/**",
-
-                        "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
+                        "/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/reply/**/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
+
     }
 }

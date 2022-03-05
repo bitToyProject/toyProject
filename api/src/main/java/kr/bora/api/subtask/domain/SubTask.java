@@ -32,7 +32,6 @@ public class SubTask extends BaseEntity {
     private String assignee;
 
     private Boolean done;
-
     private Integer point;
 
     @LastModifiedDate

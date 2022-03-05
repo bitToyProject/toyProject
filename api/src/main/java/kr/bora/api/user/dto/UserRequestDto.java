@@ -3,7 +3,10 @@ package kr.bora.api.user.dto;
 import kr.bora.api.user.domain.Authority;
 import kr.bora.api.user.domain.Title;
 import kr.bora.api.user.domain.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +35,7 @@ public class UserRequestDto {
     //    @NotEmpty
     private String phoneNum;
     //    @NotNull
-    private int gender;
+    private Integer gender;
     private Authority authority;
 
     private Title title;

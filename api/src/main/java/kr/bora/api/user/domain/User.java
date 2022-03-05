@@ -46,9 +46,10 @@ public class User{
     private String phoneNum;
 
     @Column(name = "gender",nullable = false)
-    private int gender;
+    private Integer gender;
 
     @Column(name = "indi_title",nullable = false)
+    @Enumerated(EnumType.STRING)
     private Title title;
 
     @Column(name = "mail_authentication",nullable = false)
@@ -57,9 +58,7 @@ public class User{
     @Column(name="authority")
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
-
-
-
+    
 
     public void changePassword(String password) {
         this.password = password;
@@ -67,6 +66,22 @@ public class User{
 
     public void changeNickname(String nickName) {
         this.nickName = nickName;
+    }
+
+    public void changeFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void changeLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void changeGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public void changePhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     @Transient

@@ -1,6 +1,7 @@
 package kr.bora.api.repository;
 
 import kr.bora.api.user.domain.Authority;
+import kr.bora.api.user.domain.Title;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,8 @@ public class UserRepositoryTest {
                     .nickName("nick"+i)
                     .phoneNum("0506560"+i)
                     .authority(Authority.ROLE_USER)
+                    .title(Title.BEGINNER)
+                    .mailChecked(true)
                     .build();
             userRepository.save(user);
         });
