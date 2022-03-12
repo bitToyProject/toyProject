@@ -41,13 +41,7 @@ public class AuthServiceImpl implements AuthService{
         return response;
     }
     @Override
-<<<<<<< HEAD
-    public TokenDto login(UserRequestDto userRequestDto) {
-=======
-    public CommonResponse<TokenDto> login(LoginRequestDto loginRequestDto) {
-
->>>>>>> df61ecb844f5d5873c818a6dd220d3a55f823a29
-
+    public TokenDto login(LoginRequestDto loginRequestDto) {
         UsernamePasswordAuthenticationToken authenticationToken = loginRequestDto.toAuthentication();
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
