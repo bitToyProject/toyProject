@@ -58,19 +58,14 @@ public class User{
     @Column(name="authority")
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
-<<<<<<< HEAD
-    
-=======
-    @Column(name = "department")
-    @Enumerated(EnumType.STRING)
-    private Department department;
-    @Column(name = "part")
-    @Enumerated(EnumType.STRING)
-    private Part part;
 
+//    @Column(name = "department")
+//    @Enumerated(EnumType.STRING)
+//    private Department department;
+//    @Column(name = "part",)
+//    @Enumerated(EnumType.STRING)
+//    private Part part;
 
-
->>>>>>> df61ecb844f5d5873c818a6dd220d3a55f823a29
 
     public void changePassword(String password) {
         this.password = password;

@@ -1,6 +1,5 @@
 package kr.bora.api.user.service;
 
-<<<<<<< HEAD
 import kr.bora.api.user.dto.LoginRequestDto;
 import kr.bora.api.user.dto.TokenDto;
 import kr.bora.api.user.dto.TokenRequestDto;
