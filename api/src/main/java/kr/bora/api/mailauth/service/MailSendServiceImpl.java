@@ -1,14 +1,14 @@
 package kr.bora.api.mailauth.service;
 
+import java.io.UnsupportedEncodingException;
 import javax.mail.MessagingException;
-
-import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.mailauth.MailUtil;
 import kr.bora.api.mailauth.domain.dto.AuthMailDto;
 import kr.bora.api.mailauth.domain.entity.AuthMail;
 import kr.bora.api.mailauth.repository.MailAuthRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -50,11 +50,12 @@ public class MailSendServiceImpl implements MailSendService{
           .append(authMailDto.getKey())
 //          .append("'target='_blenk'>이메일 인증 확인</a>")
           .toString());
-//      sendMail.setFrom("wkdgothf321@gmail.com", "관리자");
+      sendMail.setFrom("wkdgothf321@gmail.com", "관리자");
       sendMail.setTo(authMailDto.getAuthMail());
       sendMail.send();
-    } catch (MessagingException e) {
+    } catch (MessagingException | UnsupportedEncodingException | MailException e) {
       e.printStackTrace();
+      log.error(e.getMessage(),e);
     }
     AuthMail authMail = authMailDto.toAuthMail(authMailDto.getAuthMail(), authMailDto.getKey());
     repository.save(authMail);

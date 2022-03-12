@@ -52,9 +52,6 @@ public class User{
     @Enumerated(EnumType.STRING)
     private Title title;
 
-    @Column(name = "mail_authentication",nullable = false)
-    private boolean mailChecked;
-
     @Column(name="authority")
     @Enumerated(EnumType.STRING) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;

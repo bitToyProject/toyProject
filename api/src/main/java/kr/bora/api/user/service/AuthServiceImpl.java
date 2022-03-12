@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService{
                 .build();
 
         refreshTokenRepository.save(refreshToken);
-
+        tokenDto.setUserName(loginRequestDto.getUsername());
         return tokenDto;
     }
 

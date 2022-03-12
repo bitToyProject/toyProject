@@ -3,9 +3,9 @@ POST http://localhost:8080/auth/signup
 Content-Type: application/json
 
 {
-  "username": "wkdgothf@gmail.com",
+  "username": "wndn@gmail.com",
   "password": "haesol2",
-  "lastName": "정",
+  "lastName": "두",
   "firstName": "해솔",
   "nickname": "ssols",
   "phoneNum": "01049380425",
@@ -17,8 +17,8 @@ POST http://localhost:8080/mail/check
 Content-Type: application/json
 
 {
-  "authMail": "wkdgothf@gmail.com",
-  "key": "IKX510"
+  "authMail": "wndn@gmail.com",
+  "key": "WLE8437"
 }
 
 ###
@@ -27,6 +27,6 @@ POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "username": "wkdgothf@gmail.com",
+  "username": "wndn@gmail.com",
   "password": "haesol2"
 }

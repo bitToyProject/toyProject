@@ -38,8 +38,8 @@ public class AuthController {
     @ApiOperation(value="로그인", notes="로그인을 진행합니다.")
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto loginRequestDto) {
-        boolean dup = mailService.isCheckedAuthMail(loginRequestDto.getUsername());
-        Assert.isTrue(dup,"mail's confirmed");
+//        boolean dup = mailService.isCheckedAuthMail(loginRequestDto.getUsername());
+//        Assert.isTrue(dup,"mail's confirmed");
         return ResponseEntity.ok(authService.login(loginRequestDto));
 
     }

@@ -16,4 +16,9 @@ public class TokenDto {
     private String accessToken;
     private String refreshToken;
     private Long accessTokenExpiresIn;
+
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }
