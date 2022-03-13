@@ -4,6 +4,8 @@ import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -16,6 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(exclude = "todo")
 @Audited(withModifiedFlag = true)
+@DynamicInsert
 public class SubTask extends BaseEntity {
 
     @Id
@@ -32,6 +35,8 @@ public class SubTask extends BaseEntity {
     private String assignee;
 
     private Boolean done;
+
+    @ColumnDefault("0")
     private Integer point;
 
     @LastModifiedDate
@@ -84,5 +89,10 @@ public class SubTask extends BaseEntity {
 
     public void changePoint(Integer point) {
         this.point = point;
+    }
+
+    @PrePersist
+    public void defaultSubtaskPoint() {
+        this.point = this.point == null ? 0 : this.point;
     }
 }

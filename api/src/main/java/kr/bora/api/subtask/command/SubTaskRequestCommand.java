@@ -24,7 +24,7 @@ public class SubTaskRequestCommand {
         private String assignee;
 
         private Boolean done;
-        private Integer point = 0;
+        private Integer point;
         private LocalDateTime doneTime;
 
         private TodoDto todo;

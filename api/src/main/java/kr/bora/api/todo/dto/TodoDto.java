@@ -51,9 +51,10 @@ public class TodoDto {
         this.nickname = nickname;
         this.priority = priority;
         this.done = done;
-        this.point = point;
+        this.point = getPoint();
         this.doneTime = doneTime;
         this.regDate = regDate;
         this.modDate = modDate;
     }
+
 }

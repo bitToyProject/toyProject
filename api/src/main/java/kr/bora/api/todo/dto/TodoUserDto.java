@@ -14,9 +14,12 @@ public class TodoUserDto {
 
     private Long userId;
 
+    private String username;
+
     public User saveId(TodoUserDto dto) {
 
         return User.builder().userId(dto.userId).build();
     }
+
 
 }

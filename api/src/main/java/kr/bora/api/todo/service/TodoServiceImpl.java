@@ -81,6 +81,7 @@ public class TodoServiceImpl implements TodoService {
     public void todoModify(Long todoId, TodoDto todoDto) {
 
         Todo todo = repository.getById(todoId);
+
         todo.changeTitle(todoDto.getTitle());
         todo.changeDescription(todoDto.getDescription());
         todo.changeStart(todoDto.getStart());
@@ -89,7 +90,7 @@ public class TodoServiceImpl implements TodoService {
         todo.changePriority(todoDto.getPriority());
         todo.changeDone(todoDto.getDone());
 
-        todo.changePoint(todoDto.getDone() == true ? todoDto.getPoint() + 10 : 0);
+        todo.changePoint(todoDto.getDone() ? todo.getPoint() + 10 : todo.getPoint() - 10);
 
         repository.save(todo);
     }

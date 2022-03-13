@@ -33,12 +33,10 @@ public class Todo extends BaseEntity {
     private String viewer;
 
     private Boolean done;
-
     private Integer point;
 
     @LastModifiedDate
     private LocalDateTime doneTime;
-
     private Integer priority;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -94,5 +92,9 @@ public class Todo extends BaseEntity {
         this.point = point;
     }
 
+    @PrePersist
+    public void defaultTodoPoint() {
+        this.point = this.point == null ? 0 : this.point;
+    }
 
 }
