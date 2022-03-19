@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Component
@@ -21,11 +22,13 @@ public class SubTaskDto {
     private TodoUserDto userId;
 
     private Long todoId;
-
+    @NotNull(message="SubTask 제목은 필수 입력 값입니다.")
     private String title;
 
+    @NotNull(message="SubTask 시작일은 필수 입력 값입니다.")
     private String start;
 
+    @NotNull(message="SubTask 종료일은 필수 입력 값입니다.")
     private String end;
 
     private String assignee;

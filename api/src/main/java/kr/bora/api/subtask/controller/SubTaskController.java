@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = {"3. SubTask"})
@@ -31,7 +32,7 @@ public class SubTaskController {
      */
     @ApiOperation(value = "SubTask 등록", notes = "SubTask를 등록 합니다.")
     @PostMapping("/save/{todoId}")
-    public ResponseEntity<String> subTaskSave(@RequestBody SubTaskRequestCommand.SubTaskRequest subTaskDto, @ApiParam(value = "Todo 번호", required = true) @PathVariable Long todoId) {
+    public ResponseEntity<String> subTaskSave(@Valid @RequestBody SubTaskRequestCommand.SubTaskRequest subTaskDto, @ApiParam(value = "Todo 번호", required = true) @PathVariable Long todoId) {
 
         service.subTaskSave(subTaskDto.toDto(todoId), todoId);
         return ResponseEntity.ok("SubTask가 성공적으로 등록되었습니다.");
@@ -58,7 +59,7 @@ public class SubTaskController {
      */
     @ApiOperation(value = "SubTask 변경", notes = "SubTask를 변경 합니다.")
     @PutMapping("/modify/{subTaskId}")
-    public ResponseEntity<String> subTaskModify(@ApiParam(value = "SubTask 번호", required = true) @PathVariable("subTaskId") Long subTaskId, @RequestBody SubTaskDto subTaskDto) {
+    public ResponseEntity<String> subTaskModify(@ApiParam(value = "SubTask 번호", required = true) @PathVariable("subTaskId") Long subTaskId, @Valid @RequestBody SubTaskDto subTaskDto) {
 
         service.subTaskModify(subTaskId, subTaskDto);
 

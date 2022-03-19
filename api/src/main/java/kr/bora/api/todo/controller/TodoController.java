@@ -15,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
 @Api(tags={"2. Todo"})
 @RestController
 @Log4j2
@@ -43,7 +46,7 @@ public class TodoController {
      */
     @ApiOperation(value="Todo 등록", notes="Todo 리스트를 등록합니다.")
     @PostMapping("/save")
-    public ResponseEntity<String> todoSave(@RequestBody TodoRequestCommand.TodoRequest todoDto) {
+    public ResponseEntity<String> todoSave(@Valid @RequestBody TodoRequestCommand.TodoRequest todoDto) {
         service.todoSave(todoDto.toDto());
         return ResponseEntity.ok("ToDo가 정상적으로 등록되었습니다.");
     }
@@ -68,7 +71,7 @@ public class TodoController {
      */
     @ApiOperation(value="Todo 변경", notes=" Todo를 변경합니다.")
     @PutMapping("/modify/{todoId}")
-    public ResponseEntity<String> todoModify(@ApiParam(value="Todo 번호", required=true) @PathVariable("todoId") Long todoId, @RequestBody TodoDto todoDto) {
+    public ResponseEntity<String> todoModify(@ApiParam(value="Todo 번호", required=true) @PathVariable("todoId") Long todoId, @Valid @RequestBody TodoDto todoDto) {
 
         service.todoModify(todoId, todoDto);
 

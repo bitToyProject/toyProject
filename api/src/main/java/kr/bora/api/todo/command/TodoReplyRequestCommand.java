@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 public class TodoReplyRequestCommand {
 
     @Getter
@@ -16,8 +18,10 @@ public class TodoReplyRequestCommand {
     @AllArgsConstructor
     @Builder
     public static class TodoReplyRequest{
+        @NotNull(message="댓글을 입력해주세요")
         private String text;
         private String todoReplyer;
+
         private TodoDto todo;
 
         public TodoReplyDto toDto(Long todoId) {

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class TodoReplyController {
      */
     @ApiOperation(value="Todo 댓글 등록", notes="Todo 댓글을 등록합니다.")
     @PostMapping("/save/{todoId}")
-    public ResponseEntity<Map<String, Object>> replySave(@ApiParam(value="Todo 번호", required=true) @RequestBody TodoReplyRequestCommand.TodoReplyRequest todoReplyDto, @PathVariable Long todoId) {
+    public ResponseEntity<Map<String, Object>> replySave(@ApiParam(value="Todo 번호", required=true) @Valid @RequestBody TodoReplyRequestCommand.TodoReplyRequest todoReplyDto, @PathVariable Long todoId) {
         Map<String, Object> obj = new HashMap<>();
         obj.put("Save Success TodoReply", todoReplyDto.toDto(todoId).getTodoId() + "번 Todo의 댓글이 등록되었습니다.");
         todoReplyService.todoReplySave(todoReplyDto.toDto(todoId), todoId);
