@@ -2,7 +2,10 @@ package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.User;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -12,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "todos")
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @ToString(exclude = {"user"})
 @Audited(withModifiedFlag = true)
 public class Todo extends BaseEntity {

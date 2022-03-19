@@ -3,7 +3,6 @@ package kr.bora.api.todo.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -12,7 +11,6 @@ import java.time.LocalDateTime;
 @Component
 @Getter
 @NoArgsConstructor
-@Log4j2
 public class TodoDto {
 
     private Long todoId;
