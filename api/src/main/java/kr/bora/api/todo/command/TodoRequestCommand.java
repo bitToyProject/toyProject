@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 public class TodoRequestCommand {
 
@@ -25,14 +24,14 @@ public class TodoRequestCommand {
         @NotNull(message="종료일은 필수 입력 값입니다.")
         private String end;
         private String description;
-        private String viewer;
+        private String assignee;
         private Integer priority;
 
         private String username;
 
         private Boolean done;
         private Integer point;
-        private LocalDateTime doneTime;
+        private String doneTime;
 
         public TodoDto toDto() {
             Long userId = SecurityUtil.getCurrentUserId();
@@ -42,7 +41,7 @@ public class TodoRequestCommand {
                     .start(start)
                     .end(end)
                     .description(description)
-                    .viewer(viewer)
+                    .assignee(assignee)
                     .priority(priority)
                     .point(point)
                     .done(false)

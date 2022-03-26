@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 public class SubTaskRequestCommand {
 
@@ -29,7 +28,7 @@ public class SubTaskRequestCommand {
 
         private Boolean done;
         private Integer point;
-        private LocalDateTime doneTime;
+        private String doneTime;
 
         private TodoDto todo;
 

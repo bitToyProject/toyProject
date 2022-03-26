@@ -1,12 +1,12 @@
 package kr.bora.api.todo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Component
 @Getter
@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class TodoDto {
 
     private Long todoId;
+    @JsonIgnore
     private TodoUserDto userId;
     @NotNull(message="제목은 필수 입력 값입니다.")
     private String title;
@@ -25,7 +26,7 @@ public class TodoDto {
 
     private String description;
 
-    private String viewer;
+    private String assignee;
 
     private TodoUserDto nickname;
 
@@ -34,21 +35,23 @@ public class TodoDto {
     private Boolean done;
 
     private Integer point;
+    @JsonIgnore
+    private String doneTime;
 
-    private LocalDateTime doneTime;
+    private String regDate;
 
-    private LocalDateTime regDate;
-    private LocalDateTime modDate;
+    @JsonIgnore
+    private String modDate;
 
     @Builder
-    public TodoDto(Long todoId, TodoUserDto userId, String title, String start, String end, String description, String viewer, TodoUserDto nickname, Integer priority, Boolean done, Integer point, LocalDateTime doneTime, LocalDateTime regDate, LocalDateTime modDate) {
+    public TodoDto(Long todoId, TodoUserDto userId, String title, String start, String end, String description, String assignee, TodoUserDto nickname, Integer priority, Boolean done, Integer point, String doneTime, String regDate, String modDate) {
         this.todoId = todoId;
         this.userId = userId;
         this.title = title;
         this.start = start;
         this.end = end;
         this.description = description;
-        this.viewer = viewer;
+        this.assignee = assignee;
         this.nickname = nickname;
         this.priority = priority;
         this.done = done;

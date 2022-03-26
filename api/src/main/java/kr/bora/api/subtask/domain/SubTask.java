@@ -10,7 +10,6 @@ import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Table(name = "subtasks")
 @Entity
@@ -40,7 +39,7 @@ public class SubTask extends BaseEntity {
     private Integer point;
 
     @LastModifiedDate
-    private LocalDateTime doneTime;
+    private String doneTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "todo_id")
@@ -51,7 +50,7 @@ public class SubTask extends BaseEntity {
     private User user;
 
     @Builder
-    public SubTask(Long subTaskId, String title, String start, String end, String assignee, Boolean done, Integer point, LocalDateTime doneTime, Todo todo, User user) {
+    public SubTask(Long subTaskId, String title, String start, String end, String assignee, Boolean done, Integer point, String doneTime, Todo todo, User user) {
         this.subTaskId = subTaskId;
         this.title = title;
         this.start = start;

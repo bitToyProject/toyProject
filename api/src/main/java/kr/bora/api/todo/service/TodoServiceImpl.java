@@ -66,7 +66,6 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodoDto todoRead(Long todoId) {
         Todo result = repository.getTodo(todoId);
-
         return entityTodoDto(result);
     }
 
@@ -86,7 +85,7 @@ public class TodoServiceImpl implements TodoService {
         todo.changeDescription(todoDto.getDescription());
         todo.changeStart(todoDto.getStart());
         todo.changeEnd(todoDto.getEnd());
-        todo.changeViewer(todoDto.getViewer());
+        todo.changeAssignee(todoDto.getAssignee());
         todo.changePriority(todoDto.getPriority());
         todo.changeDone(todoDto.getDone());
 

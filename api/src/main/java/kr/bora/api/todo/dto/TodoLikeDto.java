@@ -10,7 +10,6 @@ public class TodoLikeDto {
 
     private Long todoLikeId;
     private TodoUserDto userId;
-
     private Long todoId;
 
     @Builder

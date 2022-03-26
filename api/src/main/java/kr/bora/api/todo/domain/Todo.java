@@ -10,7 +10,6 @@ import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Table(name = "todos")
 @Entity
@@ -33,13 +32,13 @@ public class Todo extends BaseEntity {
 
     private String description;
 
-    private String viewer;
+    private String assignee;
 
     private Boolean done;
     private Integer point;
 
     @LastModifiedDate
-    private LocalDateTime doneTime;
+    private String doneTime;
     private Integer priority;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -47,13 +46,13 @@ public class Todo extends BaseEntity {
     private User user;
 
     @Builder
-    public Todo(Long todoId, String title, String start, String end, String description, String viewer, Boolean done, Integer point, LocalDateTime doneTime, Integer priority, User user) {
+    public Todo(Long todoId, String title, String start, String end, String description, String assignee, Boolean done, Integer point, String doneTime, Integer priority, User user) {
         this.todoId = todoId;
         this.title = title;
         this.start = start;
         this.end = end;
         this.description = description;
-        this.viewer = viewer;
+        this.assignee = assignee;
         this.done = done;
         this.point = point;
         this.doneTime = doneTime;
@@ -79,8 +78,8 @@ public class Todo extends BaseEntity {
         this.end = end;
     }
 
-    public void changeViewer(String viewer) {
-        this.viewer = viewer;
+    public void changeAssignee(String assignee) {
+        this.assignee = assignee;
     }
 
     public void changePriority(Integer priority) {

@@ -9,7 +9,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Component
 @Getter
@@ -38,13 +37,13 @@ public class SubTaskDto {
     private Integer point;
 
     @LastModifiedDate
-    private LocalDateTime doneTime;
+    private String doneTime;
 
-    private LocalDateTime regDate;
-    private LocalDateTime modDate;
+    private String regDate;
+    private String modDate;
 
     @Builder
-    public SubTaskDto(Long subTaskId, TodoUserDto userId, Long todoId, String title, String start, String end, String assignee, Boolean done, Integer point, LocalDateTime doneTime, LocalDateTime regDate, LocalDateTime modDate) {
+    public SubTaskDto(Long subTaskId, TodoUserDto userId, Long todoId, String title, String start, String end, String assignee, Boolean done, Integer point, String doneTime, String regDate, String modDate) {
         this.subTaskId = subTaskId;
         this.userId = userId;
         this.todoId = todoId;

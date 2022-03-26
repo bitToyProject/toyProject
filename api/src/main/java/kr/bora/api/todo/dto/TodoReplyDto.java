@@ -4,8 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor
 public class TodoReplyDto {
@@ -20,12 +18,12 @@ public class TodoReplyDto {
 
     private String todoReplyer;
 
-    private LocalDateTime regDate;
+    private String  regDate;
 
-    private LocalDateTime modDate;
+    private String modDate;
 
     @Builder
-    public TodoReplyDto(Long todoReplyId, TodoUserDto userId, Long todoId, String text, String todoReplyer, LocalDateTime regDate, LocalDateTime modDate) {
+    public TodoReplyDto(Long todoReplyId, TodoUserDto userId, Long todoId, String text, String todoReplyer, String regDate, String modDate) {
         this.todoReplyId = todoReplyId;
         this.userId = userId;
         this.todoId = todoId;

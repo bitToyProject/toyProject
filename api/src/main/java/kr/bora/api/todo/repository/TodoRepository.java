@@ -23,13 +23,14 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, SearchTodoRep
     @Query("SELECT to, w FROM Todo to LEFT JOIN to.user w where to.todoId = :todoId")
     Todo getTodo(@Param("todoId") Long todoId);
 
+
     /**
      * Todo 목록
      * @return
      */
     /*JPA N+1문제 해결 방안 JOIN FETCH 또는 Entity Graph */
     @EntityGraph(attributePaths = "user")
-    @Query(value = "SELECT a FROM Todo a")
+    @Query(value = "SELECT a.title FROM Todo a")
     List<Todo> getList();
 
     /**
