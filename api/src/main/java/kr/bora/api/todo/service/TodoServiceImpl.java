@@ -32,8 +32,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public PageResultDto todoList(PageRequestDto pageRequestDto) {
 
-        Function<Object[], TodoDto> fn = (arr -> entityTodoDto(
-                (Todo) arr[0]));
+        Function<Object[], TodoDto> fn = (arr -> entityTodoDto((Todo) arr[0]));
         Page<Object[]> result = repository.searchPage(
                 pageRequestDto.getType(),
                 pageRequestDto.getKeyword(),

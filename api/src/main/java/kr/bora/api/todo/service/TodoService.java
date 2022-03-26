@@ -51,6 +51,7 @@ public interface TodoService {
                 .doneTime(dto.getDoneTime())
                 .point(dto.getPoint())
                 .user((dto.getUserId()).saveId(dto.getUserId()))
+                .user((dto.getNickname()).saveNickname(dto.getNickname()))
                 .build();
     }
 }

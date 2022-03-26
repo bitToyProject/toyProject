@@ -16,9 +16,16 @@ public class TodoUserDto {
 
     private String username;
 
+    private String nickname;
+
     public User saveId(TodoUserDto dto) {
 
         return User.builder().userId(dto.userId).build();
+    }
+
+    public User saveNickname(TodoUserDto dto) {
+
+        return User.builder().nickName(dto.nickname).build();
     }
 
 

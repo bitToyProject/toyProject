@@ -29,8 +29,10 @@ public class TodoRequestCommand {
 
         private String username;
 
+        private String nickname;
+
         private Boolean done;
-        private Integer point;
+        private Integer point = 0;
         private String doneTime;
 
         public TodoDto toDto() {
@@ -46,8 +48,8 @@ public class TodoRequestCommand {
                     .point(point)
                     .done(false)
                     .doneTime(doneTime)
+                    .point(point)
                     .build();
-
         }
 
     }

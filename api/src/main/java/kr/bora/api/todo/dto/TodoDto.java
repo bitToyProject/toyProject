@@ -34,7 +34,7 @@ public class TodoDto {
 
     private Boolean done;
 
-    private Integer point;
+    private Integer point = 0;
     @JsonIgnore
     private String doneTime;
 
@@ -55,7 +55,7 @@ public class TodoDto {
         this.nickname = nickname;
         this.priority = priority;
         this.done = done;
-        this.point = getPoint();
+        this.point = point;
         this.doneTime = doneTime;
         this.regDate = regDate;
         this.modDate = modDate;
