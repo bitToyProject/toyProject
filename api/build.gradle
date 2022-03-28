@@ -66,6 +66,14 @@ dependencies {
 // ###############################################MAIL############################################################
     implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
 
+// ###############################################CONFIG############################################################
+    implementation 'org.springframework.boot:spring-boot-configuration-processor:2.6.4'
+
+// ###############################################SLACK############################################################
+    implementation("com.slack.api:bolt:1.18.0")
+    implementation("com.slack.api:bolt-servlet:1.18.0")
+    implementation("com.slack.api:bolt-jetty:1.18.0")
+
 }
 
 test {

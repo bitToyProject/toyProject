@@ -28,5 +28,4 @@ public class TodoUserDto {
         return User.builder().nickName(dto.nickname).build();
     }
 
-
 }

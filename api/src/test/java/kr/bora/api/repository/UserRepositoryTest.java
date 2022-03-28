@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.rmi.ServerException;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -32,7 +33,12 @@ public class UserRepositoryTest {
                     .authority(Authority.ROLE_USER)
                     .title(Title.BEGINNER)
                     .build();
-            userRepository.save(user);
+            try {
+                throw new ServerException("es");
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         });
     }
 }
