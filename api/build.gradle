@@ -68,6 +68,7 @@ dependencies {
 
 // ###############################################CONFIG############################################################
     implementation 'org.springframework.boot:spring-boot-configuration-processor:2.6.4'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
 // ###############################################SLACK############################################################
     implementation("com.slack.api:bolt:1.18.0")
