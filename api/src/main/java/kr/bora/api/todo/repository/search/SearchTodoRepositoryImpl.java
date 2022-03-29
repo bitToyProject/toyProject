@@ -7,6 +7,9 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import kr.bora.api.todo.domain.QTodo;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.searchPageDto.SearchCondition;
@@ -17,10 +20,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Log4j2
 public class SearchTodoRepositoryImpl extends QuerydslRepositorySupport implements SearchTodoRepository {

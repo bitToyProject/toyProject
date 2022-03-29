@@ -25,7 +25,7 @@ logging:
   level:
     kr.bora.api: info
 slack:
-  token: xoxb-2260774149670-3306348973601-3YIUzv7UqAUjUrBEIucUIpFk
+  token: xoxb-2260774149670-3306348973601-HSdMdbahOsI9aLFJhzRHY1DR
   server: '#server-error'
   client: '#client-error'
 

@@ -1,11 +1,9 @@
 package kr.bora.api.notification.slack.service;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-
 import java.util.List;
+import org.springframework.http.HttpStatus;
 
 public interface SlackService {
     List<Integer> getStatus();
-    void postErrorToSlack(Exception ex, Object body, HttpHeaders headers, HttpStatus status);
+    void postErrorToSlack(Exception ex, Object body, HttpStatus status);
 }

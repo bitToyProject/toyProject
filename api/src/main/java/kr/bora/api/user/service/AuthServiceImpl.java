@@ -2,21 +2,30 @@ package kr.bora.api.user.service;
 
 
 import kr.bora.api.mailauth.repository.MailAuthRepository;
+import kr.bora.api.notification.slack.factory.SlackFactory;
+import kr.bora.api.notification.slack.service.SlackService;
 import kr.bora.api.user.domain.RefreshToken;
 import kr.bora.api.user.domain.User;
-import kr.bora.api.user.dto.*;
+import kr.bora.api.user.dto.LoginRequestDto;
+import kr.bora.api.user.dto.TokenDto;
+import kr.bora.api.user.dto.TokenRequestDto;
+import kr.bora.api.user.dto.UserRequestDto;
+import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.jwt.TokenProvider;
 import kr.bora.api.user.repository.RefreshTokenRepository;
 import kr.bora.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -42,9 +51,20 @@ public class AuthServiceImpl implements AuthService{
     }
     @Override
     public TokenDto login(LoginRequestDto loginRequestDto) {
-        UsernamePasswordAuthenticationToken authenticationToken = loginRequestDto.toAuthentication();
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        UsernamePasswordAuthenticationToken authenticationToken = loginRequestDto.toAuthentication();
+        Authentication authentication = null;
+        try {
+             authentication = authenticationManagerBuilder.getObject()
+                .authenticate(authenticationToken);
+        } catch (AuthenticationException e) {
+            log.error("login requested parameter : \r\n username : {} \r\n password : {} ",
+                loginRequestDto.getUsername(), loginRequestDto.getPassword());
+            log.error(e.getMessage(),e);
+            SlackService slackService = SlackFactory.getSeries(HttpStatus.UNAUTHORIZED);
+            slackService.postErrorToSlack(e,authenticationToken,HttpStatus.UNAUTHORIZED);
+            return null;
+        }
 
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 

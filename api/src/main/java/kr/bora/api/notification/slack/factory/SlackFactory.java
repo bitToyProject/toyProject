@@ -28,7 +28,6 @@ public class SlackFactory {
         }
     }
     public static SlackService getSeries(HttpStatus httpStatus){
-        SlackService service = slackService.get(httpStatus.series().value());
-        return service;
+        return slackService.get(httpStatus.series().value());
     }
 }
