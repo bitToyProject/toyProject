@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.envers.Audited;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
@@ -64,6 +66,10 @@ public class User{
 //    private Part part;
 
 
+    public String toString(){
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
+
     public void changePassword(String password) {
         this.password = password;
     }
@@ -101,4 +107,6 @@ public class User{
     public void clearEvent(){
         log.info("AuthMail Send Success");
     }
+
+
 }

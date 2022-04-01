@@ -7,6 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UserService {
 
+    boolean checkChangeableAuthority(long userId, String authorityCode);
+
     UserRequestDto modify(UserRequestDto userRequestDto);
 
    default User dtoEntity(UserRequestDto userRequestDto, PasswordEncoder passwordEncoder) {
@@ -19,11 +21,11 @@ public interface UserService {
         return entity;
     }
 
-    default UserRequestDto entityDto(User user, PasswordEncoder passwordEncoder) {
+    default UserRequestDto entityDto(User user) {
         UserRequestDto userRequestDto = UserRequestDto.builder()
                 .userId(user.getUserId())
                 .username(user.getUsername())
-                .password(passwordEncoder.encode(user.getPassword()))
+                .password(user.getPassword())
                 .authority(Authority.ROLE_USER)
                 .build();
 

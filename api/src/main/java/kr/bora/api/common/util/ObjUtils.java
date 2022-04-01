@@ -3,9 +3,13 @@ package kr.bora.api.common.util;
 import java.util.Collection;
 import java.util.Collections;
 
-public class StringUtils {
+public class ObjUtils {
 
-    public String getSafeString(Object obj, String def) {
+    public static String getSafeString(Object obj) {
+        return getSafeString(obj, "");
+    }
+
+    public static String getSafeString(Object obj, String def) {
         if (obj == null) {
             return def;
         } else if (obj instanceof String) {

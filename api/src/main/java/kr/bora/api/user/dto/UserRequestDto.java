@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.Email;
@@ -82,4 +83,17 @@ public class UserRequestDto {
     }
 
 
+    public User toPasswordEncoding() {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        return User.builder()
+            .userId(userId)
+            .password(encoder.encode(password))
+            .authority(authority)
+            .phoneNum(phoneNum)
+            .nickName(nickName)
+            .firstName(firstName)
+            .lastName(lastName)
+            .gender(gender)
+            .build();
+    }
 }
