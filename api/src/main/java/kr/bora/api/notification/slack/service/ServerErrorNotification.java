@@ -45,4 +45,14 @@ public class ServerErrorNotification implements SlackService{
             log.error(e.getMessage());
         }
     }
+
+    @Override
+    public void postErrorToSlack(Exception ex, Object body) {
+
+    }
+
+    @Override
+    public void postErrorToSlack(Exception ex) {
+
+    }
 }

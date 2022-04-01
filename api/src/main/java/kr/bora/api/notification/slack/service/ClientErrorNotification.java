@@ -56,4 +56,14 @@ public class ClientErrorNotification implements SlackService{
             log.error("fail to send  to slack error about error : {} ",e.getMessage(),e);
         }
     }
+
+    @Override
+    public void postErrorToSlack(Exception ex, Object body) {
+
+    }
+
+    @Override
+    public void postErrorToSlack(Exception ex) {
+
+    }
 }
