@@ -29,10 +29,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean checkChangeableAuthority(long userId, String authorityCode) {
+    public boolean checkChangeableAuthority(long userId, int authorityCode) {
         User user = repository.findById(userId)
             .orElseThrow(() -> new InvalidParameterException("해당 id의 유저가 존재하지 않습니다."));
-        return Integer.parseInt(authorityCode) >= Integer.parseInt(user.getAuthority().getCode());
+        return authorityCode >= user.getAuthority().getCode();
     }
 
     public UserRequestDto modify(UserRequestDto userRequestDto) {

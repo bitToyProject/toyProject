@@ -3,11 +3,14 @@ package kr.bora.api.user.service;
 import kr.bora.api.user.domain.Authority;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.UserRequestDto;
+import kr.bora.api.user.dto.UserResponseDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UserService {
 
-    boolean checkChangeableAuthority(long userId, String authorityCode);
+    boolean checkChangeableAuthority(long userId, int authorityCode);
+
+    
 
     UserRequestDto modify(UserRequestDto userRequestDto);
 

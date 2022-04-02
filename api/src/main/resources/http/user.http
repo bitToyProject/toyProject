@@ -3,11 +3,11 @@ POST http://localhost:8080/auth/signup
 Content-Type: application/json
 
 {
-  "username": "wndn@gmail.com",
+  "username": "wkdgothf@gmail.com",
   "password": "haesol2",
-  "lastName": "두",
+  "lastName": "장",
   "firstName": "해솔",
-  "nickname": "ssols",
+  "nickName": "ssols",
   "phoneNum": "01049380425",
   "gender": "1"
 }

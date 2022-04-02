@@ -45,9 +45,9 @@ public class Department {
     }
 
     @Transient
-    private static String authorityGrade = ObjUtils.getSafeString(Authority.ROLE_ADMIN);
+    private static int authorityGrade = Authority.ROLE_ADMIN.getCode();
 
-    public static String getAuthorityGrade(){
+    public static int getAuthorityGrade(){
         return authorityGrade;
     }
 
