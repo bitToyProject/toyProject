@@ -33,8 +33,6 @@ public class SubTask extends BaseEntity {
 
     private String assignee;
 
-    private Boolean done;
-
     @ColumnDefault("0")
     private Integer point;
 
@@ -49,21 +47,22 @@ public class SubTask extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Enumerated(EnumType.STRING)
+    private SubtaskType subTaskType;
+
     @Builder
-    public SubTask(Long subTaskId, String title, String start, String end, String assignee, Boolean done, Integer point, String doneTime, Todo todo, User user) {
+    public SubTask(Long subTaskId, String title, String start, String end, String assignee, Integer point, String doneTime, Todo todo, User user, SubtaskType subTaskType) {
         this.subTaskId = subTaskId;
         this.title = title;
         this.start = start;
         this.end = end;
         this.assignee = assignee;
-        this.done = done;
         this.point = point;
         this.doneTime = doneTime;
         this.todo = todo;
         this.user = user;
+        this.subTaskType = subTaskType;
     }
-
-
 
     // == Subtask 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
@@ -77,17 +76,20 @@ public class SubTask extends BaseEntity {
     public void changeEnd(String end) {
         this.end = end;
     }
-
     public void changeAssignee(String assignee) {
         this.assignee = assignee;
     }
 
-    public void changeDone(Boolean done) {
-        this.done = done;
-    }
-
     public void changePoint(Integer point) {
         this.point = point;
+    }
+
+    public void changeSubTaskType(SubtaskType subtaskType) {
+        this.subTaskType = subtaskType;
+    }
+
+    public void changeDoneTime(String doneTime) {
+        this.doneTime = doneTime;
     }
 
     @PrePersist

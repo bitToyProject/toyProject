@@ -18,7 +18,7 @@ public class TodoReplyDto {
 
     private String todoReplyer;
 
-    private String  regDate;
+    private String regDate;
 
     private String modDate;
 

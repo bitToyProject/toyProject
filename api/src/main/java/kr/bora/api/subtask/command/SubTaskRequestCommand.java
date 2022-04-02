@@ -1,5 +1,6 @@
 package kr.bora.api.subtask.command;
 
+import kr.bora.api.subtask.domain.SubtaskType;
 import kr.bora.api.subtask.dto.SubTaskDto;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.TodoUserDto;
@@ -25,10 +26,7 @@ public class SubTaskRequestCommand {
         @NotNull(message="SubTask 종료일은 필수 입력 값입니다.")
         private String end;
         private String assignee;
-
-        private Boolean done;
         private Integer point;
-        private String doneTime;
 
         private TodoDto todo;
 
@@ -41,9 +39,8 @@ public class SubTaskRequestCommand {
                     .start(start)
                     .end(end)
                     .assignee(assignee)
-                    .done(false)
                     .point(point)
-                    .doneTime(doneTime)
+                    .subtaskType(SubtaskType.SUBTASK)
                     .build();
         }
 

@@ -24,13 +24,11 @@ public class TodoRequestCommand {
         private String start;
         @NotNull(message = "종료일은 필수 입력 값입니다.")
         private String end;
+        @NotNull(message = "상세 할 일은 필수 입력 값입니다.")
         private String description;
         private String assignee;
         private Integer priority;
-
-        private Boolean done;
         private Integer point = 0;
-        private String doneTime;
 
         public TodoDto toDto() {
             Long userId = SecurityUtil.getCurrentUserId();
@@ -42,9 +40,6 @@ public class TodoRequestCommand {
                     .description(description)
                     .assignee(assignee)
                     .priority(priority)
-                    .point(point)
-                    .done(false)
-                    .doneTime(doneTime)
                     .point(point)
                     .todoType(TodoType.TODO)
                     .build();

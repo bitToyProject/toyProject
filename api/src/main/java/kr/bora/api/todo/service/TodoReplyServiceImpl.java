@@ -31,7 +31,7 @@ public class TodoReplyServiceImpl implements TodoReplyService {
     @Override
     @Transactional
     public Long todoReplySave(TodoReplyDto todoReplyDto, Long todoId) {
-        UserResponseDto replyer = getUserResponseDto();
+        UserResponseDto replyer = getUserNickname();
 
         todoReplyDto.setTodoReplyer(replyer.getNickname());
 
@@ -64,7 +64,7 @@ public class TodoReplyServiceImpl implements TodoReplyService {
     }
 
     // 댓글 작성자 - 현재 사용자 닉네임
-    private UserResponseDto getUserResponseDto() {
+    private UserResponseDto getUserNickname() {
         UserResponseDto replyer = userRepository.findById(SecurityUtil.getCurrentUserId())
                 .map(UserResponseDto::of)
                 .orElseThrow();

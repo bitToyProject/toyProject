@@ -1,11 +1,10 @@
 package kr.bora.api.subtask.service;
 
 import kr.bora.api.subtask.domain.SubTask;
+import kr.bora.api.subtask.domain.SubtaskType;
 import kr.bora.api.subtask.dto.SubTaskDto;
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
-import kr.bora.api.todo.repository.TodoRepository;
-import kr.bora.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -21,8 +20,6 @@ import java.util.stream.Collectors;
 public class SubTaskServiceImpl implements SubTaskService {
 
     private final SubTaskRepository subTaskRepository;
-    private final TodoRepository todoRepository;
-    private final UserRepository userRepository;
     /**
      * SubTask 등록
      *
@@ -48,7 +45,7 @@ public class SubTaskServiceImpl implements SubTaskService {
      */
     @Override
     public List<SubTaskDto> subTaskList(Long todoId) {
-        List<SubTask> result = subTaskRepository.getSubTasksByTodoOrderByRegDate(Todo.builder().todoId(todoId).build());
+        List<SubTask> result = subtaskListOrderByRegDate(todoId);
 
         return result.stream().map(this::entityToDto).collect(Collectors.toList());
     }
@@ -63,14 +60,7 @@ public class SubTaskServiceImpl implements SubTaskService {
     @Override
     public void subTaskModify(Long subTaskId, SubTaskDto subTaskDto) {
         SubTask subTask = subTaskRepository.getById(subTaskId);
-        subTask.changeTitle(subTaskDto.getTitle());
-        subTask.changeStart(subTaskDto.getStart());
-        subTask.changeEnd(subTaskDto.getEnd());
-        subTask.changeAssignee(subTaskDto.getAssignee());
-        subTask.changeDone(subTaskDto.getDone());
-
-        subTask.changePoint(subTaskDto.getDone() ? subTask.getPoint() + 10 : subTask.getPoint() - 10);
-
+        changeSubtask(subTaskDto, subTask);
         subTaskRepository.save(subTask);
     }
 
@@ -84,5 +74,20 @@ public class SubTaskServiceImpl implements SubTaskService {
         subTaskRepository.deleteById(subTaskId);
     }
 
+
+    private List<SubTask> subtaskListOrderByRegDate(Long todoId) {
+        List<SubTask> result = subTaskRepository.getSubTasksByTodoOrderByRegDate(Todo.builder().todoId(todoId).build());
+        return result;
+    }
+
+    private void changeSubtask(SubTaskDto subTaskDto, SubTask subTask) {
+        subTask.changeTitle(subTaskDto.getTitle());
+        subTask.changeStart(subTaskDto.getStart());
+        subTask.changeEnd(subTaskDto.getEnd());
+        subTask.changeAssignee(subTaskDto.getAssignee());
+        subTask.changePoint(subTaskDto.getSubTaskType() == SubtaskType.DONE ? subTask.getPoint() + 10 : subTask.getPoint() - 10);
+        subTask.changeDoneTime(subTaskDto.getSubTaskType() == SubtaskType.DONE ? subTaskDto.getDoneTime() : subTaskDto.getModDate());
+        subTask.changeSubTaskType(subTaskDto.getSubTaskType());
+    }
 
 }

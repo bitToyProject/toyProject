@@ -43,7 +43,6 @@ public class TodoLikeServiceImpl implements TodoLikeService {
 
 
     // 좋아요 이미 했을 경우 체크
-
     private boolean alreadyTodoLike(Todo todo) {
         return todoLikeRepository.findByTodo(todo).isEmpty();
     }

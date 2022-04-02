@@ -2,6 +2,7 @@ package kr.bora.api.todo.service;
 
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
@@ -25,7 +26,6 @@ public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository repository;
     private final SubTaskRepository subTaskRepository;
-
     private final UserRepository userRepository;
 
     /**
@@ -57,9 +57,7 @@ public class TodoServiceImpl implements TodoService {
      */
     @Override
     public Long todoSave(TodoDto todoDto) {
-        UserResponseDto userNickname = userRepository.findById(SecurityUtil.getCurrentUserId())
-                .map(UserResponseDto::of).orElseThrow();
-        System.out.println("userNickname.getNickname() = " + userNickname.getNickname());
+        UserResponseDto userNickname = getUserNickname();
         todoDto.setNickname(userNickname.getNickname());
         Todo todo = toEntitySaveTodo(todoDto);
         repository.save(todo);
@@ -111,12 +109,11 @@ public class TodoServiceImpl implements TodoService {
 
 
     // Todo 작성자 - 현재 사용자 닉네임
-    private UserResponseDto getUserResponseDto() {
+    private UserResponseDto getUserNickname() {
         UserResponseDto userNickname = userRepository.findById(SecurityUtil.getCurrentUserId())
                 .map(UserResponseDto::of).orElseThrow();
         return userNickname;
     }
-
 
     private void changeTodo(TodoDto todoDto, Todo todo) {
         todo.changeTitle(todoDto.getTitle());
@@ -125,8 +122,8 @@ public class TodoServiceImpl implements TodoService {
         todo.changeEnd(todoDto.getEnd());
         todo.changeAssignee(todoDto.getAssignee());
         todo.changePriority(todoDto.getPriority());
-        todo.changeDone(todoDto.getDone());
-        todo.changePoint(todoDto.getDone() ? todo.getPoint() + 10 : todo.getPoint() - 10);
+        todo.changeDoneTime(todoDto.getTodoType() == TodoType.DONE ? todoDto.getDoneTime() : todo.getModDate());
+        todo.changePoint(todoDto.getTodoType() == TodoType.DONE ? todo.getPoint() + 10 : todo.getPoint() - 10);
         todo.changeTodoType(todoDto.getTodoType());
     }
 

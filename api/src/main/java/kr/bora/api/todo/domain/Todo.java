@@ -23,22 +23,13 @@ public class Todo extends BaseEntity {
     @Column(name = "todo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long todoId;
-
     private String title;
-
     private String start;
-
     private String end;
-
     private String description;
-
     private String assignee;
-
-    private Boolean done;
     private Integer point;
-
     private String nickname;
-
     @LastModifiedDate
     private String doneTime;
     private Integer priority;
@@ -51,14 +42,13 @@ public class Todo extends BaseEntity {
     private TodoType todoType;
 
     @Builder
-    public Todo(Long todoId, String title, String start, String end, String description, String assignee, Boolean done, Integer point, String nickname, String doneTime, Integer priority, User user, TodoType todoType) {
+    public Todo(Long todoId, String title, String start, String end, String description, String assignee, Integer point, String nickname, String doneTime, Integer priority, User user, TodoType todoType) {
         this.todoId = todoId;
         this.title = title;
         this.start = start;
         this.end = end;
         this.description = description;
         this.assignee = assignee;
-        this.done = done;
         this.point = point;
         this.nickname = nickname;
         this.doneTime = doneTime;
@@ -93,16 +83,16 @@ public class Todo extends BaseEntity {
         this.priority = priority;
     }
 
-    public void changeDone(Boolean done) {
-        this.done = done;
-    }
-
     public void changePoint(Integer point) {
         this.point = point;
     }
 
     public void changeTodoType(TodoType todoType) {
         this.todoType = todoType;
+    }
+
+    public void changeDoneTime(String doneTime) {
+        this.doneTime = doneTime;
     }
 
     @PrePersist
