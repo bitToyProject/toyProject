@@ -43,7 +43,6 @@ public class UserRequestDto {
 
     private String authKey;
 
-
     public User toUserforSave(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .userId(userId)

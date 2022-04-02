@@ -22,8 +22,6 @@ public class UserResponseDto {
 
     private String phoneNumber;
 
-    private DepartmentDto departmentDto;
-
     @Builder
     public UserResponseDto(String username,
                            String nickname,
