@@ -20,7 +20,6 @@ public class TodoReplyRequestCommand {
     public static class TodoReplyRequest{
         @NotNull(message="댓글을 입력해주세요")
         private String text;
-        private String todoReplyer;
 
         private TodoDto todo;
 
@@ -30,7 +29,6 @@ public class TodoReplyRequestCommand {
                     .userId(TodoUserDto.builder().userId(userId).build())
                     .todoId(todoId)
                     .text(text)
-                    .todoReplyer(todoReplyer)
                     .build();
         }
     }

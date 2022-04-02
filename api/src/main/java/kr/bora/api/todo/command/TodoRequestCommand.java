@@ -1,5 +1,6 @@
 package kr.bora.api.todo.command;
 
+import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.TodoUserDto;
 import kr.bora.api.user.util.SecurityUtil;
@@ -17,19 +18,15 @@ public class TodoRequestCommand {
     @AllArgsConstructor
     @Builder
     public static class TodoRequest {
-        @NotNull(message="제목은 필수 입력 값입니다.")
+        @NotNull(message = "제목은 필수 입력 값입니다.")
         private String title;
-        @NotNull(message="시작일은 필수 입력 값입니다.")
+        @NotNull(message = "시작일은 필수 입력 값입니다.")
         private String start;
-        @NotNull(message="종료일은 필수 입력 값입니다.")
+        @NotNull(message = "종료일은 필수 입력 값입니다.")
         private String end;
         private String description;
         private String assignee;
         private Integer priority;
-
-        private String username;
-
-        private String nickname;
 
         private Boolean done;
         private Integer point = 0;
@@ -49,6 +46,7 @@ public class TodoRequestCommand {
                     .done(false)
                     .doneTime(doneTime)
                     .point(point)
+                    .todoType(TodoType.TODO)
                     .build();
         }
 

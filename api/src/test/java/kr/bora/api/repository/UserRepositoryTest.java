@@ -6,18 +6,23 @@ import kr.bora.api.user.domain.User;
 import kr.bora.api.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.web.servlet.MockMvc;
 
-import java.rmi.ServerException;
 import java.util.stream.IntStream;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
     public void insertUser() {
@@ -33,12 +38,9 @@ public class UserRepositoryTest {
                     .authority(Authority.ROLE_USER)
                     .title(Title.BEGINNER)
                     .build();
-            try {
-                throw new ServerException("es");
 
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+            userRepository.save(user);
         });
     }
+
 }

@@ -42,9 +42,4 @@ public class TodoReply extends BaseEntity {
         this.user = user;
     }
 
-
-    public void changeText(String text) {
-        this.text = text;
-    }
-
 }

@@ -1,6 +1,5 @@
 package kr.bora.api.user.service;
 
-import java.security.InvalidParameterException;
 import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.common.response.Status;
 import kr.bora.api.todo.repository.TodoRepository;
@@ -12,6 +11,8 @@ import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.security.InvalidParameterException;
 
 @Service
 @RequiredArgsConstructor

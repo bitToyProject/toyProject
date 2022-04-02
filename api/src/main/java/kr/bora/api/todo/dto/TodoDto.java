@@ -1,14 +1,13 @@
 package kr.bora.api.todo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import kr.bora.api.todo.domain.TodoType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
-@Component
 @Getter
 @NoArgsConstructor
 public class TodoDto {
@@ -16,8 +15,10 @@ public class TodoDto {
     private Long todoId;
     @JsonIgnore
     private TodoUserDto userId;
+
     @NotNull(message="제목은 필수 입력 값입니다.")
     private String title;
+
     @NotNull(message="시작일은 필수 입력 값입니다.")
     private String start;
 
@@ -28,7 +29,7 @@ public class TodoDto {
 
     private String assignee;
 
-    private TodoUserDto nickname;
+    private String nickname;
 
     private Integer priority;
 
@@ -43,8 +44,24 @@ public class TodoDto {
     @JsonIgnore
     private String modDate;
 
+    private TodoType todoType;
+
     @Builder
-    public TodoDto(Long todoId, TodoUserDto userId, String title, String start, String end, String description, String assignee, TodoUserDto nickname, Integer priority, Boolean done, Integer point, String doneTime, String regDate, String modDate) {
+    public TodoDto(Long todoId,
+                   TodoUserDto userId,
+                   String title,
+                   String start,
+                   String end,
+                   String description,
+                   String assignee,
+                   String nickname,
+                   Integer priority,
+                   Boolean done,
+                   Integer point,
+                   String doneTime,
+                   String regDate,
+                   String modDate,
+                   TodoType todoType) {
         this.todoId = todoId;
         this.userId = userId;
         this.title = title;
@@ -59,6 +76,10 @@ public class TodoDto {
         this.doneTime = doneTime;
         this.regDate = regDate;
         this.modDate = modDate;
+        this.todoType = todoType;
     }
 
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }

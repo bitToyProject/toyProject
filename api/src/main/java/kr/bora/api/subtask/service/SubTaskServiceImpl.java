@@ -5,6 +5,7 @@ import kr.bora.api.subtask.dto.SubTaskDto;
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.repository.TodoRepository;
+import kr.bora.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class SubTaskServiceImpl implements SubTaskService {
 
     private final SubTaskRepository subTaskRepository;
     private final TodoRepository todoRepository;
-
+    private final UserRepository userRepository;
     /**
      * SubTask 등록
      *
@@ -80,7 +81,6 @@ public class SubTaskServiceImpl implements SubTaskService {
      */
     @Override
     public void subTaskRemove(Long subTaskId) {
-
         subTaskRepository.deleteById(subTaskId);
     }
 

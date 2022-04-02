@@ -2,6 +2,7 @@ package kr.bora.api.todo.service;
 
 import kr.bora.api.todo.command.TodoRequestCommand;
 import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
@@ -32,9 +33,11 @@ public interface TodoService {
                 .priority(todo.getPriority())
                 .regDate(todo.getRegDate())
                 .modDate(todo.getModDate())
+                .nickname(todo.getNickname())
                 .done(todo.getDone())
                 .doneTime(todo.getDoneTime())
                 .point(todo.getPoint())
+                .todoType(TodoType.TODO)
                 .build();
     }
 
@@ -51,7 +54,8 @@ public interface TodoService {
                 .doneTime(dto.getDoneTime())
                 .point(dto.getPoint())
                 .user((dto.getUserId()).saveId(dto.getUserId()))
-                .user((dto.getNickname()).saveNickname(dto.getNickname()))
+                .nickname(dto.getNickname())
+                .todoType(dto.getTodoType())
                 .build();
     }
 }

@@ -19,6 +19,7 @@ public interface UserService {
                 .userId(userRequestDto.getUserId())
                 .username(userRequestDto.getUsername())
                 .password(passwordEncoder.encode(userRequestDto.getPassword()))
+                .nickName(userRequestDto.getNickName())
                 .authority(Authority.ROLE_USER)
                 .build();
         return entity;
@@ -30,6 +31,7 @@ public interface UserService {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .authority(Authority.ROLE_USER)
+                .nickName(user.getNickName())
                 .build();
 
         return userRequestDto;

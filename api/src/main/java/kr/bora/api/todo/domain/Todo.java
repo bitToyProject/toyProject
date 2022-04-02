@@ -37,6 +37,8 @@ public class Todo extends BaseEntity {
     private Boolean done;
     private Integer point;
 
+    private String nickname;
+
     @LastModifiedDate
     private String doneTime;
     private Integer priority;
@@ -45,8 +47,11 @@ public class Todo extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Enumerated(EnumType.STRING)
+    private TodoType todoType;
+
     @Builder
-    public Todo(Long todoId, String title, String start, String end, String description, String assignee, Boolean done, Integer point, String doneTime, Integer priority, User user) {
+    public Todo(Long todoId, String title, String start, String end, String description, String assignee, Boolean done, Integer point, String nickname, String doneTime, Integer priority, User user, TodoType todoType) {
         this.todoId = todoId;
         this.title = title;
         this.start = start;
@@ -55,9 +60,11 @@ public class Todo extends BaseEntity {
         this.assignee = assignee;
         this.done = done;
         this.point = point;
+        this.nickname = nickname;
         this.doneTime = doneTime;
         this.priority = priority;
         this.user = user;
+        this.todoType = todoType;
     }
 
 
@@ -92,6 +99,10 @@ public class Todo extends BaseEntity {
 
     public void changePoint(Integer point) {
         this.point = point;
+    }
+
+    public void changeTodoType(TodoType todoType) {
+        this.todoType = todoType;
     }
 
     @PrePersist

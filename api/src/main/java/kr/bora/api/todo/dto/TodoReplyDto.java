@@ -32,4 +32,8 @@ public class TodoReplyDto {
         this.regDate = regDate;
         this.modDate = modDate;
     }
+
+    public void setTodoReplyer(String todoReplyer) {
+        this.todoReplyer = todoReplyer;
+    }
 }
