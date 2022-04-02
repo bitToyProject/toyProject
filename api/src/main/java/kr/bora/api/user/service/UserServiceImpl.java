@@ -5,8 +5,10 @@ import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.common.response.Status;
 import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.AssignDepartmentDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.dto.UserWithDepartmentDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +23,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final TodoRepository todoRepository;
 
+    @Override
     public UserResponseDto getMyInfo() {
         return repository.findById(SecurityUtil.getCurrentUserId())
                 .map(UserResponseDto::of)
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
-
 
     @Override
     public boolean checkChangeableAuthority(long userId, int authorityCode) {
@@ -35,25 +37,16 @@ public class UserServiceImpl implements UserService {
         return authorityCode >= user.getAuthority().getCode();
     }
 
+    @Override
+    public UserWithDepartmentDto departmentAssigning(AssignDepartmentDto dto) {
+        User user = dto.toUser();
+        int dup = repository.assiningUserDepartment(user);
+        return UserWithDepartmentDto.toDto(user);
+    }
+
+    @Override
     public UserRequestDto modify(UserRequestDto userRequestDto) {
 
-//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-//        User user = repository.getById(userRequestDto.getUserId());
-//
-//        user.changePassword(passwordEncoder.encode(userRequestDto.getPassword()));
-//
-//        user.changeNickname(userRequestDto.getNickName());
-//
-//        user.changeLastName(userRequestDto.getLastName());
-//
-//        user.changeFirstName(userRequestDto.getFirstName());
-//
-//        user.changeGender(userRequestDto.getGender());
-//
-//        user.changePhoneNum(userRequestDto.getPhoneNum());
-
-        //TODO : 위 코드 간략화
         User user = userRequestDto.toPasswordEncoding();
 
         repository.save(user);
@@ -62,12 +55,13 @@ public class UserServiceImpl implements UserService {
 
         return dtoEntity;
     }
-
+    @Override
     public void deleteUserRelate(UserRequestDto dto) {
         User user = dto.toUserEntity(dto);
         todoRepository.deleteTodoUserId(user.getUserId());
     }
 
+    @Override
     public CommonResponse<UserResponseDto> deleteUser(UserRequestDto dto) {
         User user = dto.toUserEntity(dto);
         deleteUserRelate(dto);

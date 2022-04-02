@@ -22,23 +22,19 @@ public class UserResponseDto {
 
     private String phoneNumber;
 
-    private DepartmentDto departmentDto;
-
     @Builder
     public UserResponseDto(String username,
                            String nickname,
                            String firstName,
                            String lastName,
                            Integer gender,
-                           String phoneNumber,
-                           DepartmentDto departmentDto) {
+                           String phoneNumber) {
         this.username = username;
         this.nickname = nickname;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
-        this.departmentDto = departmentDto;
     }
 
     public static UserResponseDto of(User user) {
@@ -47,8 +43,7 @@ public class UserResponseDto {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getGender(),
-                user.getPhoneNum(),
-                user.getDepartment().toDto());
+                user.getPhoneNum());
     }
 
 }

@@ -27,6 +27,18 @@ POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "username": "wndn@gmail.cwom",
+  "username": "wkdgothf@gmail.com",
   "password": "haesol2"
+}
+
+###
+PUT http://localhost:8080/user/assign/department
+Content-Type: application/json
+
+{
+"userId": 1,
+"departmentDto": {
+"departmentId": 1,
+"departmentName":"아이크림개발"
+}
 }

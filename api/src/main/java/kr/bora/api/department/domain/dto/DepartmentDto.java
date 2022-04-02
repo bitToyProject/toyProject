@@ -5,10 +5,12 @@ import kr.bora.api.department.domain.entity.Department;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class DepartmentDto {

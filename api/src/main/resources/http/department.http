@@ -1,0 +1,9 @@
+###
+POST http://localhost:8080/department/register
+Content-Type: application/json
+
+{
+  "depatmentName":"개발부",
+  "desc": "프로덕션개발부",
+  "userId": 1
+}

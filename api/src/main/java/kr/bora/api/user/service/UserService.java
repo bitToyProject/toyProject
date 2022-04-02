@@ -1,18 +1,27 @@
 package kr.bora.api.user.service;
 
+import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.user.domain.Authority;
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.AssignDepartmentDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.dto.UserWithDepartmentDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UserService {
 
     boolean checkChangeableAuthority(long userId, int authorityCode);
 
-    
+    UserWithDepartmentDto departmentAssigning(AssignDepartmentDto dto);
 
     UserRequestDto modify(UserRequestDto userRequestDto);
+
+    public UserResponseDto getMyInfo();
+
+    void deleteUserRelate(UserRequestDto dto);
+
+    CommonResponse<UserResponseDto> deleteUser(UserRequestDto dto);
 
    default User dtoEntity(UserRequestDto userRequestDto, PasswordEncoder passwordEncoder) {
         User entity = User.builder()

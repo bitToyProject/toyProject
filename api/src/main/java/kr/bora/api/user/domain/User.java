@@ -2,6 +2,7 @@ package kr.bora.api.user.domain;
 
 import kr.bora.api.department.domain.entity.Department;
 import kr.bora.api.user.domain.reader.MailSender;
+import kr.bora.api.user.dto.UserResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -61,7 +62,7 @@ public class User{
     private Authority authority;
 
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "department")
     private Department department;
 

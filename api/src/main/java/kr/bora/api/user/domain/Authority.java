@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public enum Authority {
     ROLE_ADMIN(1, "어드민"),
-    ROLE_USER(2, "일반유저"),
-    ROLE_ASSISTANT(3, "전임 관리자"),
-    ROLE_MANAGER(4,"선임 관리자")
+    ROLE_ASSISTANT(2, "전임 관리자"),
+    ROLE_MANAGER(3,"선임 관리자"),
+    ROLE_USER(4, "일반유저")
     ;
 
     public int getCode() {
