@@ -44,7 +44,6 @@ public class SubTaskServiceImpl implements SubTaskService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public List<SubTaskDto> subTaskList(Long todoId) {
         List<SubTask> result = subtaskListOrderByRegDate(todoId);
         return result.stream().map(this::entityToDto).collect(Collectors.toList());

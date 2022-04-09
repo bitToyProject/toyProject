@@ -22,6 +22,7 @@ import java.util.function.Function;
 @Log4j2
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository repository;
@@ -35,7 +36,6 @@ public class TodoServiceImpl implements TodoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public PageResultDto todoList(PageRequestDto pageRequestDto) {
 
         Function<Object[], TodoDto> fn = (arr -> entityTodoDto((Todo) arr[0]));
@@ -56,6 +56,7 @@ public class TodoServiceImpl implements TodoService {
      * @return
      */
     @Override
+    @Transactional
     public Long todoSave(TodoDto todoDto) {
         UserResponseDto userNickname = getUserNickname();
         todoDto.setNickname(userNickname.getNickname());
@@ -71,7 +72,6 @@ public class TodoServiceImpl implements TodoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public TodoDto todoRead(Long todoId) {
         Todo result = repository.getTodo(todoId);
         return entityTodoDto(result);
@@ -83,8 +83,8 @@ public class TodoServiceImpl implements TodoService {
      * @param todoId
      * @param todoDto
      */
-    @Transactional
     @Override
+    @Transactional
     public void todoModify(Long todoId, TodoDto todoDto) {
 
         Todo todo = repository.getById(todoId);
@@ -100,8 +100,8 @@ public class TodoServiceImpl implements TodoService {
      *
      * @param todoId
      */
-    @Transactional
     @Override
+    @Transactional
     public void todoRemove(Long todoId) {
         subTaskRepository.subTaskDelete(todoId);
         repository.deleteById(todoId);

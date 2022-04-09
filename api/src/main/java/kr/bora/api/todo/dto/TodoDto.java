@@ -33,8 +33,6 @@ public class TodoDto {
 
     private Integer priority;
 
-    private Boolean done;
-
     private Integer point = 0;
     @JsonIgnore
     private String doneTime;
@@ -56,7 +54,6 @@ public class TodoDto {
                    String assignee,
                    String nickname,
                    Integer priority,
-                   Boolean done,
                    Integer point,
                    String doneTime,
                    String regDate,
@@ -71,7 +68,6 @@ public class TodoDto {
         this.assignee = assignee;
         this.nickname = nickname;
         this.priority = priority;
-        this.done = done;
         this.point = point;
         this.doneTime = doneTime;
         this.regDate = regDate;

@@ -7,11 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
-@Component
 @Getter
 @Setter
 @NoArgsConstructor
