@@ -1,6 +1,7 @@
 package kr.bora.api.subtask.service;
 
 import kr.bora.api.subtask.domain.SubTask;
+import kr.bora.api.subtask.domain.SubtaskType;
 import kr.bora.api.subtask.dto.SubTaskDto;
 import kr.bora.api.todo.command.TodoRequestCommand;
 import kr.bora.api.todo.domain.Todo;
@@ -24,6 +25,7 @@ public interface SubTaskService {
                 .assignee(subTaskDto.getAssignee())
                 .doneTime(subTaskDto.getDoneTime())
                 .point(subTaskDto.getPoint())
+                .subTaskType(SubtaskType.SUBTASK)
                 .todo(Todo.builder().todoId(subTaskDto.getTodoId()).build())
                 .user((subTaskDto.getUserId()).saveId(subTaskDto.getUserId()))
                 .build();
@@ -43,7 +45,7 @@ public interface SubTaskService {
                 .doneTime(subTask.getDoneTime())
                 .point(subTask.getPoint())
                 .todoId(subTask.getTodo().getTodoId())
-                .subtaskType(subTask.getSubTaskType())
+                .subtaskType(SubtaskType.SUBTASK)
                 .build();
 
     }

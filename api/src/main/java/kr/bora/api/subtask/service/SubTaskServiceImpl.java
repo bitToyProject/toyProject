@@ -44,9 +44,9 @@ public class SubTaskServiceImpl implements SubTaskService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public List<SubTaskDto> subTaskList(Long todoId) {
         List<SubTask> result = subtaskListOrderByRegDate(todoId);
-
         return result.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 
@@ -56,8 +56,8 @@ public class SubTaskServiceImpl implements SubTaskService {
      * @param subTaskId
      * @param subTaskDto
      */
-    @Transactional
     @Override
+    @Transactional
     public void subTaskModify(Long subTaskId, SubTaskDto subTaskDto) {
         SubTask subTask = subTaskRepository.getById(subTaskId);
         changeSubtask(subTaskDto, subTask);
@@ -70,6 +70,7 @@ public class SubTaskServiceImpl implements SubTaskService {
      * @param subTaskId
      */
     @Override
+    @Transactional
     public void subTaskRemove(Long subTaskId) {
         subTaskRepository.deleteById(subTaskId);
     }
@@ -85,7 +86,10 @@ public class SubTaskServiceImpl implements SubTaskService {
         subTask.changeStart(subTaskDto.getStart());
         subTask.changeEnd(subTaskDto.getEnd());
         subTask.changeAssignee(subTaskDto.getAssignee());
-        subTask.changePoint(subTaskDto.getSubTaskType() == SubtaskType.DONE ? subTask.getPoint() + 10 : subTask.getPoint() - 10);
+        subTask.changePoint(
+                               (subTaskDto.getSubTaskType() == SubtaskType.DONE && subTask.getPoint() == 0) ? subTask.getPoint() + 10 :
+                              !(subTaskDto.getSubTaskType() == SubtaskType.DONE) && subTask.getPoint() == 10 ? subTask.getPoint() - 10 : subTask.getPoint()
+                           );
         subTask.changeDoneTime(subTaskDto.getSubTaskType() == SubtaskType.DONE ? subTaskDto.getDoneTime() : subTaskDto.getModDate());
         subTask.changeSubTaskType(subTaskDto.getSubTaskType());
     }
