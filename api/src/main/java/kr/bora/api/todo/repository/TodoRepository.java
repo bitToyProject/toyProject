@@ -1,6 +1,7 @@
 package kr.bora.api.todo.repository;
 
 import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.repository.search.SearchTodoRepository;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional(rollbackFor = Exception.class)
@@ -39,5 +41,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, SearchTodoRep
     @Modifying(clearAutomatically = true)
     @Query("DELETE FROM Todo t where t.user.userId =:userId")
     void deleteTodoUserId(@Param("userId") long userId);
+
+    Optional<TodoType> findByTodoType(TodoType todoType);
 
 }
