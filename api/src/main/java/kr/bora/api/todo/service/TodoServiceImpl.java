@@ -123,11 +123,17 @@ public class TodoServiceImpl implements TodoService {
         todo.changeAssignee(todoDto.getAssignee());
         todo.changePriority(todoDto.getPriority());
         todo.changeDoneTime(todoDto.getTodoType() == TodoType.DONE ? todoDto.getDoneTime() : todo.getModDate());
-        todo.changePoint(
-                            (todoDto.getTodoType() == TodoType.DONE && todo.getPoint() == 0) ? todo.getPoint() + 10 :
-                           !(todoDto.getTodoType() == TodoType.DONE) && todo.getPoint() == 10 ? todo.getPoint() - 10 : todo.getPoint()
-                        );
+        if (todoDto.getTodoType() == TodoType.DONE && todo.getPoint() == 0) {
+            todo.changePoint(todo.getPoint() + 10);
+        }
+        if (!(todoDto.getTodoType() == TodoType.DONE) && todo.getPoint() == 10){
+            todo.changePoint(todo.getPoint() - 10);
+        } else{
+            todo.changePoint(todo.getPoint());
+        }
         todo.changeTodoType(todoDto.getTodoType());
+
+
     }
 
 }

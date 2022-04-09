@@ -19,7 +19,7 @@ public class SubTaskReply extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long subtaskRno;
+    private Long subtaskReplyId;
 
     private String text;
 
@@ -34,8 +34,8 @@ public class SubTaskReply extends BaseEntity {
     private User user;
 
     @Builder
-    public SubTaskReply(Long subtaskRno, String text, String subtaskReplyer, SubTask subTask, User user) {
-        this.subtaskRno = subtaskRno;
+    public SubTaskReply(Long subtaskReplyId, String text, String subtaskReplyer, SubTask subTask, User user) {
+        this.subtaskReplyId = subtaskReplyId;
         this.text = text;
         this.subtaskReplyer = subtaskReplyer;
         this.subTask = subTask;

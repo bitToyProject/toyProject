@@ -85,10 +85,16 @@ public class SubTaskServiceImpl implements SubTaskService {
         subTask.changeStart(subTaskDto.getStart());
         subTask.changeEnd(subTaskDto.getEnd());
         subTask.changeAssignee(subTaskDto.getAssignee());
-        subTask.changePoint(
-                               (subTaskDto.getSubTaskType() == SubtaskType.DONE && subTask.getPoint() == 0) ? subTask.getPoint() + 10 :
-                              !(subTaskDto.getSubTaskType() == SubtaskType.DONE) && subTask.getPoint() == 10 ? subTask.getPoint() - 10 : subTask.getPoint()
-                           );
+
+        if (subTaskDto.getSubTaskType() == SubtaskType.DONE && subTask.getPoint() == 0) {
+            subTask.changePoint(subTask.getPoint() + 10);
+        }
+
+        if (!(subTaskDto.getSubTaskType() == SubtaskType.DONE) && subTask.getPoint() == 10) {
+            subTask.changePoint(subTask.getPoint() - 10);
+        }else{
+            subTask.changePoint(subTask.getPoint());
+        }
         subTask.changeDoneTime(subTaskDto.getSubTaskType() == SubtaskType.DONE ? subTaskDto.getDoneTime() : subTaskDto.getModDate());
         subTask.changeSubTaskType(subTaskDto.getSubTaskType());
     }
