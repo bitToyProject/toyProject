@@ -3,8 +3,8 @@ package kr.bora.api.subtask.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import kr.bora.api.subtask.command.SubTaskRequestCommand;
 import kr.bora.api.subtask.dto.SubTaskDto;
+import kr.bora.api.subtask.dto.request.SubTaskRequestDto;
 import kr.bora.api.subtask.service.SubTaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -32,7 +32,7 @@ public class SubTaskController {
      */
     @ApiOperation(value = "SubTask 등록", notes = "SubTask를 등록 합니다.")
     @PostMapping("/save/{todoId}")
-    public ResponseEntity<String> subTaskSave(@Valid @RequestBody SubTaskRequestCommand.SubTaskRequest subTaskDto, @ApiParam(value = "Todo 번호", required = true) @PathVariable Long todoId) {
+    public ResponseEntity<String> subTaskSave(@Valid @RequestBody SubTaskRequestDto subTaskDto, @ApiParam(value = "Todo 번호", required = true) @PathVariable Long todoId) {
 
         service.subTaskSave(subTaskDto.toDto(todoId), todoId);
         return ResponseEntity.ok("SubTask가 성공적으로 등록되었습니다.");

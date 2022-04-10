@@ -1,6 +1,6 @@
 package kr.bora.api.todo.controller;
 
-import kr.bora.api.todo.command.TodoLikeRequestCommand;
+import kr.bora.api.todo.dto.request.TodoLikeRequestDto;
 import kr.bora.api.todo.service.TodoLikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class TodoLikeController {
     private final TodoLikeService todoLikeService;
 
     @PostMapping("/like/{todoId}")
-    public ResponseEntity<String> addLike(TodoLikeRequestCommand.TodoLikeRequest todoLikeDto, @PathVariable Long todoId) {
+    public ResponseEntity<String> addLike(TodoLikeRequestDto todoLikeDto, @PathVariable Long todoId) {
 
         boolean result = false;
 
@@ -28,7 +28,7 @@ public class TodoLikeController {
     }
 
     @DeleteMapping("/like/{todoId}/{todoLikeId}")
-    public ResponseEntity<String> addLikeCancel(TodoLikeRequestCommand.TodoLikeRequest todoLikeDto, @PathVariable Long todoId, @PathVariable Long todoLikeId) {
+    public ResponseEntity<String> addLikeCancel(TodoLikeRequestDto todoLikeDto, @PathVariable Long todoId, @PathVariable Long todoLikeId) {
 
         todoLikeService.addLikeCancel(todoLikeDto.toDto(todoId), todoId, todoLikeId);
 

@@ -3,13 +3,13 @@ package kr.bora.api.subtask.service;
 import kr.bora.api.subtask.domain.SubTask;
 import kr.bora.api.subtask.domain.SubtaskType;
 import kr.bora.api.subtask.dto.SubTaskDto;
-import kr.bora.api.todo.command.TodoRequestCommand;
+import kr.bora.api.subtask.dto.request.SubTaskRequestDto;
 import kr.bora.api.todo.domain.Todo;
 
 import java.util.List;
 public interface SubTaskService {
 
-    Long subTaskSave(SubTaskDto subTaskDto, Long TodoId);
+    Long subTaskSave(SubTaskRequestDto SubTaskRequestDto, Long TodoId);
 
     void subTaskRemove(Long subTaskId);
 
@@ -17,7 +17,7 @@ public interface SubTaskService {
 
     List<SubTaskDto> subTaskList(Long todoId);
 
-    default SubTask dtoToEntity(SubTaskDto subTaskDto) {
+    default SubTask dtoToEntity(SubTaskRequestDto subTaskDto) {
         return SubTask.builder()
                 .title(subTaskDto.getTitle())
                 .start(subTaskDto.getStart())
@@ -32,10 +32,10 @@ public interface SubTaskService {
     }
 
     default SubTaskDto entityToDto(SubTask subTask) {
-        TodoRequestCommand.TodoRequest users = TodoRequestCommand.TodoRequest.builder().build();
+        SubTaskRequestDto users = SubTaskRequestDto.builder().build();
         return SubTaskDto.builder()
                 .subTaskId(subTask.getSubTaskId())
-                .userId(users.toDto().getUserId())
+                .userId(users.toDto(subTask.getTodo().getTodoId()).getUserId())
                 .title(subTask.getTitle())
                 .start(subTask.getStart())
                 .end(subTask.getEnd())

@@ -1,9 +1,9 @@
 package kr.bora.api.todo.service;
 
-import kr.bora.api.todo.command.TodoRequestCommand;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.dto.TodoDto;
+import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 
@@ -11,7 +11,7 @@ public interface TodoService {
 
     PageResultDto<TodoDto, Object[]> todoList(PageRequestDto pageRequestDto);
 
-    Long todoSave(TodoDto todoDto);
+    Long todoSave(TodoRequestDto todoRequestDto);
 
     TodoDto todoRead(Long todoId);
 
@@ -21,7 +21,7 @@ public interface TodoService {
 
 
     default TodoDto entityTodoDto(Todo todo) {
-        TodoRequestCommand.TodoRequest users = TodoRequestCommand.TodoRequest.builder().build();
+        TodoRequestDto users = TodoRequestDto.builder().build();
         return TodoDto.builder()
                 .todoId(todo.getTodoId())
                 .userId(users.toDto().getUserId())
@@ -41,7 +41,7 @@ public interface TodoService {
     }
 
 
-    default Todo toEntitySaveTodo(TodoDto dto) {
+    default Todo toEntitySaveTodo(TodoRequestDto dto) {
         return Todo.builder()
                 .title(dto.getTitle())
                 .start(dto.getStart())

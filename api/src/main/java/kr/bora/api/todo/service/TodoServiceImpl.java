@@ -4,6 +4,7 @@ import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.dto.TodoDto;
+import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 import kr.bora.api.todo.repository.TodoRepository;
@@ -52,17 +53,17 @@ public class TodoServiceImpl implements TodoService {
     /**
      * Todo 저장
      *
-     * @param todoDto
+     * @param todoRequestDto
      * @return
      */
     @Override
     @Transactional
-    public Long todoSave(TodoDto todoDto) {
+    public Long todoSave(TodoRequestDto todoRequestDto) {
         UserResponseDto userNickname = getUserNickname();
-        todoDto.setNickname(userNickname.getNickname());
-        Todo todo = toEntitySaveTodo(todoDto);
+        todoRequestDto.setNickname(userNickname.getNickname());
+        Todo todo = toEntitySaveTodo(todoRequestDto);
         repository.save(todo);
-        return todoDto.getTodoId();
+        return todoRequestDto.getTodoId();
     }
 
     /**

@@ -1,24 +1,24 @@
 package kr.bora.api.todo.service;
 
-import kr.bora.api.todo.command.TodoRequestCommand;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoReply;
 import kr.bora.api.todo.dto.TodoReplyDto;
+import kr.bora.api.todo.dto.request.TodoReplyRequestDto;
 
 import java.util.List;
 
 public interface TodoReplyService {
-    Long todoReplySave(TodoReplyDto todoReplyDto, Long todoId);
+    Long todoReplySave(TodoReplyRequestDto todoReplyDto, Long todoId);
 
     void todoReplyRemove(Long todoRno);
 
     List<TodoReplyDto> todoReplyList(Long todoId);
 
     default TodoReplyDto entityTodoReplyDto(TodoReply todoReply) {
-        TodoRequestCommand.TodoRequest users = TodoRequestCommand.TodoRequest.builder().build();
+        TodoReplyRequestDto users = TodoReplyRequestDto.builder().build();
         return TodoReplyDto.builder()
                 .todoId(todoReply.getTodo().getTodoId())
-                .userId(users.toDto().getUserId())
+                .userId(users.toReplyDto(todoReply.getTodo().getTodoId()).getUserId())
                 .todoReplyId(todoReply.getTodoRno())
                 .text(todoReply.getText())
                 .todoReplyer(todoReply.getTodoReplyer())
@@ -28,7 +28,7 @@ public interface TodoReplyService {
 
     }
 
-    default TodoReply dtoTodoReplyEntity(TodoReplyDto todoReplyDto) {
+    default TodoReply dtoTodoReplyEntity(TodoReplyRequestDto todoReplyDto) {
         return TodoReply.builder()
                 .todoRno(todoReplyDto.getTodoReplyId())
                 .text(todoReplyDto.getText())

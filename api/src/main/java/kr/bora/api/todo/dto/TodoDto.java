@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @NoArgsConstructor
 public class TodoDto {
@@ -16,13 +14,10 @@ public class TodoDto {
     @JsonIgnore
     private TodoUserDto userId;
 
-    @NotNull(message = "제목은 필수 입력 값입니다.")
     private String title;
 
-    @NotNull(message = "시작일은 필수 입력 값입니다.")
     private String start;
 
-    @NotNull(message = "종료일은은 필수입력 값입니다.")
     private String end;
 
     private String description;
@@ -75,7 +70,4 @@ public class TodoDto {
         this.todoType = todoType;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 }

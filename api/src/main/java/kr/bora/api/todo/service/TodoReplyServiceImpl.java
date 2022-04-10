@@ -3,6 +3,7 @@ package kr.bora.api.todo.service;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoReply;
 import kr.bora.api.todo.dto.TodoReplyDto;
+import kr.bora.api.todo.dto.request.TodoReplyRequestDto;
 import kr.bora.api.todo.repository.TodoReplyRepository;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
@@ -30,7 +31,7 @@ public class TodoReplyServiceImpl implements TodoReplyService {
      */
     @Override
     @Transactional
-    public Long todoReplySave(TodoReplyDto todoReplyDto, Long todoId) {
+    public Long todoReplySave(TodoReplyRequestDto todoReplyDto, Long todoId) {
         UserResponseDto replyer = getUserNickname();
 
         todoReplyDto.setTodoReplyer(replyer.getNickname());

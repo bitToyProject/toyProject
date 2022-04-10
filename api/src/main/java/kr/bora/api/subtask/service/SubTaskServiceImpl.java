@@ -3,6 +3,7 @@ package kr.bora.api.subtask.service;
 import kr.bora.api.subtask.domain.SubTask;
 import kr.bora.api.subtask.domain.SubtaskType;
 import kr.bora.api.subtask.dto.SubTaskDto;
+import kr.bora.api.subtask.dto.request.SubTaskRequestDto;
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class SubTaskServiceImpl implements SubTaskService {
      */
     @Override
     @Transactional
-    public Long subTaskSave(SubTaskDto subTaskDto, Long todoId) {
+    public Long subTaskSave(SubTaskRequestDto subTaskDto, Long todoId) {
 
         SubTask subTask = dtoToEntity(subTaskDto);
         subTaskRepository.save(subTask);

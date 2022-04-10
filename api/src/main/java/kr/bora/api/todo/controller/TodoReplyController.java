@@ -3,8 +3,8 @@ package kr.bora.api.todo.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import kr.bora.api.todo.command.TodoReplyRequestCommand;
 import kr.bora.api.todo.dto.TodoReplyDto;
+import kr.bora.api.todo.dto.request.TodoReplyRequestDto;
 import kr.bora.api.todo.service.TodoReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,10 +42,10 @@ public class TodoReplyController {
      */
     @ApiOperation(value="Todo 댓글 등록", notes="Todo 댓글을 등록합니다.")
     @PostMapping("/save/{todoId}")
-    public ResponseEntity<Map<String, Object>> replySave(@ApiParam(value="Todo 번호", required=true) @Valid @RequestBody TodoReplyRequestCommand.TodoReplyRequest todoReplyDto, @PathVariable Long todoId) {
+    public ResponseEntity<Map<String, Object>> replySave(@ApiParam(value="Todo 번호", required=true) @Valid @RequestBody TodoReplyRequestDto todoReplyDto, @PathVariable Long todoId) {
         Map<String, Object> obj = new HashMap<>();
-        obj.put("Save Success TodoReply", todoReplyDto.toDto(todoId).getTodoId() + "번 Todo의 댓글이 등록되었습니다.");
-        todoReplyService.todoReplySave(todoReplyDto.toDto(todoId), todoId);
+        obj.put("Save Success TodoReply", todoReplyDto.toReplyDto(todoId).getTodoId() + "번 Todo의 댓글이 등록되었습니다.");
+        todoReplyService.todoReplySave(todoReplyDto.toReplyDto(todoId), todoId);
 
         return ResponseEntity.ok(obj);
     }

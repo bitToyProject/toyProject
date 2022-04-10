@@ -6,8 +6,8 @@ package kr.bora.api.todo.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import kr.bora.api.todo.command.TodoRequestCommand;
 import kr.bora.api.todo.dto.TodoDto;
+import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 import kr.bora.api.todo.service.TodoService;
@@ -46,7 +46,7 @@ public class TodoController {
      */
     @ApiOperation(value="Todo 등록", notes="Todo 리스트를 등록합니다.")
     @PostMapping("/save")
-    public ResponseEntity<String> todoSave(@Valid @RequestBody TodoRequestCommand.TodoRequest todoDto) {
+    public ResponseEntity<String> todoSave(@Valid @RequestBody TodoRequestDto todoDto) {
         service.todoSave(todoDto.toDto());
         return ResponseEntity.ok("ToDo가 정상적으로 등록되었습니다.");
     }
