@@ -35,6 +35,7 @@ dependencies {
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation 'org.springframework.data:spring-data-envers'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.0'
+    implementation 'org.modelmapper:modelmapper:3.0.0'
 
 // ##########################################JPA, QUERY DSL###########################################################
     implementation 'com.querydsl:querydsl-jpa'

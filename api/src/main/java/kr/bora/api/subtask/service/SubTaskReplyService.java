@@ -3,7 +3,6 @@ package kr.bora.api.subtask.service;
 import kr.bora.api.subtask.domain.SubTask;
 import kr.bora.api.subtask.domain.SubTaskReply;
 import kr.bora.api.subtask.dto.SubTaskReplyDto;
-import kr.bora.api.todo.command.TodoRequestCommand;
 
 import java.util.List;
 
@@ -16,10 +15,10 @@ public interface SubTaskReplyService {
     List<SubTaskReplyDto> subtaskReplyList(Long subtaskId);
 
     default SubTaskReplyDto entitySubtaskReplyDto(SubTaskReply subTaskReply) {
-        TodoRequestCommand.TodoRequest users = TodoRequestCommand.TodoRequest.builder().build();
+//        TodoRequestCommand.TodoRequest users = TodoRequestCommand.TodoRequest.builder().build();
         return SubTaskReplyDto.builder()
                 .subtaskId(subTaskReply.getSubTask().getSubTaskId())
-                .userId(users.toDto().getUserId())
+//                .userId(users.toDto().getUserId())
                 .subtaskReplyId(subTaskReply.getSubtaskReplyId())
                 .text(subTaskReply.getText())
                 .subtaskReplyer(subTaskReply.getSubtaskReplyer())

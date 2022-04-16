@@ -2,12 +2,15 @@ package kr.bora.api.todo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kr.bora.api.todo.domain.TodoType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TodoDto {
 
     private Long todoId;
@@ -38,36 +41,5 @@ public class TodoDto {
     private String modDate;
 
     private TodoType todoType;
-
-    @Builder
-    public TodoDto(Long todoId,
-                   TodoUserDto userId,
-                   String title,
-                   String start,
-                   String end,
-                   String description,
-                   String assignee,
-                   String nickname,
-                   Integer priority,
-                   Integer point,
-                   String doneTime,
-                   String regDate,
-                   String modDate,
-                   TodoType todoType) {
-        this.todoId = todoId;
-        this.userId = userId;
-        this.title = title;
-        this.start = start;
-        this.end = end;
-        this.description = description;
-        this.assignee = assignee;
-        this.nickname = nickname;
-        this.priority = priority;
-        this.point = point;
-        this.doneTime = doneTime;
-        this.regDate = regDate;
-        this.modDate = modDate;
-        this.todoType = todoType;
-    }
 
 }

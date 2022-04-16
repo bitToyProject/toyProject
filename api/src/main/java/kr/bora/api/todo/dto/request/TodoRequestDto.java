@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -57,6 +58,7 @@ public class TodoRequestDto {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
 
 
 }

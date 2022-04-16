@@ -2,10 +2,7 @@ package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,8 +12,10 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(exclude = {"user"})
 @Audited(withModifiedFlag = true)
+@Builder
 public class Todo extends BaseEntity {
 
     @Id
@@ -41,21 +40,7 @@ public class Todo extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TodoType todoType;
 
-    @Builder
-    public Todo(Long todoId, String title, String start, String end, String description, String assignee, Integer point, String nickname, String doneTime, Integer priority, User user, TodoType todoType) {
-        this.todoId = todoId;
-        this.title = title;
-        this.start = start;
-        this.end = end;
-        this.description = description;
-        this.assignee = assignee;
-        this.point = point;
-        this.nickname = nickname;
-        this.doneTime = doneTime;
-        this.priority = priority;
-        this.user = user;
-        this.todoType = todoType;
-    }
+
 
 
     // == Todo 수정 시 변경 메서드 == //
