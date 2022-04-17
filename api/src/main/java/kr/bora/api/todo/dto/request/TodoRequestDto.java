@@ -2,6 +2,7 @@ package kr.bora.api.todo.dto.request;
 
 import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.dto.TodoUserDto;
+import kr.bora.api.upload.dto.TodoFileUploadDto;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -39,6 +41,10 @@ public class TodoRequestDto {
 
     private TodoType todoType;
 
+    private TodoFileUploadDto fileUpload;
+
+    private List<TodoFileUploadDto> files;
+
 
      public TodoRequestDto toDto() {
         Long userId = SecurityUtil.getCurrentUserId();
@@ -52,6 +58,7 @@ public class TodoRequestDto {
                 .priority(priority)
                 .point(point)
                 .todoType(TodoType.TODO)
+                .files(files)
                 .build();
     }
 

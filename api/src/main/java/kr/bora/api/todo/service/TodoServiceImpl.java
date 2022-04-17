@@ -8,6 +8,9 @@ import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 import kr.bora.api.todo.repository.TodoRepository;
+import kr.bora.api.upload.domain.TodoFileUpload;
+import kr.bora.api.upload.dto.TodoFileUploadDto;
+import kr.bora.api.upload.repository.FileUploadRepository;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
@@ -18,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Log4j2
@@ -29,6 +33,8 @@ public class TodoServiceImpl implements TodoService {
     private final TodoRepository repository;
     private final SubTaskRepository subTaskRepository;
     private final UserRepository userRepository;
+
+    private final FileUploadRepository fileUploadRepository;
 
     /**
      * Todo 리스트
@@ -58,11 +64,23 @@ public class TodoServiceImpl implements TodoService {
      */
     @Override
     @Transactional
-    public Long todoSave(TodoRequestDto todoRequestDto) {
+    public Long todoSave(TodoRequestDto todoRequestDto, TodoFileUploadDto todoFileUploadDto) {
         UserResponseDto userNickname = getUserNickname();
         todoRequestDto.setNickname(userNickname.getNickname());
         Todo todo = toEntitySaveTodo(todoRequestDto);
         repository.save(todo);
+
+        // 파일 업로드
+        List<TodoFileUploadDto> files = todoRequestDto.getFiles();
+
+        if (files != null && files.size() > 0) {
+            files.forEach(file -> {
+                TodoFileUpload todoFileUpload = dtoEntityFiles(todoFileUploadDto);
+//                todoFileUpload.
+                fileUploadRepository.save(todoFileUpload);
+            });
+        }
+
         return todoRequestDto.getTodoId();
     }
 

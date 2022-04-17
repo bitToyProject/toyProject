@@ -42,7 +42,10 @@ public class FileUploadServiceImpl implements FileUploadService {
 
             try{
                 uploadFile.transferTo(savePath);
-                TodoFileUploadDto todoFileUploadDto = TodoFileUploadDto.builder().uuid(uuid).imgName(ofName).build();
+                TodoFileUploadDto todoFileUploadDto = TodoFileUploadDto.builder()
+                        .uuid(uuid)
+                        .originalFilename(ofName)
+                        .build();
                 resultFileList.add(todoFileUploadDto);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -50,5 +53,15 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         }
         return resultFileList;
+    }
+
+    @Override
+    public List<TodoFileUploadDto> updateFile(List<MultipartFile> updateFile) {
+        return null;
+    }
+
+    @Override
+    public void deleteFile(Long fileId) {
+        fileUploadRepository.deleteByTodoId(fileId);
     }
 }

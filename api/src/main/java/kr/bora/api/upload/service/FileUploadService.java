@@ -11,7 +11,9 @@ public interface FileUploadService {
 
     List<TodoFileUploadDto> saveFile(List<MultipartFile> uploadFile);
 
-//    void fileUpload(Long fileId);
+    List<TodoFileUploadDto> updateFile(List<MultipartFile> updateFile);
+
+    void deleteFile(Long fileId);
 
     default TodoFileUpload dtoToEntity(TodoFileUploadDto todoFileUploadDto) {
         return TodoFileUpload.builder()
