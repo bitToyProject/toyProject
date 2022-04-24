@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @NoArgsConstructor
-public class CommandDto {
+public class TeamUserCommandDto {
 
     @Getter
     @NoArgsConstructor

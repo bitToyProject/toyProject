@@ -24,7 +24,7 @@ public class TeamUserController {
      * @return Id, User, Team Info
      */
     @PostMapping("/save")
-    public ResponseEntity<TeamUserResponse> saveTeam(@RequestBody CommandDto.CommanderSave command){
+    public ResponseEntity<TeamUserResponse> saveTeam(@RequestBody TeamUserCommandDto.CommanderSave command){
         TeamUserDto dto = command.toDto();
         return ResponseEntity.ok(service.saveTeam(dto));
     }
@@ -35,7 +35,7 @@ public class TeamUserController {
      * @return List<Id, User, Team> Infos
      */
     @PostMapping("/save/users")
-    public ResponseEntity<List<TeamUserResponse>> saveTeamUsers(@RequestBody CommandDto.CommanderSaveUsers command) {
+    public ResponseEntity<List<TeamUserResponse>> saveTeamUsers(@RequestBody TeamUserCommandDto.CommanderSaveUsers command) {
         TeamUsersDto dto = command.toDto();
         return ResponseEntity.ok(service.saveTeamUsers(dto));
     }
@@ -49,9 +49,19 @@ public class TeamUserController {
     public ResponseEntity<TeamUsersResponseDto> findTeamUsers(@PathVariable Long teamId) {
         return ResponseEntity.ok(service.findTeamUsers(teamId));
     }
+
+    /**
+     * 팀 유저 추가(복수)
+     * @param teamId
+     * @param command
+     * @return
+     */
     @PutMapping("/add/team/user/{teamId}")
-    public ResponseEntity<TeamUsersResponseDto> addTeamUsers(@PathVariable Long teamId, @RequestBody CommandDto.CommanderAddUsers command) {
+    public ResponseEntity<TeamUsersResponseDto> addTeamUsers(@PathVariable Long teamId, @RequestBody TeamUserCommandDto.CommanderAddUsers command) {
         TeamUsersDto dto = command.toDto();
         return ResponseEntity.ok(service.addTeamUsers(teamId, dto));
     }
+    /**
+     * 팀 유저 추가(단일)
+     */
 }

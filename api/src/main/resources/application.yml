@@ -15,6 +15,11 @@ spring:
         format_sql: true
         envers:
           audit_table_suffix: _TOYHISTORY
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
 server:
   port: 8080
 logging:
@@ -25,7 +30,7 @@ logging:
   level:
     kr.bora.api: info
 slack:
-  token: xoxb-2260774149670-3306348973601-HSdMdbahOsI9aLFJhzRHY1DR
+  token: xoxb-2260774149670-3306348973601-i8jonBVb9sxyoefBcZVZmIgp
   server: '#server-error'
   client: '#client-error'
 
@@ -44,3 +49,4 @@ oauth:
   code: GhhXcHaLH0ESJgUvjYGf8bAtz9A6pLDOitRmxSIsv9wgnVWw1hRWNHdiZnHQOmK-vnn-Two9dNsAAAF-XJlP7Q
   clientsecret: nfSzoJ9ny0CxHr3z0qFZzSxCBvjlENF8
   headervalue: application/x-www-form-urlencoded;charset=utf-8
+

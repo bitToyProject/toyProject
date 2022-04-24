@@ -9,6 +9,7 @@ import kr.bora.api.user.service.UserService;
 import kr.bora.api.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 @CrossOrigin("*")
-@Log4j2
+@Slf4j
 public class UserController {
 
     private final UserService userService;
@@ -51,5 +52,11 @@ public class UserController {
             @RequestBody UserRequestCommand.RequestAssignDepartment command) {
         var dto = command.toDto();
         return ResponseEntity.ok(userService.departmentAssigning(dto));
+    }
+    //TODO : 접속중인 유저인지 확인하는 것
+    @GetMapping()
+    public ResponseEntity<String> checkLoginedUsers(){
+
+        return ResponseEntity.ok("바꿔야함");
     }
 }

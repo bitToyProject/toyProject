@@ -8,6 +8,7 @@ import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 import kr.bora.api.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.function.Function;
 
-@Log4j2
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TodoServiceImpl implements TodoService {

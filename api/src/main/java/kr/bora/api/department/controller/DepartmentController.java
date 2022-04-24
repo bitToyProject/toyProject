@@ -6,6 +6,7 @@ import kr.bora.api.department.domain.entity.Department;
 import kr.bora.api.department.service.DepartmentService;
 import kr.bora.api.user.domain.Authority;
 import kr.bora.api.user.service.UserService;
+import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,8 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDto> modifyDepartment(
         // TODO : 최소 권한 설정
         @RequestBody DepartmentRequestCommand.ModifyDepartmentCommander command) {
+        Long currentUserId = SecurityUtil.getCurrentUserId();
+
         DepartmentDto departmentDto = command.toDto();
         return ResponseEntity.ok(departmentService.modify(departmentDto));
     }

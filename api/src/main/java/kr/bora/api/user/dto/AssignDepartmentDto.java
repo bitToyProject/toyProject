@@ -19,7 +19,7 @@ public class AssignDepartmentDto {
 
         return User.builder()
                 .userId(id)
-                .department(departmentDto.toEntity())
+//                .department(departmentDto.toEntity())
                 .build();
     }
 }

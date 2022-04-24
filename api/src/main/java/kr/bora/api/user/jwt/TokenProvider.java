@@ -5,6 +5,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import kr.bora.api.user.dto.TokenDto;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,14 +19,19 @@ import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Log4j2
+@Slf4j
 @Component
 public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7 ;
+//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;
 //    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;// 30분
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
+//    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
+
+
+
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000;
 
     private final Key key;
 

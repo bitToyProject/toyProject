@@ -13,6 +13,7 @@ import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.service.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @CrossOrigin(origins ="*")
-@Log4j2
+@Slf4j
 public class AuthController {
 
     private final AuthServiceImpl authService;

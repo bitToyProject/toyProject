@@ -36,6 +36,10 @@ dependencies {
     implementation 'org.springframework.data:spring-data-envers'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.0'
 
+// ##########################################SPRING BATCH###########################################################
+    implementation 'org.springframework.batch:spring-batch-core:4.3.5'
+    implementation 'org.springframework.boot:spring-boot-starter-quartz:2.6.6'
+
 // ##########################################JPA, QUERY DSL###########################################################
     implementation 'com.querydsl:querydsl-jpa'
 

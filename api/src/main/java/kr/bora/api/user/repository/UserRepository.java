@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByusername(String username);
 
-    @Modifying
-    @Query("update User u set u.department = :#{#user.department} where u.userId=:#{#user.userId}")
-    int assiningUserDepartment(@Param("user") User user);
+//    @Modifying
+//    @Query("update User u set u.department = :#{#user.department} where u.userId=:#{#user.userId}")
+//    int assiningUserDepartment(@Param("user") User user);
 }

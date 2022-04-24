@@ -22,5 +22,4 @@ public class TeamController {
     }
 //    @PostMapping("/enrollment")
 //    public ResponseEntity<TeamResponseDto> enrollmentUser(TeamCommandDto.)
-
 }

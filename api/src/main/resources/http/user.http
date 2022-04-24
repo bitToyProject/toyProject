@@ -3,7 +3,7 @@ POST http://localhost:8080/auth/signup
 Content-Type: application/json
 
 {
-  "username": "wkdgothf@gmail.com",
+  "username": "wkdgothf321@gmail.com",
   "password": "haesol2",
   "lastName": "장",
   "firstName": "해솔",
@@ -27,7 +27,7 @@ POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "username": "wkdgothf@gmail.com",
+  "username": "wkdgothf3241@gmail.com",
   "password": "haesol2"
 }
 
@@ -36,9 +36,20 @@ PUT http://localhost:8080/user/assign/department
 Content-Type: application/json
 
 {
-"userId": 1,
-"departmentDto": {
-"departmentId": 1,
-"departmentName":"아이크림개발"
+  "userId": 1,
+  "departmentDto": {
+    "departmentId": 1,
+    "departmentName": "아이크림개발"
+  }
 }
+
+
+###
+POST http://localhost:8080/auth/reissue
+Content-Type: application/json
+
+{
+  "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY1MDA4MjQ0MH0.0MdLTW1GEus4YhQTD8Zhrr_DfS_A1bMrEaeK9LUAnkoCB-nzbzm5nR2VYvCGfbJtXGV5juq1J3OF9qxspSE-7g",
+  "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2NTAwODI0NDB9.0ZFT72io2KFFqrBZLak_Z5GLQESfHNEJRdLw4SdFCSo9yL5-jNmTMLzynVUxjIcRo6EnPCFoLccLAtAKAMT45w"
+
 }

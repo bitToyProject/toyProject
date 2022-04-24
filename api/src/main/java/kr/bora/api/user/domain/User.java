@@ -1,8 +1,6 @@
 package kr.bora.api.user.domain;
 
-import kr.bora.api.department.domain.entity.Department;
 import kr.bora.api.user.domain.reader.MailSender;
-import kr.bora.api.user.dto.UserResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
 
@@ -61,10 +58,6 @@ public class User{
     @Enumerated(EnumType.ORDINAL) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
 
-    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "department")
-    private Department department;
 
 
 //    @Column(name = "part",)

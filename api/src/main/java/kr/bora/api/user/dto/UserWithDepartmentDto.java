@@ -36,7 +36,7 @@ public class UserWithDepartmentDto {
                 .lastName(user.getLastName())
                 .gender(user.getGender())
                 .phoneNumber(user.getPhoneNum())
-                .departmentDto(user.getDepartment().toDto())
+//                .departmentDto(user.getDepartment().toDto())
                 .build();
     }
 }

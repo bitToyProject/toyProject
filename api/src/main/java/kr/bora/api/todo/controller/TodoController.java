@@ -13,6 +13,7 @@ import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 import kr.bora.api.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 
 @Api(tags={"2. Todo"})
 @RestController
-@Log4j2
+@Slf4j
 @RequestMapping("/todos")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")

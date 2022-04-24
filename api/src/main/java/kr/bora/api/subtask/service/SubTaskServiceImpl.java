@@ -7,13 +7,14 @@ import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j2
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
