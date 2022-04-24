@@ -38,7 +38,6 @@ public class TodoRepositoryTest {
                     .end("2022-03" + "-" + i)
                     .assignee("같이 푸는 사람" + i)
                     .priority(1 + i)
-                    .done(false)
                     .build();
 
             todoRepository.save(todo);

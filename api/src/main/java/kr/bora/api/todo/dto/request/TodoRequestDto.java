@@ -8,8 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -43,7 +45,11 @@ public class TodoRequestDto {
 
     private TodoFileUploadDto fileUpload;
 
-    private List<TodoFileUploadDto> files;
+    @Builder.Default
+    private ArrayList<MultipartFile> files = new ArrayList<>();
+
+    @Builder.Default
+    private List<TodoFileUploadDto> todoFileDtoList = new ArrayList<>();
 
 
      public TodoRequestDto toDto() {
@@ -58,7 +64,7 @@ public class TodoRequestDto {
                 .priority(priority)
                 .point(point)
                 .todoType(TodoType.TODO)
-                .files(files)
+                .files(files) // 주석 처리 해야할지 테스트 해봐야 함.
                 .build();
     }
 
@@ -66,6 +72,11 @@ public class TodoRequestDto {
         this.nickname = nickname;
     }
 
+    public void addTodoFileDto(TodoFileUploadDto todoFileUploadDto) {
+        todoFileDtoList.add(todoFileUploadDto);
+    }
 
-
+    public void setTodoFileDtoList(List<TodoFileUploadDto> todoFileDtoList) {
+        this.todoFileDtoList = todoFileDtoList;
+    }
 }

@@ -13,7 +13,7 @@ public interface TodoService {
 
     PageResultDto<TodoDto, Object[]> todoList(PageRequestDto pageRequestDto);
 
-    Long todoSave(TodoRequestDto todoRequestDto, TodoFileUploadDto todoFileUploadDto);
+    Long todoSave(TodoRequestDto todoRequestDto);
 
     TodoDto todoRead(Long todoId);
 
@@ -58,12 +58,42 @@ public interface TodoService {
                 .todoType(dto.getTodoType())
                 .build();
     }
+    default TodoDto entityToDtoForList(Todo todo, TodoFileUploadDto todoFileUpload) {
+        TodoRequestDto users = TodoRequestDto.builder().build();
+        return TodoDto.builder()
+                .todoId(todo.getTodoId())
+                .userId(users.toDto().getUserId())
+                .title(todo.getTitle())
+                .description(todo.getDescription())
+                .start(todo.getStart())
+                .end(todo.getEnd())
+                .assignee(todo.getAssignee())
+                .priority(todo.getPriority())
+                .regDate(todo.getRegDate())
+                .modDate(todo.getModDate())
+                .nickname(todo.getNickname())
+                .doneTime(todo.getDoneTime())
+                .point(todo.getPoint())
+                .todoType(TodoType.TODO)
+                .fileUpload(TodoFileUploadDto.builder()
+                        .fileId(todoFileUpload.getFileId())
+                        .originalFilename(todoFileUpload.getOriginalFilename())
+                        .saveFilename(todoFileUpload.getSaveFilename())
+                        .path(todoFileUpload.getPath())
+                        .todo(TodoDto.builder().todoId(todoFileUpload.getTodo().getTodoId()).build())
+                        .build())
+                .build();
+    }
 
     default TodoFileUpload dtoEntityFiles(TodoFileUploadDto todoFileUploadDto) {
         return TodoFileUpload.builder()
                 .uuid(todoFileUploadDto.getUuid())
                 .originalFilename(todoFileUploadDto.getOriginalFilename())
                 .saveFilename(todoFileUploadDto.getUuid() + "__" + todoFileUploadDto.getOriginalFilename())
+                .imageName(todoFileUploadDto.getImgName())
+                .path(todoFileUploadDto.getPath())
+                .todo(Todo.builder().todoId(todoFileUploadDto.getTodoId()).build())
+                .user((todoFileUploadDto.getUserId()).saveId(todoFileUploadDto.getUserId()))
                 .build();
     }
 
@@ -77,8 +107,6 @@ public interface TodoService {
                 .todoId(todoFileUpload.getTodo().getTodoId())
                 .userId(users.toDto().getUserId())
                 .build();
-
-
     }
 
 }

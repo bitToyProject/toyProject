@@ -45,7 +45,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public PageResultDto todoList(PageRequestDto pageRequestDto) {
 
-        Function<Object[], TodoDto> fn = (arr -> entityTodoDto((Todo) arr[0]));
+        Function<Object[], TodoDto> fn = (arr -> entityToDtoForList((Todo) arr[0], (TodoFileUploadDto) arr[1]));
         Page<Object[]> result = repository.searchPage(
                 pageRequestDto.getType(),
                 pageRequestDto.getKeyword(),
@@ -64,19 +64,19 @@ public class TodoServiceImpl implements TodoService {
      */
     @Override
     @Transactional
-    public Long todoSave(TodoRequestDto todoRequestDto, TodoFileUploadDto todoFileUploadDto) {
+    public Long todoSave(TodoRequestDto todoRequestDto) {
         UserResponseDto userNickname = getUserNickname();
         todoRequestDto.setNickname(userNickname.getNickname());
         Todo todo = toEntitySaveTodo(todoRequestDto);
+
         repository.save(todo);
 
-        // 파일 업로드
-        List<TodoFileUploadDto> files = todoRequestDto.getFiles();
+        List<TodoFileUploadDto> todoFiles = todoRequestDto.getTodoFileDtoList();
 
-        if (files != null && files.size() > 0) {
-            files.forEach(file -> {
-                TodoFileUpload todoFileUpload = dtoEntityFiles(todoFileUploadDto);
-//                todoFileUpload.
+        if (todoFiles != null && todoFiles.size() > 0) {
+            todoFiles.forEach(f -> {
+                TodoFileUpload todoFileUpload = dtoEntityFiles(f);
+                todoFileUpload.setTodo(todo);
                 fileUploadRepository.save(todoFileUpload);
             });
         }
@@ -123,6 +123,7 @@ public class TodoServiceImpl implements TodoService {
     @Transactional
     public void todoRemove(Long todoId) {
         subTaskRepository.subTaskDelete(todoId);
+        fileUploadRepository.deleteByTodoId(todoId);
         repository.deleteById(todoId);
     }
 
@@ -145,13 +146,12 @@ public class TodoServiceImpl implements TodoService {
         if (todoDto.getTodoType() == TodoType.DONE && todo.getPoint() == 0) {
             todo.changePoint(todo.getPoint() + 10);
         }
-        if (!(todoDto.getTodoType() == TodoType.DONE) && todo.getPoint() == 10){
+        if (!(todoDto.getTodoType() == TodoType.DONE) && todo.getPoint() == 10) {
             todo.changePoint(todo.getPoint() - 10);
-        } else{
+        } else {
             todo.changePoint(todo.getPoint());
         }
         todo.changeTodoType(todoDto.getTodoType());
-
 
     }
 

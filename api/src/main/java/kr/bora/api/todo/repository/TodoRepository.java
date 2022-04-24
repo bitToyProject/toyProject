@@ -25,6 +25,12 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, SearchTodoRep
     @Query("SELECT to, w FROM Todo to LEFT JOIN to.user w where to.todoId = :todoId")
     Todo getTodo(@Param("todoId") Long todoId);
 
+    @Query("SELECT to, w, tf " +
+            " FROM Todo to LEFT JOIN to.user w" +
+            " LEFT JOIN TodoFileUpload tf on tf.todo = to " +
+            "where to.todoId =:todoId group by tf ")
+    List<Object[]> getTodoWithTodoFileUpload(@Param("todoId") Long todoId);
+
     /**
      * Todo 목록
      * @return

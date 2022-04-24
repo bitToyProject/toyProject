@@ -42,4 +42,11 @@ public class TodoFileUpload extends BaseEntity {
     private Todo todo;
 
 
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
+    }
+
+    public void setTodo(Todo todo) {
+        this.todo = todo;
+    }
 }

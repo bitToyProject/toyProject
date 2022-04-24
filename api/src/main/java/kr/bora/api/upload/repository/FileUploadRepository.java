@@ -11,4 +11,7 @@ public interface FileUploadRepository extends JpaRepository<TodoFileUpload, Long
     @Modifying
     @Query("DELETE FROM TodoFileUpload tf where tf.todo.todoId = :todoId")
     void deleteByTodoId(@Param("todoId") Long todoId);
+
+    @Query("SELECT f.fileId FROM TodoFileUpload  f WHERE f.uuid = :uuid")
+    Long findByUuid(@Param("uuid") String uuid);
 }
