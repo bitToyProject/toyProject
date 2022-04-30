@@ -1,6 +1,6 @@
 package kr.bora.api.upload.controller;
 
-import kr.bora.api.upload.dto.TodoFileUploadDto;
+import kr.bora.api.upload.dto.FileUploadDto;
 import kr.bora.api.upload.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-public class FileUploadController {
+public class FileUploadController  {
 
     private final FileUploadService uploadService;
 
@@ -29,7 +29,7 @@ public class FileUploadController {
 
 
     @PostMapping("/uploadFile")
-    public ResponseEntity<List<TodoFileUploadDto>> uploadFile(List<MultipartFile> files) {
+    public ResponseEntity<List<FileUploadDto>> uploadFile(List<MultipartFile> files) {
         for (MultipartFile file : files) {
             if (!file.getContentType().startsWith("image")) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -52,7 +52,7 @@ public class FileUploadController {
     }
 
     @PutMapping("/update/{fileId}")
-    public ResponseEntity<List<TodoFileUploadDto>> updateFiles(List<MultipartFile> files) {
+    public ResponseEntity<List<FileUploadDto>> updateFiles(List<MultipartFile> files) {
         return ResponseEntity.ok(uploadService.saveFile(files));
     }
 

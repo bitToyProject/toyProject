@@ -1,7 +1,6 @@
 package kr.bora.api.upload.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
-import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TodoFileUpload extends BaseEntity {
+public class FileUpload extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,22 +30,13 @@ public class TodoFileUpload extends BaseEntity {
     @Column(name = "save_name")
     private String saveFilename;
 
-    private String imageName;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "todo_id")
-    private Todo todo;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "todo_id")
+//    private Todo todo;
+//
 
-
-    public void setFileId(Long fileId) {
-        this.fileId = fileId;
-    }
-
-    public void setTodo(Todo todo) {
-        this.todo = todo;
-    }
 }

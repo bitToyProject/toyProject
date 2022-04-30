@@ -1,30 +1,29 @@
 package kr.bora.api.upload.service;
 
-import kr.bora.api.todo.domain.Todo;
-import kr.bora.api.upload.domain.TodoFileUpload;
-import kr.bora.api.upload.dto.TodoFileUploadDto;
+import kr.bora.api.common.util.ModelMapperUtils;
+import kr.bora.api.upload.domain.FileUpload;
+import kr.bora.api.upload.dto.FileUploadDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface FileUploadService {
 
-    List<TodoFileUploadDto> saveFile(List<MultipartFile> uploadFile);
+    List<FileUploadDto> saveFile(List<MultipartFile> uploadFile);
 
-    List<TodoFileUploadDto> updateFile(List<MultipartFile> updateFile);
+    List<FileUploadDto> updateFile(List<MultipartFile> updateFile);
 
     void deleteFile(Long fileId);
 
-    default TodoFileUpload dtoToEntity(TodoFileUploadDto todoFileUploadDto) {
-        return TodoFileUpload.builder()
-                .uuid(todoFileUploadDto.getUuid())
-                .originalFilename(todoFileUploadDto.getOriginalFilename())
-                .saveFilename(todoFileUploadDto.getSaveFilename())
-                .imageName(todoFileUploadDto.getImgName())
-                .path(todoFileUploadDto.getPath())
-                .todo(Todo.builder().todoId(todoFileUploadDto.getTodoId()).build())
-                .user((todoFileUploadDto.getUserId()).saveId(todoFileUploadDto.getUserId()))
-                .build();
+    default FileUpload dtoTodEntity(FileUploadDto fileUploadDto) {
+        FileUpload fileUpload = ModelMapperUtils.getModelMapper().map(fileUploadDto, FileUpload.class);
 
+        return fileUpload;
+    }
+
+    default FileUploadDto entityToDto(FileUpload reviewFile){
+        FileUploadDto fileUploadDto = ModelMapperUtils.getModelMapper().map(reviewFile, FileUploadDto.class);
+
+        return fileUploadDto;
     }
 }

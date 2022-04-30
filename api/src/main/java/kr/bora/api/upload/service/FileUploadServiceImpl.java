@@ -1,7 +1,9 @@
 package kr.bora.api.upload.service;
 
-import kr.bora.api.upload.dto.TodoFileUploadDto;
+import kr.bora.api.todo.dto.TodoUserDto;
+import kr.bora.api.upload.dto.FileUploadDto;
 import kr.bora.api.upload.repository.FileUploadRepository;
+import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,8 +28,8 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     @Transactional
-    public ArrayList<TodoFileUploadDto> saveFile(List<MultipartFile> uploadFiles) {
-        ArrayList<TodoFileUploadDto> resultFileList = new ArrayList<>();
+    public ArrayList<FileUploadDto> saveFile(List<MultipartFile> uploadFiles) {
+        ArrayList<FileUploadDto> resultFileList = new ArrayList<>();
         for (MultipartFile uploadFile : uploadFiles) {
             String ofName = uploadFile.getOriginalFilename();
             int idx = ofName.lastIndexOf('.');
@@ -42,11 +44,14 @@ public class FileUploadServiceImpl implements FileUploadService {
 
             try{
                 uploadFile.transferTo(savePath);
-                TodoFileUploadDto todoFileUploadDto = TodoFileUploadDto.builder()
+                Long userId = SecurityUtil.getCurrentUserId();
+                FileUploadDto fileUploadDto = FileUploadDto.builder()
+                        .saveFilename(saveName)
+                        .userId(TodoUserDto.builder().userId(userId).build())
                         .uuid(uuid)
                         .originalFilename(ofName)
                         .build();
-                resultFileList.add(todoFileUploadDto);
+                resultFileList.add(fileUploadDto);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -56,12 +61,13 @@ public class FileUploadServiceImpl implements FileUploadService {
     }
 
     @Override
-    public List<TodoFileUploadDto> updateFile(List<MultipartFile> updateFile) {
+    public List<FileUploadDto> updateFile(List<MultipartFile> updateFile) {
         return null;
     }
 
     @Override
     public void deleteFile(Long fileId) {
-        fileUploadRepository.deleteByTodoId(fileId);
+
     }
+
 }

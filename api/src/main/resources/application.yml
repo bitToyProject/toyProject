@@ -15,6 +15,12 @@ spring:
         format_sql: true
         envers:
           audit_table_suffix: _TOYHISTORY
+    servlet:
+      multipart:
+        enabled: true
+        location: C:\update
+        max-request-size: 30MB
+        max-file-size: 30MB
 server:
   port: 8080
 logging:
