@@ -11,9 +11,5 @@ public class TodoFileUploadServiceImpl implements TodoFileUploadService{
 
     private final TodoRepository todoRepository;
 
-    @Override
-    public Long register(TodoFileUploadDto todoFileUploadDto) {
 
-        return null;
-    }
 }
