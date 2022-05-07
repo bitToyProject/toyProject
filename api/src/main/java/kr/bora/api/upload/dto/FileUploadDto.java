@@ -1,5 +1,6 @@
-package kr.bora.api.todo.dto;
+package kr.bora.api.upload.dto;
 
+import kr.bora.api.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TodoFileUploadDto {
+public class FileUploadDto {
 
     private String uuid;
 
@@ -17,4 +18,5 @@ public class TodoFileUploadDto {
 
     private String path;
 
+    private User user;
 }

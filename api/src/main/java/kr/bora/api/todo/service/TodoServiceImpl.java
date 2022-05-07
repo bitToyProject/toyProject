@@ -7,6 +7,7 @@ import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
+import kr.bora.api.todo.repository.TodoFileUploadRepository;
 import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
@@ -29,6 +30,8 @@ public class TodoServiceImpl implements TodoService {
     private final TodoRepository repository;
     private final SubTaskRepository subTaskRepository;
     private final UserRepository userRepository;
+
+    private final TodoFileUploadRepository todoFileUploadRepository;
 
 
     /**
@@ -60,6 +63,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     @Transactional
     public Long todoSave(TodoRequestDto todoRequestDto) {
+
         UserResponseDto userNickname = getUserNickname();
         todoRequestDto.setNickname(userNickname.getNickname());
         Todo todo = toEntitySaveTodo(todoRequestDto);

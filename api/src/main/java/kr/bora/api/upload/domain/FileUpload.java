@@ -1,19 +1,21 @@
-package kr.bora.api.todo.domain;
+package kr.bora.api.upload.domain;
 
-import kr.bora.api.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TodoFileUpload {
+public class FileUpload {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +27,5 @@ public class TodoFileUpload {
 
     private String path;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Todo todo;
 
 }

@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/oauth/**",
-                        "/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/reply/**/**","/department/**","/team/**","/teams/**")
+                        "/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/reply/**/**","/department","/team","/teams", "/upload/**/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
