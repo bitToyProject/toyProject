@@ -8,9 +8,6 @@ import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 import kr.bora.api.todo.repository.TodoRepository;
-import kr.bora.api.upload.domain.TodoFileUpload;
-import kr.bora.api.upload.dto.TodoFileUploadDto;
-import kr.bora.api.upload.repository.FileUploadRepository;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
@@ -21,7 +18,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.function.Function;
 
 @Log4j2
@@ -34,7 +30,6 @@ public class TodoServiceImpl implements TodoService {
     private final SubTaskRepository subTaskRepository;
     private final UserRepository userRepository;
 
-    private final FileUploadRepository fileUploadRepository;
 
     /**
      * Todo 리스트
@@ -45,7 +40,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public PageResultDto todoList(PageRequestDto pageRequestDto) {
 
-        Function<Object[], TodoDto> fn = (arr -> entityToDtoForList((Todo) arr[0], (TodoFileUploadDto) arr[1]));
+        Function<Object[], TodoDto> fn = (arr -> entityTodoDto((Todo) arr[0]));
         Page<Object[]> result = repository.searchPage(
                 pageRequestDto.getType(),
                 pageRequestDto.getKeyword(),
@@ -70,16 +65,6 @@ public class TodoServiceImpl implements TodoService {
         Todo todo = toEntitySaveTodo(todoRequestDto);
 
         repository.save(todo);
-
-        List<TodoFileUploadDto> todoFiles = todoRequestDto.getTodoFileDtoList();
-
-        if (todoFiles != null && todoFiles.size() > 0) {
-            todoFiles.forEach(f -> {
-                TodoFileUpload todoFileUpload = dtoEntityFiles(f);
-                todoFileUpload.setTodo(todo);
-                fileUploadRepository.save(todoFileUpload);
-            });
-        }
 
         return todoRequestDto.getTodoId();
     }
@@ -123,7 +108,7 @@ public class TodoServiceImpl implements TodoService {
     @Transactional
     public void todoRemove(Long todoId) {
         subTaskRepository.subTaskDelete(todoId);
-        fileUploadRepository.deleteByTodoId(todoId);
+//        fileUploadRepository.deleteByTodoId(todoId);
         repository.deleteById(todoId);
     }
 

@@ -28,6 +28,7 @@ public class Todo extends BaseEntity {
     private String description;
     private String assignee;
     private Integer point;
+
     private String nickname;
     @LastModifiedDate
     private String doneTime;
@@ -39,9 +40,7 @@ public class Todo extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private TodoType todoType;
-
-
-
+    
 
     // == Todo 수정 시 변경 메서드 == //
     public void changeTitle(String title) {

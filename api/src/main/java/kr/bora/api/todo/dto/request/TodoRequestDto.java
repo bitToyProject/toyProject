@@ -1,14 +1,13 @@
 package kr.bora.api.todo.dto.request;
 
 import kr.bora.api.todo.domain.TodoType;
+import kr.bora.api.todo.dto.TodoFileUploadDto;
 import kr.bora.api.todo.dto.TodoUserDto;
-import kr.bora.api.upload.dto.TodoFileUploadDto;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -43,19 +42,13 @@ public class TodoRequestDto {
 
     private TodoType todoType;
 
-    private TodoFileUploadDto fileUpload;
-
     @Builder.Default
-    private ArrayList<MultipartFile> files = new ArrayList<>();
-
-    @Builder.Default
-    private List<TodoFileUploadDto> todoFileDtoList = new ArrayList<>();
-
+    private List<TodoFileUploadDto> todoFileUploadDtoList = new ArrayList<>();
 
      public TodoRequestDto toDto() {
         Long userId = SecurityUtil.getCurrentUserId();
         return TodoRequestDto.builder()
-                .userId(TodoUserDto.builder().userId(userId).build())
+                .userId(TodoUserDto.builder().userId(userId).build()) //1
                 .title(title)
                 .start(start)
                 .end(end)
@@ -64,7 +57,7 @@ public class TodoRequestDto {
                 .priority(priority)
                 .point(point)
                 .todoType(TodoType.TODO)
-                .files(files) // 주석 처리 해야할지 테스트 해봐야 함.
+                .todoFileUploadDtoList(todoFileUploadDtoList)
                 .build();
     }
 
@@ -72,11 +65,4 @@ public class TodoRequestDto {
         this.nickname = nickname;
     }
 
-    public void addTodoFileDto(TodoFileUploadDto todoFileUploadDto) {
-        todoFileDtoList.add(todoFileUploadDto);
-    }
-
-    public void setTodoFileDtoList(List<TodoFileUploadDto> todoFileDtoList) {
-        this.todoFileDtoList = todoFileDtoList;
-    }
 }
