@@ -19,6 +19,7 @@ public class TextEditorServiceImpl implements TextEditorService {
     @Transactional(readOnly = true)
     public TextEditorDto readEditor(Long id) {
         TextEditor textEditor = textEditorRepository.getTextEditor(id);
+        log.info("textEditor 읽어오기", textEditor);
         return entityEditorDto(textEditor);
     }
 
@@ -27,6 +28,7 @@ public class TextEditorServiceImpl implements TextEditorService {
     public TextEditorDto saveEditor(TextEditorDto dto) {
         TextEditor textEditor = dtoEditorEntity(dto);
         textEditorRepository.save(textEditor);
+        log.info("textEditor !!!저장!!!", textEditor);
         return dto;
     }
 
@@ -34,7 +36,9 @@ public class TextEditorServiceImpl implements TextEditorService {
     @Transactional
     public void modifyEditor(Long id, TextEditorDto dto) {
         TextEditor existEditor = textEditorRepository.getById(id);
+//        textEditorRepository.save(dto); // 똑똑한 JPA가 알아서 해줌 (단, id값을 가지고 있어야 한다.)
         changeTextEditor(dto, existEditor);
+        log.info("textEditor 수정해보자", existEditor);
         textEditorRepository.save(existEditor);
     }
 
@@ -42,6 +46,7 @@ public class TextEditorServiceImpl implements TextEditorService {
     @Transactional
     public void removeEditor(Long id) {
         textEditorRepository.deleteById(id);
+        log.info("삭제 완료!!");
     }
 
 
