@@ -1,5 +1,6 @@
 package kr.bora.api.todo.domain;
 
+import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,10 +11,11 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class TodoFileUpload {
+@NoArgsConstructor
+@Builder
+@Table
+public class TodoFile extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +28,12 @@ public class TodoFileUpload {
     private String path;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @JoinColumn(name = "todo_id")
+    private Todo todo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Todo todo;
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 }

@@ -1,12 +1,11 @@
-package kr.bora.api.todo.service;
+package kr.bora.api.upload.service;
 
-import kr.bora.api.todo.dto.TodoUserDto;
-import kr.bora.api.todo.dto.request.TodoFileRequestDto;
-import kr.bora.api.todo.repository.TodoRepository;
-import kr.bora.api.user.util.SecurityUtil;
+import kr.bora.api.upload.dto.FileUploadDto;
+import kr.bora.api.upload.repository.FileUploadRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -19,16 +18,17 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class TodoFileUploadServiceImpl implements TodoFileUploadService{
+public class FileUploadServiceImpl implements FileUploadService {
 
-    private final TodoRepository todoRepository;
+    private final FileUploadRepository fileUploadRepository;
 
     @Value("${bora.upload.path}")
     private String uploadPath;
 
+    @Transactional
     @Override
-    public List<TodoFileRequestDto> saveFile(List<MultipartFile> uploadFiles, Long todoId) {
-        ArrayList<TodoFileRequestDto> resultDtoList = new ArrayList<>();
+    public ArrayList<FileUploadDto> saveFile(List<MultipartFile> uploadFiles) {
+        ArrayList<FileUploadDto> resultDtoList = new ArrayList<>();
         for (MultipartFile uploadFile : uploadFiles) {
             String ofname = uploadFile.getOriginalFilename();
             int idx = ofname.lastIndexOf(".");
@@ -43,13 +43,10 @@ public class TodoFileUploadServiceImpl implements TodoFileUploadService{
 
             try{
                 uploadFile.transferTo(savePath);
-                Long userId = SecurityUtil.getCurrentUserId();
-                TodoFileRequestDto fileUploadDto = TodoFileRequestDto.builder()
+
+                FileUploadDto fileUploadDto = FileUploadDto.builder()
                         .uuid(uuid)
                         .imgName(ofname)
-                        .path(uploadPath)
-                        .todoId(todoId)
-                        .userId(TodoUserDto.builder().userId(userId).build()) //1
                         .build();
                 resultDtoList.add(fileUploadDto);
             } catch (IOException e) {

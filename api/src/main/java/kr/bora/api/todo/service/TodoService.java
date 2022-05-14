@@ -7,12 +7,12 @@ import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 
-
 public interface TodoService {
 
     PageResultDto<TodoDto, Object[]> todoList(PageRequestDto pageRequestDto);
 
     Long todoSave(TodoRequestDto todoRequestDto);
+
 
     TodoDto todoRead(Long todoId);
 
@@ -57,24 +57,6 @@ public interface TodoService {
                 .todoType(dto.getTodoType())
                 .build();
     }
-    default TodoDto entityToDtoForList(Todo todo) {
-        TodoRequestDto users = TodoRequestDto.builder().build();
-        return TodoDto.builder()
-                .todoId(todo.getTodoId())
-                .userId(users.toDto().getUserId())
-                .title(todo.getTitle())
-                .description(todo.getDescription())
-                .start(todo.getStart())
-                .end(todo.getEnd())
-                .assignee(todo.getAssignee())
-                .priority(todo.getPriority())
-                .regDate(todo.getRegDate())
-                .modDate(todo.getModDate())
-                .nickname(todo.getNickname())
-                .doneTime(todo.getDoneTime())
-                .point(todo.getPoint())
-                .todoType(TodoType.TODO)
-                .build();
-    }
+
 
 }

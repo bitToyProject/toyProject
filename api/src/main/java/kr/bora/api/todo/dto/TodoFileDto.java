@@ -6,15 +6,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class TodoFileUploadDto {
+public class TodoFileDto {
+
+    private Long todoFileId;
+    private Long todoId;
+    private TodoUserDto userId;
 
     private String uuid;
-
     private String imgName;
-
     private String path;
 
+    private String regDate;
+
+    private String modDate;
 }
