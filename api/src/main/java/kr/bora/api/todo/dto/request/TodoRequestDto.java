@@ -39,6 +39,7 @@ public class TodoRequestDto {
 
     private TodoType todoType;
 
+
      public TodoRequestDto toDto() {
         Long userId = SecurityUtil.getCurrentUserId();
         return TodoRequestDto.builder()

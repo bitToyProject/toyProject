@@ -19,7 +19,7 @@ public class TodoFileController {
     private final TodoFileUploadService todoFileUploadService;
 
     @PostMapping("/files/{todoId}")
-    public ResponseEntity<List<TodoFileRequestDto>> uploadFile(List<MultipartFile> files, @PathVariable("todoId") Long todoId, @Reque) {
+    public ResponseEntity<List<TodoFileRequestDto>> uploadFile(List<MultipartFile> files, @PathVariable("todoId") Long todoId) {
         for (MultipartFile file : files) {
             if (!file.getContentType().startsWith("image")) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
