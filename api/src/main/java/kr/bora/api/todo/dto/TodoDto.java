@@ -2,10 +2,15 @@ package kr.bora.api.todo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kr.bora.api.todo.domain.TodoType;
+import kr.bora.api.todo.dto.request.TodoFileRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -42,5 +47,17 @@ public class TodoDto {
 
     private TodoType todoType;
 
+    @Builder.Default
+    private ArrayList<MultipartFile> files = new ArrayList<>();
 
+    @Builder.Default
+    private List<TodoFileRequestDto> todoFileDtoList = new ArrayList<>();
+
+    public void addReviewFileDto(TodoFileRequestDto todoFileRequestDto){
+        todoFileDtoList.add(todoFileRequestDto);
+    }
+
+    public void setTodoFileDtoList(List<TodoFileRequestDto> todoFileDtoList) {
+        this.todoFileDtoList = todoFileDtoList;
+    }
 }

@@ -1,7 +1,9 @@
 package kr.bora.api.todo.service;
 
+import kr.bora.api.todo.domain.TodoFile;
 import kr.bora.api.todo.dto.TodoUserDto;
 import kr.bora.api.todo.dto.request.TodoFileRequestDto;
+import kr.bora.api.todo.repository.TodoFileRepository;
 import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,8 @@ import java.util.UUID;
 public class TodoFileUploadServiceImpl implements TodoFileUploadService{
 
     private final TodoRepository todoRepository;
+
+    private final TodoFileRepository todoFileRepository;
 
     @Value("${bora.upload.path}")
     private String uploadPath;
@@ -52,10 +56,13 @@ public class TodoFileUploadServiceImpl implements TodoFileUploadService{
                         .userId(TodoUserDto.builder().userId(userId).build()) //1
                         .build();
                 resultDtoList.add(fileUploadDto);
+                TodoFile todoFile = dtoTodoFileEntity(fileUploadDto);
+                todoFileRepository.save(todoFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
         return resultDtoList;
     }
 }

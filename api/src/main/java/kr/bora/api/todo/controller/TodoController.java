@@ -46,7 +46,8 @@ public class TodoController {
      */
     @ApiOperation(value="Todo 등록", notes="Todo 리스트를 등록합니다.")
     @PostMapping("/save")
-    public ResponseEntity<String> todoSave(@Valid  TodoRequestDto todoDto) {
+    public ResponseEntity<String> todoSave(@Valid @RequestBody TodoRequestDto todoDto) {
+
         service.todoSave(todoDto.toDto());
         return ResponseEntity.ok("ToDo가 정상적으로 등록되었습니다.");
     }
