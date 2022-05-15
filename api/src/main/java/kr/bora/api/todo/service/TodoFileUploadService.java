@@ -12,13 +12,16 @@ public interface TodoFileUploadService {
 
     List<TodoFileRequestDto> saveFile(List<MultipartFile> uploadFiles, Long todoId);
 
+    void todoFileDelete(Long todoFileId);
+
     default TodoFileDto entityTodoFileDto(TodoFile todoFile) {
         TodoFileRequestDto users = TodoFileRequestDto.builder().build();
         return TodoFileDto.builder()
                 .todoId(todoFile.getTodo().getTodoId())
                 .userId(users.toFileDto(todoFile.getTodo().getTodoId()).getUserId())
                 .todoFileId(todoFile.getId())
-                .imgName(todoFile.getImgName())
+                .filename(todoFile.getFilename())
+                .ofname(todoFile.getOfname())
                 .uuid(todoFile.getUuid())
                 .path(todoFile.getPath())
                 .regDate(todoFile.getRegDate())
@@ -29,7 +32,8 @@ public interface TodoFileUploadService {
     default TodoFile dtoTodoFileEntity(TodoFileRequestDto todoFileRequestDto) {
         return TodoFile.builder()
                 .id(todoFileRequestDto.getTodoFileId())
-                .imgName(todoFileRequestDto.getImgName())
+                .filename(todoFileRequestDto.getFilename())
+                .ofname(todoFileRequestDto.getOfname())
                 .path(todoFileRequestDto.getPath())
                 .uuid(todoFileRequestDto.getUuid())
                 .todo(Todo.builder().todoId(todoFileRequestDto.getTodoId()).build())

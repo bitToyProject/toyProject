@@ -2,19 +2,18 @@ package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Builder
 @Table
+@Audited(withModifiedFlag = true)
 public class TodoFile extends BaseEntity {
 
     @Id
@@ -23,7 +22,9 @@ public class TodoFile extends BaseEntity {
 
     private String uuid;
 
-    private String imgName;
+    private String filename;
+
+    private String ofname;
 
     private String path;
 

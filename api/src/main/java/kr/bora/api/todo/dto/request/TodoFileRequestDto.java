@@ -18,7 +18,8 @@ public class TodoFileRequestDto {
     private TodoUserDto userId;
 
     private String uuid;
-    private String imgName;
+    private String filename;
+    private String ofname;
     private String path;
 
     public TodoFileRequestDto toFileDto(Long todoId) {
@@ -26,7 +27,8 @@ public class TodoFileRequestDto {
         return TodoFileRequestDto.builder()
                 .userId(TodoUserDto.builder().userId(userId).build())
                 .todoId(todoId)
-                .imgName(imgName)
+                .filename(filename)
+                .ofname(ofname)
                 .uuid(uuid)
                 .path(path)
                 .build();

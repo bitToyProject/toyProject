@@ -9,6 +9,7 @@ import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -50,19 +51,30 @@ public class TodoFileUploadServiceImpl implements TodoFileUploadService{
                 Long userId = SecurityUtil.getCurrentUserId();
                 TodoFileRequestDto fileUploadDto = TodoFileRequestDto.builder()
                         .uuid(uuid)
-                        .imgName(ofname)
+                        .filename(saveName)
+                        .ofname(ofname)
                         .path(uploadPath)
                         .todoId(todoId)
                         .userId(TodoUserDto.builder().userId(userId).build()) //1
                         .build();
                 resultDtoList.add(fileUploadDto);
+
                 TodoFile todoFile = dtoTodoFileEntity(fileUploadDto);
                 todoFileRepository.save(todoFile);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         return resultDtoList;
+    }
+
+
+    @Override
+    @Transactional
+    public void todoFileDelete(Long todoFileId) {
+
+        todoFileRepository.deleteById(todoFileId);
     }
 }

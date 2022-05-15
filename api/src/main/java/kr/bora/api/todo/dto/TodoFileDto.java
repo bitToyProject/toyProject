@@ -16,7 +16,8 @@ public class TodoFileDto {
     private TodoUserDto userId;
 
     private String uuid;
-    private String imgName;
+    private String filename;
+    private String ofname;
     private String path;
 
     private String regDate;

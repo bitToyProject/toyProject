@@ -112,7 +112,7 @@ public class TodoServiceImpl implements TodoService {
     @Transactional
     public void todoRemove(Long todoId) {
         subTaskRepository.subTaskDelete(todoId);
-//        fileUploadRepository.deleteByTodoId(todoId);
+        todoFileRepository.todoFileDelete(todoId);
         repository.deleteById(todoId);
     }
 
