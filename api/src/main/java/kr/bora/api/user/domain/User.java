@@ -1,6 +1,7 @@
 package kr.bora.api.user.domain;
 
 import kr.bora.api.department.domain.entity.Department;
+import kr.bora.api.todo.domain.TodoFile;
 import kr.bora.api.user.domain.reader.MailSender;
 import kr.bora.api.user.dto.UserResponseDto;
 import lombok.AllArgsConstructor;
@@ -57,9 +58,14 @@ public class User{
     @Enumerated(EnumType.STRING)
     private Title title;
 
+    @Column(name = "avatar",nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private Avatar avatar;
+
     @Column(name="authority")
     @Enumerated(EnumType.ORDINAL) // enum 문자열 자체가 저장(USER, ADMIN 등)
     private Authority authority;
+    //TODO : 프로필 사진 어떻게 할진 확인
 
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)

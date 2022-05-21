@@ -1,6 +1,7 @@
 package kr.bora.api.user.controller;
 
 import kr.bora.api.department.domain.dto.DepartmentDto;
+import kr.bora.api.user.domain.Avatar;
 import kr.bora.api.user.dto.AssignDepartmentDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.util.SecurityUtil;
@@ -22,6 +23,8 @@ public class UserRequestCommand {
 
         private String nickname;
 
+        private Avatar avatar;
+
         public UserRequestDto toDto() {
             if (!password.equals(checkPassword)) {
                 throw new InvalidParameterException("새로운 비밀번호와 비밀번호 확인 값이 같지 않습니다.");
@@ -31,6 +34,7 @@ public class UserRequestCommand {
                     .userId(userId)
                     .password(password)
                     .nickName(nickname)
+                    .avatar(avatar)
                     .build();
         }
     }

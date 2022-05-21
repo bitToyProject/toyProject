@@ -1,6 +1,7 @@
 package kr.bora.api.user.dto;
 
 import kr.bora.api.user.domain.Authority;
+import kr.bora.api.user.domain.Avatar;
 import kr.bora.api.user.domain.Title;
 import kr.bora.api.user.domain.User;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,7 @@ public class UserRequestDto {
     private Title title;
 
     private String authKey;
+    private Avatar avatar;
 
     public User toUserforSave(PasswordEncoder passwordEncoder) {
         return User.builder()
@@ -55,6 +57,7 @@ public class UserRequestDto {
                 .gender(gender)
                 .title(Title.STARTER)
                 .authority(Authority.ROLE_USER)
+                .avatar(avatar)
                 .build();
     }
 
@@ -68,6 +71,7 @@ public class UserRequestDto {
                 .authority(dto.getAuthority())
                 .phoneNum(dto.getPhoneNum())
                 .username(dto.getUsername())
+                .avatar(dto.getAvatar())
                 .build();
     }
 
@@ -93,6 +97,7 @@ public class UserRequestDto {
             .firstName(firstName)
             .lastName(lastName)
             .gender(gender)
+            .avatar(avatar)
             .build();
     }
 }
