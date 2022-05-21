@@ -40,7 +40,7 @@ public class TodoRequestDto {
     private TodoType todoType;
 
 
-     public TodoRequestDto toDto() {
+    public TodoRequestDto toDto() {
         Long userId = SecurityUtil.getCurrentUserId();
         return TodoRequestDto.builder()
                 .userId(TodoUserDto.builder().userId(userId).build()) //1
@@ -55,8 +55,9 @@ public class TodoRequestDto {
                 .build();
     }
 
-    public void setNickname(String nickname) {
+    public String setNickname(String nickname) {
         this.nickname = nickname;
+        return nickname;
     }
 
 }

@@ -1,7 +1,6 @@
 package kr.bora.api.todo.repository;
 
 import kr.bora.api.todo.domain.Todo;
-import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.repository.search.SearchTodoRepository;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,13 +11,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Transactional(rollbackFor = Exception.class)
 public interface TodoRepository extends JpaRepository<Todo, Long>, SearchTodoRepository {
+
+
     /**
      * Todo 상세 글
+     *
      * @param todoId
      * @return
      */
@@ -33,6 +34,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, SearchTodoRep
 
     /**
      * Todo 목록
+     *
      * @return
      */
     /*JPA N+1문제 해결 방안 JOIN FETCH 또는 Entity Graph */
@@ -42,12 +44,18 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, SearchTodoRep
 
     /**
      * 사용자 삭제 시 Todo 데이터 삭제
+     *
      * @param userId
      */
     @Modifying(clearAutomatically = true)
     @Query("DELETE FROM Todo t where t.user.userId =:userId")
     void deleteTodoUserId(@Param("userId") long userId);
 
-    Optional<TodoType> findByTodoType(TodoType todoType);
+//    Optional<TodoType> findByTodoType(TodoType todoType);
 
+    // assignee 연결시 알림
+    @Query("SELECT t.assignee FROM Todo t WHERE t.user.nickName IN(SELECT t.user.nickName FROM Todo WHERE t.user.userId =:userId)")
+    List<String> findAssgineeNotification(@Param("userId") long userId);
+
+    // assignee만 삭제
 }

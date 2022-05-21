@@ -16,9 +16,12 @@ public interface TodoService {
 
     TodoDto todoRead(Long todoId);
 
-    void todoModify(Long todoId, TodoDto todoDto);
+    void todoModify(Long todoId, TodoDto todoDto, TodoRequestDto todoRequestDto);
 
     void todoRemove(Long todoId);
+
+    void findAssignee(Long userid); // List
+
 
 
     default TodoDto entityTodoDto(Todo todo) {
@@ -48,7 +51,8 @@ public interface TodoService {
                 .start(dto.getStart())
                 .end(dto.getEnd())
                 .priority(dto.getPriority())
-                .assignee(dto.getAssignee())
+                // 팀에 있는 닉네임
+                .assignee(dto.getAssignee() != null ? dto.getNickname() : dto.getAssignee())
                 .description(dto.getDescription())
                 .doneTime(dto.getDoneTime())
                 .point(dto.getPoint())
