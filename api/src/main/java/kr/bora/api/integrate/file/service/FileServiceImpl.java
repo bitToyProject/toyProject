@@ -23,6 +23,7 @@ public class FileServiceImpl implements FileService{
         if(files.isEmpty())throw new FileRequestFileNotException("File Not Exception");
 
         FileInfo fileInfo = null;
+        //파일에 대한 정보가 담긴 params의 값들을 key : value 형식으로 읽어들인다.
         try {
             objectMapper.readValue(params, FileInfo.class);
         } catch (JsonProcessingException e) {
@@ -31,12 +32,11 @@ public class FileServiceImpl implements FileService{
 
 
         log.info(fileInfo.toString());
-
+        //TODO : ObjectMapper가 리스트 형식의 JSON 정보를 읽어들이고 그것이 리스트가 되는지 하나의 JSON형식의 객체가 되는지 확인 필요
         try {
             List<Resource> resources = files.stream()
                 .map(this.localFileService::copyMultipartFile)
                 .collect(Collectors.toList());
-//            localFileService.saveFilesInfo()
             return null;
 //            return ResFileInfo.toResFileInfo(files);
         } catch (Exception e) {
