@@ -53,9 +53,9 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, SearchTodoRep
 
 //    Optional<TodoType> findByTodoType(TodoType todoType);
 
-    // assignee 연결시 알림
-    @Query("SELECT t.assignee FROM Todo t WHERE t.user.nickName IN(SELECT t.user.nickName FROM Todo WHERE t.user.userId =:userId)")
-    List<String> findAssgineeNotification(@Param("userId") long userId);
+    // assignee 연결시 알림, 해당 todo 게시글의 협력자
+    @Query("SELECT t FROM Todo t WHERE t.user.nickName IN(SELECT t.user.nickName FROM Todo WHERE t.user.userId =:userId)")
+    List<Todo> findAssgineeNotification(@Param("userId") long userId);
 
     // assignee만 삭제
 }

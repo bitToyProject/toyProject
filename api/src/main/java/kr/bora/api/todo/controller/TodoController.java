@@ -6,6 +6,7 @@ package kr.bora.api.todo.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Api(tags = {"2. Todo"})
 @RestController
@@ -99,11 +101,13 @@ public class TodoController<ReponseEntity> {
         return ResponseEntity.ok("Todo가 정상적으로 삭제 되었습니다.");
     }
 
-    @GetMapping("/assignee/noti")
-    public ResponseEntity<String> noti(SecurityUtil securityUtil) {
+    @GetMapping("/assignee/noti/{todoId}")
+    public ResponseEntity <List<String>> noti(SecurityUtil securityUtil, @PathVariable("todoId") Long todoId) {
+        // 해당 toto 글에서 협력자이므로 pathvariable 준비
         Long currentUserId = securityUtil.getCurrentUserId();
 
-        service.findAssignee(currentUserId);
-        return ResponseEntity.ok("ss");
+        List<String> assignee = service.findAssignee(currentUserId);
+
+        return ResponseEntity.ok(assignee);
     }
 }

@@ -20,8 +20,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -133,9 +135,19 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public void findAssignee(Long userId) {
-        List<String> assgineeNotification = repository.findAssgineeNotification(userId);
-        log.info(assgineeNotification);
+    public List<String> findAssignee(Long userId) {
+        List<Todo> assgineeNotification = repository.findAssgineeNotification(userId);
+
+        List<String> collect = assgineeNotification.stream().map(Todo::getAssignee).collect(Collectors.toList());
+        String single = assgineeNotification.stream().map(Todo::getNickname).findFirst().get();
+
+        String assignee = "";
+        for (int i = 0; i < collect.size(); i++) {
+            assignee = collect.get(i).toString();
+        }
+        log.info(assignee);
+
+        return Collections.singletonList(single + "님과" + assignee + "님이 동맹");
     }
 
 

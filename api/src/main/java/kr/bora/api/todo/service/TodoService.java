@@ -7,6 +7,8 @@ import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 
+import java.util.List;
+
 public interface TodoService {
 
     PageResultDto<TodoDto, Object[]> todoList(PageRequestDto pageRequestDto);
@@ -20,7 +22,7 @@ public interface TodoService {
 
     void todoRemove(Long todoId);
 
-    void findAssignee(Long userid); // List
+    List<String> findAssignee(Long userid); // List
 
 
 
