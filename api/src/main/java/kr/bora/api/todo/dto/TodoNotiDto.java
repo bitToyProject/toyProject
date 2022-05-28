@@ -1,5 +1,6 @@
 package kr.bora.api.todo.dto;
 
+import kr.bora.api.todo.domain.TodoNotification;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class TodoNotiDto {
+
+    private Long notiId;
 
     private TodoUserDto userId;
 
@@ -24,7 +27,8 @@ public class TodoNotiDto {
     private boolean isRead;
 
     @Builder
-    public TodoNotiDto(TodoUserDto userId, String content, String url, Integer[] createAt, boolean isRead) {
+    public TodoNotiDto(Long notiId, TodoUserDto userId, String content, String url, Integer[] createAt, boolean isRead) {
+        this.notiId = notiId;
         this.userId = userId;
         this.content = content;
         this.url = url;
@@ -33,16 +37,16 @@ public class TodoNotiDto {
     }
 
 
-    public TodoNotiDto toDto() {
+    public static TodoNotiDto from(TodoNotification todoNotification) {
         Long userId = SecurityUtil.getCurrentUserId();
         return TodoNotiDto.builder()
+                .notiId(todoNotification.getNotiId())
+                .content(todoNotification.getContent())
+                .url(todoNotification.getUrl())
+//                .createAt(todoNotification.getRegDate())
+                .isRead(todoNotification.isRead())
                 .userId(TodoUserDto.builder().userId(userId).build())
-                .content(content)
-                .url(url)
-                .createAt(createAt)
-                .isRead(isRead)
                 .build();
     }
-
 
 }

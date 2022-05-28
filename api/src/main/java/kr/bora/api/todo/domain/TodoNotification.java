@@ -20,7 +20,6 @@ public class TodoNotification extends BaseEntity {
     private String content;
 
     private String url;
-
     private boolean isRead;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,7 +28,7 @@ public class TodoNotification extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User receiver;
 
 
     public void read() {

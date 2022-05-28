@@ -12,6 +12,7 @@ import kr.bora.api.todo.repository.TodoFileRepository;
 import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
+import kr.bora.api.user.service.UserService;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -37,6 +38,9 @@ public class TodoServiceImpl implements TodoService {
     private final TodoFileRepository todoFileRepository;
 
     private final TeamUserRepository teamUserRepository;
+    private final TodoNotiService todoNotiService;
+
+    private final UserService userService;
     /**
      * Todo 리스트
      *
@@ -73,6 +77,8 @@ public class TodoServiceImpl implements TodoService {
         Todo todo = toEntitySaveTodo(todoRequestDto);
 
         repository.save(todo);
+
+        todoNotiService.send(todoRequestDto.getUserId(), todo, "assignee 알림");
 
         return todoRequestDto.getTodoId();
     }

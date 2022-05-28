@@ -11,18 +11,23 @@ import java.util.List;
 public class TodoNotificationsDto {
 
     // 로그인 한 유저의 모든 알림
-    private List<TodoNotificationsDto> TodoNotificationsDto;
+    private List<TodoNotiDto> TodoNotifications;
 
     // 로그인한 유저가 읽지 않은 알림 수
     private Long unreadCount;
 
     @Builder
-    public TodoNotificationsDto(List<TodoNotificationsDto> TodoNotificationsDto, Long unreadCount) {
-        this.TodoNotificationsDto = TodoNotificationsDto;
+    public TodoNotificationsDto(List<TodoNotiDto> todoNotifications, Long unreadCount) {
+        TodoNotifications = todoNotifications;
         this.unreadCount = unreadCount;
     }
 
 
-
+    public static TodoNotificationsDto of(List<TodoNotiDto> todoNotifications, long count) {
+        return TodoNotificationsDto.builder()
+                .todoNotifications(todoNotifications)
+                .unreadCount(count)
+                .build();
+    }
 
 }
