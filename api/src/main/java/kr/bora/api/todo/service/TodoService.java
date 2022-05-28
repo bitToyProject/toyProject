@@ -7,6 +7,8 @@ import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 
+import java.util.List;
+
 public interface TodoService {
 
     PageResultDto<TodoDto, Object[]> todoList(PageRequestDto pageRequestDto);
@@ -16,9 +18,12 @@ public interface TodoService {
 
     TodoDto todoRead(Long todoId);
 
-    void todoModify(Long todoId, TodoDto todoDto);
+    void todoModify(Long todoId, TodoDto todoDto, TodoRequestDto todoRequestDto);
 
     void todoRemove(Long todoId);
+
+    List<String> findAssignee(Long userid); // List
+
 
 
     default TodoDto entityTodoDto(Todo todo) {
@@ -48,7 +53,8 @@ public interface TodoService {
                 .start(dto.getStart())
                 .end(dto.getEnd())
                 .priority(dto.getPriority())
-                .assignee(dto.getAssignee())
+                // 팀에 있는 닉네임
+                .assignee(dto.getAssignee() != null ? dto.getNickname() : dto.getAssignee())
                 .description(dto.getDescription())
                 .doneTime(dto.getDoneTime())
                 .point(dto.getPoint())

@@ -3,30 +3,25 @@ package kr.bora.api.todo.domain;
 import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.User;
 import lombok.*;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Builder
-@Table
-@Audited(withModifiedFlag = true)
-public class TodoFile extends BaseEntity {
+public class TodoNotification extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long notiId;
 
-    private String uuid;
+    private String content;
 
-    private String filename;
+    private String url;
 
-    private String ofname;
-
-    private String path;
+    private boolean isRead;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "todo_id")
@@ -36,5 +31,9 @@ public class TodoFile extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+
+    public void read() {
+        this.isRead = true;
+    }
 
 }
