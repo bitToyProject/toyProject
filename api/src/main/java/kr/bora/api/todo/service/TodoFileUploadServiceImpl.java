@@ -4,7 +4,6 @@ import kr.bora.api.todo.domain.TodoFile;
 import kr.bora.api.todo.dto.TodoUserDto;
 import kr.bora.api.todo.dto.request.TodoFileRequestDto;
 import kr.bora.api.todo.repository.TodoFileRepository;
-import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,9 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TodoFileUploadServiceImpl implements TodoFileUploadService{
 
-    private final TodoRepository todoRepository;
-
-    private final TodoFileRepository todoFileRepository;
+    private final TodoFileRepository todoFileRepository;;
 
     @Value("${bora.upload.path}")
     private String uploadPath;

@@ -23,11 +23,10 @@ import java.util.List;
 
 @Api(tags = {"2. Todo"})
 @RestController
-@Log4j2
 @RequestMapping("/todos")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-public class TodoController<ReponseEntity> {
+public class TodoController {
 
     private final TodoService service;
 

@@ -5,18 +5,17 @@ import kr.bora.api.team.domain.dto.TeamResponseDto;
 import kr.bora.api.team.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/team")
+@CrossOrigin(origins = "*")
 public class TeamController {
     private final TeamService service;
 
     @PostMapping("/save")
-    public ResponseEntity<TeamResponseDto> registerTeam(TeamCommandDto.RegisterTeam command){
+    public ResponseEntity<TeamResponseDto> registerTeam(@RequestBody TeamCommandDto.RegisterTeam command){
         TeamRequestDto dto = command.toDto();
         return ResponseEntity.ok(service.registerTeam(dto));
     }

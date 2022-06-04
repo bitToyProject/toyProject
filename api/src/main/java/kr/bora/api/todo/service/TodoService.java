@@ -1,6 +1,11 @@
 package kr.bora.api.todo.service;
 
+import kr.bora.api.team.domain.dto.TeamResponseDto;
+import kr.bora.api.teamuser.domain.dto.TeamUserDto;
+import kr.bora.api.teamuser.domain.dto.TeamUserResponse;
+import kr.bora.api.teamuser.domain.dto.TeamUsersResponseDto;
 import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.todo.domain.TodoPriorityType;
 import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.request.TodoRequestDto;
@@ -36,7 +41,7 @@ public interface TodoService {
                 .start(todo.getStart())
                 .end(todo.getEnd())
                 .assignee(todo.getAssignee())
-                .priority(todo.getPriority())
+                .priority(TodoPriorityType.BASIC)
                 .regDate(todo.getRegDate())
                 .modDate(todo.getModDate())
                 .nickname(todo.getNickname())
@@ -48,13 +53,14 @@ public interface TodoService {
 
 
     default Todo toEntitySaveTodo(TodoRequestDto dto) {
+        TeamUserResponse teamUsers = TeamUserResponse.builder().build();
         return Todo.builder()
                 .title(dto.getTitle())
                 .start(dto.getStart())
                 .end(dto.getEnd())
                 .priority(dto.getPriority())
-                // 팀에 있는 닉네임
-                .assignee(dto.getAssignee() != null ? dto.getNickname() : dto.getAssignee())
+                // 팀에 있는 닉네임  - 팀원
+                .assignee(dto.getAssignee())
                 .description(dto.getDescription())
                 .doneTime(dto.getDoneTime())
                 .point(dto.getPoint())

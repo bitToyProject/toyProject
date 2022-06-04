@@ -1,5 +1,6 @@
 package kr.bora.api.todo.dto.request;
 
+import kr.bora.api.todo.domain.TodoPriorityType;
 import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.dto.TodoUserDto;
 import kr.bora.api.user.util.SecurityUtil;
@@ -27,7 +28,8 @@ public class TodoRequestDto {
     @NotNull(message = "상세 할 일은 필수 입력 값입니다.")
     private String description;
     private String assignee;
-    private Integer priority;
+
+    private TodoPriorityType priority;
     private Integer point = 0;
 
     private String doneTime;
@@ -49,7 +51,7 @@ public class TodoRequestDto {
                 .end(end)
                 .description(description)
                 .assignee(assignee)
-                .priority(priority)
+                .priority(TodoPriorityType.BASIC)
                 .point(point)
                 .todoType(TodoType.TODO)
                 .build();

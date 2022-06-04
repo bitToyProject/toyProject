@@ -32,7 +32,8 @@ public class Todo extends BaseEntity {
     private String nickname;
     @LastModifiedDate
     private String doneTime;
-    private Integer priority;
+    @Enumerated(EnumType.ORDINAL)
+    private TodoPriorityType priority;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -63,7 +64,7 @@ public class Todo extends BaseEntity {
         this.assignee = assignee;
     }
 
-    public void changePriority(Integer priority) {
+    public void changePriority(TodoPriorityType priority) {
         this.priority = priority;
     }
 
