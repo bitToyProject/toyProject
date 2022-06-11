@@ -6,7 +6,6 @@ package kr.bora.api.todo.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
@@ -14,9 +13,9 @@ import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 import kr.bora.api.todo.service.TodoService;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -50,9 +49,9 @@ public class TodoController {
      */
     @ApiOperation(value = "Todo 등록", notes = "Todo 리스트를 등록합니다.")
     @PostMapping("/save")
-    public ResponseEntity<String> todoSave(@Valid @RequestBody TodoRequestDto todoDto) {
+    public ResponseEntity<String> todoSave(@Valid  @RequestPart("file") List<MultipartFile> files, @RequestPart("text") TodoRequestDto todoDto) {
 
-        service.todoSave(todoDto.toDto());
+        service.todoSave(todoDto.toDto(),files);
         return ResponseEntity.ok("ToDo가 정상적으로 등록되었습니다.");
     }
 

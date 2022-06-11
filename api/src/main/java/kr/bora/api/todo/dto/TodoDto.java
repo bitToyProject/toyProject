@@ -43,4 +43,6 @@ public class TodoDto {
 
     private TodoType todoType;
 
+    private Long fileId;
+
 }

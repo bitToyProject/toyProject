@@ -30,6 +30,7 @@ public class Todo extends BaseEntity {
     private Integer point;
 
     private String nickname;
+
     @LastModifiedDate
     private String doneTime;
     @Enumerated(EnumType.ORDINAL)
@@ -41,7 +42,8 @@ public class Todo extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private TodoType todoType;
-    
+
+    private Long fileId;
 
     // == Todo 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
