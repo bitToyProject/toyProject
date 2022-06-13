@@ -1,5 +1,6 @@
 package kr.bora.api.todo.dto.request;
 
+import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.todo.domain.TodoPriorityType;
 import kr.bora.api.todo.domain.TodoType;
 import kr.bora.api.todo.dto.TodoUserDto;
@@ -41,6 +42,7 @@ public class TodoRequestDto {
 
     private TodoType todoType;
 
+    private FileDto fileType;
 
     public TodoRequestDto toDto() {
         Long userId = SecurityUtil.getCurrentUserId();

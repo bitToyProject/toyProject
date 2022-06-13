@@ -1,7 +1,9 @@
 package kr.bora.api.files.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
+import kr.bora.api.user.domain.User;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -11,7 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Builder
 @Table
-public class File extends BaseEntity {
+@Audited(withModifiedFlag = true)
+public class Files extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +26,10 @@ public class File extends BaseEntity {
 
     private String path;
 
+    @Enumerated(EnumType.STRING)
+    private FileType fileType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

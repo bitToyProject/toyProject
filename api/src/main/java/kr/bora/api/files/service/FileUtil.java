@@ -1,13 +1,19 @@
 package kr.bora.api.files.service;
 
+import kr.bora.api.files.domain.FileType;
+import kr.bora.api.files.domain.Files;
 import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.files.exception.FileException;
 import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.util.MD5Generator;
+import kr.bora.api.user.domain.User;
+import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -15,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class FileService {
+public class FileUtil {
 
     @Value("${bora.upload.path}")
     private String uploadPath;
@@ -28,8 +34,8 @@ public class FileService {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-
-    public List<FileDto> uploadFiles(List<MultipartFile> files, Long id) {
+    @Transactional
+    public List<FileDto> uploadFiles(List<MultipartFile> files, FileType fileType) {
 
         /* 업로드 파일 정보를 담을 비어있는 리스트 */
         List<FileDto> attachList = new ArrayList<>();
@@ -52,23 +58,37 @@ public class FileService {
                 File target = new File(uploadPath, saveName);
                 file.transferTo(target);
 
+
                 /* 파일 정보 저장 */
+                Long userId = SecurityUtil.getCurrentUserId();
                 FileDto attach = FileDto.builder()
-                        .fileId(id)
                         .originFilename(file.getOriginalFilename())
                         .filename(saveName)
                         .path(uploadPath)
+                        .fileType(fileType)
+                        .userId(User.builder().userId(userId).build())
                         .build();
-
                 /* 파일 정보 추가 */
                 attachList.add(attach);
-                fileRepository.save(attach.toEntity());
             } catch (Exception e) {
                 throw new FileException("[" + file.getOriginalFilename() + "] failed to save file...");
             }
         } // end of for
 
         return attachList;
+    }
+
+    @Transactional(readOnly = true)
+    public FileDto getFile(Long fileId) {
+        Files files = fileRepository.findById(fileId).get();
+
+        return FileDto.builder()
+                .fileId(fileId)
+                .originFilename(files.getOriginFilename())
+                .filename(files.getFilename())
+                .fileType(files.getFileType())
+                .path(files.getPath())
+                .build();
     }
 
 }

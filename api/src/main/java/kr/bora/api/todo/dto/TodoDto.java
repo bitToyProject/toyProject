@@ -1,6 +1,7 @@
 package kr.bora.api.todo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.todo.domain.TodoPriorityType;
 import kr.bora.api.todo.domain.TodoType;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,6 @@ public class TodoDto {
 
     private TodoType todoType;
 
-    private Long fileId;
+    private FileDto fileDto;
 
 }

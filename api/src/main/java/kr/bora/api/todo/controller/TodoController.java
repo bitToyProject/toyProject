@@ -41,17 +41,19 @@ public class TodoController {
         return ResponseEntity.ok(service.todoList(pageRequestDto));
     }
 
+
     /**
-     * Todo 등록
-     *
+     * todo 등록 (파일 업로드 포함)
+     * @param files
      * @param todoDto
      * @return
      */
     @ApiOperation(value = "Todo 등록", notes = "Todo 리스트를 등록합니다.")
     @PostMapping("/save")
-    public ResponseEntity<String> todoSave(@Valid  @RequestPart("file") List<MultipartFile> files, @RequestPart("text") TodoRequestDto todoDto) {
+    public ResponseEntity<String> todoSave(@Valid  @RequestPart(value = "file", required = false) List<MultipartFile> files,
+                                                   @RequestPart("todoDto") TodoRequestDto todoDto) {
 
-        service.todoSave(todoDto.toDto(),files);
+        service.todoSave(todoDto.toDto(), files);
         return ResponseEntity.ok("ToDo가 정상적으로 등록되었습니다.");
     }
 

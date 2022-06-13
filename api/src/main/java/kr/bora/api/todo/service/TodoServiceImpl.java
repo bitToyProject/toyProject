@@ -1,5 +1,10 @@
 package kr.bora.api.todo.service;
 
+import kr.bora.api.files.domain.FileType;
+import kr.bora.api.files.domain.Files;
+import kr.bora.api.files.dto.FileDto;
+import kr.bora.api.files.repository.FileRepository;
+import kr.bora.api.files.service.FileUtil;
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.teamuser.repository.TeamUserRepository;
 import kr.bora.api.todo.domain.Todo;
@@ -20,6 +25,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,10 +43,13 @@ public class TodoServiceImpl implements TodoService {
     private final UserRepository userRepository;
     private final TodoFileRepository todoFileRepository;
 
+    private final FileRepository fileRepository;
+
     private final TeamUserRepository teamUserRepository;
     private final TodoNotiService todoNotiService;
 
     private final UserService userService;
+    private final FileUtil fileUtil;
     /**
      * Todo 리스트
      *
@@ -69,18 +78,27 @@ public class TodoServiceImpl implements TodoService {
      */
     @Override
     @Transactional
-    public Long todoSave(TodoRequestDto todoRequestDto) {
+    public Long todoSave(TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile) {
 
         UserResponseDto userNickname = getUserNickname();
         todoRequestDto.setNickname(userNickname.getNickname());
-
         Todo todo = toEntitySaveTodo(todoRequestDto);
 
-        repository.save(todo);
+        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFile, FileType.TODO);
 
-        todoNotiService.send(todoRequestDto.getUserId(), todo, "assignee 알림");
+        if (!fileDtoList.isEmpty()) {
+            for (FileDto fileDto : fileDtoList) {
+                Files filesSave = fileDto.toEntity();
+                fileRepository.save(filesSave);
+            }
+        }
 
-        return todoRequestDto.getTodoId();
+        if (todoRequestDto.getAssignee() != null) {
+            // asignee에게 알림 보내기
+            todoNotiService.send(todoRequestDto.getUserId(), todo, "assignee 알림");
+        }
+
+        return repository.save(todo).getTodoId();
     }
 
     /**
@@ -127,6 +145,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
 
+
     /**
      * Todo 삭제
      *
@@ -162,6 +181,14 @@ public class TodoServiceImpl implements TodoService {
         UserResponseDto userNickname = userRepository.findById(SecurityUtil.getCurrentUserId())
                 .map(UserResponseDto::of).orElseThrow();
         return userNickname;
+    }
+
+    private FileDto getFileId(Long fileId) {
+        Files files = fileRepository.findById(fileId).get();
+        FileDto fileDto = FileDto.builder()
+                .fileId(files.getFileId())
+                .build();
+        return fileDto;
     }
 
     private void changeTodo(TodoDto todoDto, Todo todo) {

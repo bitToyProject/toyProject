@@ -1,9 +1,8 @@
 package kr.bora.api.todo.service;
 
-import kr.bora.api.team.domain.dto.TeamResponseDto;
-import kr.bora.api.teamuser.domain.dto.TeamUserDto;
+import kr.bora.api.files.domain.FileType;
+import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.teamuser.domain.dto.TeamUserResponse;
-import kr.bora.api.teamuser.domain.dto.TeamUsersResponseDto;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoPriorityType;
 import kr.bora.api.todo.domain.TodoType;
@@ -11,6 +10,7 @@ import kr.bora.api.todo.dto.TodoDto;
 import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,8 +18,9 @@ public interface TodoService {
 
     PageResultDto<TodoDto, Object[]> todoList(PageRequestDto pageRequestDto);
 
-    Long todoSave(TodoRequestDto todoRequestDto);
+    Long todoSave(TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile);
 
+//    Long todoFileSave(TodoRequestDto todoRequestDto, MultipartFile[] files);
 
     TodoDto todoRead(Long todoId);
 
@@ -54,6 +55,7 @@ public interface TodoService {
 
     default Todo toEntitySaveTodo(TodoRequestDto dto) {
         TeamUserResponse teamUsers = TeamUserResponse.builder().build();
+        FileDto fileDto = FileDto.builder().build();
         return Todo.builder()
                 .title(dto.getTitle())
                 .start(dto.getStart())
@@ -67,6 +69,7 @@ public interface TodoService {
                 .user((dto.getUserId()).saveId(dto.getUserId()))
                 .nickname(dto.getNickname())
                 .todoType(dto.getTodoType())
+                .fileType(FileType.TODO)
                 .build();
     }
 
