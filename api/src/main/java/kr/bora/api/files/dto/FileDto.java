@@ -2,6 +2,7 @@ package kr.bora.api.files.dto;
 
 import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.domain.Files;
+import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,8 @@ public class FileDto {
 
     private User userId;
 
+    private Todo todoId;
+
     private FileType fileType;
 
     public Files toEntity() {
@@ -36,6 +39,7 @@ public class FileDto {
                 .path(path)
                 .fileType(fileType)
                 .user(userId)
+                .todo(todoId)
                 .build();
         return files;
     }

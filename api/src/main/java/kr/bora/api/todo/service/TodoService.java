@@ -20,17 +20,13 @@ public interface TodoService {
 
     Long todoSave(TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile);
 
-//    Long todoFileSave(TodoRequestDto todoRequestDto, MultipartFile[] files);
-
     TodoDto todoRead(Long todoId);
 
-    void todoModify(Long todoId, TodoDto todoDto, TodoRequestDto todoRequestDto);
+    void todoModify(Long todoId, TodoDto todoDto, TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile);
 
     void todoRemove(Long todoId);
 
     List<String> findAssignee(Long userid); // List
-
-
 
     default TodoDto entityTodoDto(Todo todo) {
         TodoRequestDto users = TodoRequestDto.builder().build();
@@ -55,7 +51,6 @@ public interface TodoService {
 
     default Todo toEntitySaveTodo(TodoRequestDto dto) {
         TeamUserResponse teamUsers = TeamUserResponse.builder().build();
-        FileDto fileDto = FileDto.builder().build();
         return Todo.builder()
                 .title(dto.getTitle())
                 .start(dto.getStart())

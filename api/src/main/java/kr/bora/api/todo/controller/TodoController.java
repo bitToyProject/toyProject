@@ -79,9 +79,12 @@ public class TodoController {
      */
     @ApiOperation(value = "Todo 변경", notes = " Todo를 변경합니다.")
     @PutMapping("/modify/{todoId}")
-    public ResponseEntity<String> todoModify(@ApiParam(value = "Todo 번호", required = true) @PathVariable("todoId") Long todoId, @Valid @RequestBody TodoDto todoDto, TodoRequestDto todoRequestDto) {
+    public ResponseEntity<String> todoModify(@ApiParam(value = "Todo 번호", required = true) @PathVariable("todoId") Long todoId,
+                                             @Valid @RequestPart("todoDto") TodoDto todoDto,
+                                             @RequestPart(value = "todoRequestDto", required = false) TodoRequestDto todoRequestDto,
+                                             @RequestPart(value = "file", required = false) List<MultipartFile> files) {
 
-        service.todoModify(todoId, todoDto, todoRequestDto);
+        service.todoModify(todoId, todoDto, todoRequestDto, files);
 
         return ResponseEntity.ok(todoId + "번 TODO가 수정되었습니다.");
     }

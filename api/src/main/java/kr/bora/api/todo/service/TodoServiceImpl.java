@@ -80,11 +80,17 @@ public class TodoServiceImpl implements TodoService {
     @Transactional
     public Long todoSave(TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile) {
 
+        // 닉네임 가져오기
         UserResponseDto userNickname = getUserNickname();
         todoRequestDto.setNickname(userNickname.getNickname());
+
+        // todo 엔티티 저장
         Todo todo = toEntitySaveTodo(todoRequestDto);
 
-        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFile, FileType.TODO);
+        // 파일 업로드 연관 Todo
+        Long todoId = repository.save(todo).getTodoId();
+
+        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFile, FileType.TODO, todoId);
 
         if (!fileDtoList.isEmpty()) {
             for (FileDto fileDto : fileDtoList) {
@@ -98,7 +104,7 @@ public class TodoServiceImpl implements TodoService {
             todoNotiService.send(todoRequestDto.getUserId(), todo, "assignee 알림");
         }
 
-        return repository.save(todo).getTodoId();
+        return todoId;
     }
 
     /**
@@ -121,14 +127,22 @@ public class TodoServiceImpl implements TodoService {
      */
     @Override
     @Transactional
-    public void todoModify(Long todoId, TodoDto todoDto, TodoRequestDto todoRequestDto) {
+    public void todoModify(Long todoId, TodoDto todoDto, TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile) {
 
         Todo todo = repository.getById(todoId);
 
+        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFile, FileType.TODO, todo.getTodoId());
+
+        if (!fileDtoList.isEmpty()) {
+            for (FileDto fileDto : fileDtoList) {
+                Files filesSave = fileDto.toEntity();
+                fileRepository.save(filesSave);
+            }
+        }
         // todo 변경 메서드 모음
         changeTodo(todoDto, todo);
 
-        changeAssignee(todo, todoRequestDto);
+//        changeAssignee(todo, todoRequestDto);
         repository.save(todo);
     }
 

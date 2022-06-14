@@ -1,6 +1,8 @@
 package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
+import kr.bora.api.files.domain.FileType;
+import kr.bora.api.files.domain.Files;
 import kr.bora.api.user.domain.User;
 import lombok.*;
 import org.hibernate.envers.Audited;
@@ -43,7 +45,10 @@ public class Todo extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TodoType todoType;
 
-    private Long fileId;
+    @Enumerated(EnumType.STRING)
+    private FileType fileType;
+
+
 
     // == Todo 수정 시 변경 메서드 == //
     public void changeTitle(String title) {

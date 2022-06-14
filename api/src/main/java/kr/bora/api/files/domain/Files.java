@@ -1,6 +1,7 @@
 package kr.bora.api.files.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
+import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.*;
 import org.hibernate.envers.Audited;
@@ -12,7 +13,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Builder
-@Table
 @Audited(withModifiedFlag = true)
 public class Files extends BaseEntity {
 
@@ -32,4 +32,8 @@ public class Files extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "todo_id")
+    private Todo todo;
 }

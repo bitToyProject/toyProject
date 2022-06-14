@@ -6,6 +6,7 @@ import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.files.exception.FileException;
 import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.util.MD5Generator;
+import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class FileUtil {
     }
 
     @Transactional
-    public List<FileDto> uploadFiles(List<MultipartFile> files, FileType fileType) {
+    public List<FileDto> uploadFiles(List<MultipartFile> files, FileType fileType, Long id) {
 
         /* 업로드 파일 정보를 담을 비어있는 리스트 */
         List<FileDto> attachList = new ArrayList<>();
@@ -67,6 +68,7 @@ public class FileUtil {
                         .path(uploadPath)
                         .fileType(fileType)
                         .userId(User.builder().userId(userId).build())
+                        .todoId(Todo.builder().todoId(id).build())
                         .build();
                 /* 파일 정보 추가 */
                 attachList.add(attach);
