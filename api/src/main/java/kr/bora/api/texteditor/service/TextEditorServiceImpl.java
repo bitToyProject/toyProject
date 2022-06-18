@@ -1,5 +1,10 @@
 package kr.bora.api.texteditor.service;
 
+import kr.bora.api.files.domain.FileType;
+import kr.bora.api.files.domain.Files;
+import kr.bora.api.files.dto.FileDto;
+import kr.bora.api.files.repository.FileRepository;
+import kr.bora.api.files.service.FileUtil;
 import kr.bora.api.texteditor.domain.dto.TextEditorDto;
 import kr.bora.api.texteditor.domain.entity.TextEditor;
 import kr.bora.api.texteditor.repository.TextEditorRepository;
@@ -7,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -14,6 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class TextEditorServiceImpl implements TextEditorService {
 
     private final TextEditorRepository textEditorRepository;
+
+    private final FileUtil fileUtil;
+
+    private final FileRepository fileRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -24,10 +36,21 @@ public class TextEditorServiceImpl implements TextEditorService {
 
     @Override
     @Transactional
-    public TextEditorDto saveEditor(TextEditorDto dto) {
+    public Long saveEditor(TextEditorDto dto, List<MultipartFile> multipartFiles) {
+
         TextEditor textEditor = dtoEditorEntity(dto);
-        textEditorRepository.save(textEditor);
-        return dto;
+
+        Long textEditorId = textEditorRepository.save(textEditor).getTextEditId();
+
+        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFiles, FileType.TEXT_EDITOR, textEditorId);
+
+        if (!fileDtoList.isEmpty()) {
+            for (FileDto fileDto : fileDtoList) {
+                Files filesSave = fileDto.toEntity();
+                fileRepository.save(filesSave);
+            }
+        }
+        return textEditorId;
     }
 
     @Override

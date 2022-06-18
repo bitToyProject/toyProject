@@ -3,9 +3,11 @@ package kr.bora.api.files.service;
 import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.domain.Files;
 import kr.bora.api.files.dto.FileDto;
+import kr.bora.api.files.dto.FileResponseDto;
 import kr.bora.api.files.exception.FileException;
 import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.util.MD5Generator;
+import kr.bora.api.texteditor.domain.entity.TextEditor;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.util.SecurityUtil;
@@ -21,9 +23,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Service
 public class FileUtil {
 
     @Value("${bora.upload.path}")
@@ -68,7 +72,8 @@ public class FileUtil {
                         .path(uploadPath)
                         .fileType(fileType)
                         .userId(User.builder().userId(userId).build())
-                        .todoId(Todo.builder().todoId(id).build())
+//                        .todoId(Todo.builder().todoId(id).build())
+                        .textEditorId(TextEditor.builder().textEditId(id).build())
                         .build();
                 /* 파일 정보 추가 */
                 attachList.add(attach);
@@ -92,5 +97,12 @@ public class FileUtil {
                 .path(files.getPath())
                 .build();
     }
+
+
+    @Transactional
+    public void fileDelete(Long fileId) {
+        fileRepository.deleteById(fileId);
+    }
+
 
 }

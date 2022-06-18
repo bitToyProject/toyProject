@@ -1,17 +1,20 @@
 package kr.bora.api.files.controller;
 
+import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.files.service.FileUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.*;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,9 +23,13 @@ import java.nio.file.Paths;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("/files")
-public class FileDownController {
+public class FilesController {
 
     private final FileUtil fileUtil;
+
+    @Value("${bora.upload.path}")
+    private String uploadPath;
+
 
     @GetMapping("/download/{fileId}")
     public ResponseEntity<Resource> fileDownload(@PathVariable("fileId") Long fileId) throws IOException {
@@ -37,5 +44,31 @@ public class FileDownController {
                         + new String(fileDto.getOriginFilename().getBytes("UTF-8"), "ISO-8859-1") + "\"")
                 .body(resource);
     }
+
+    @GetMapping("/display/{fileId}")
+    public ResponseEntity<byte[]> getFile(@PathVariable("fileId") Long fileId, @RequestParam FileType fileType) {
+        ResponseEntity<byte[]> result = null;
+
+        FileDto fileDto = fileUtil.getFile(fileId);
+
+        String filename = fileDto.getFilename();
+
+        fileType = fileDto.getFileType();
+
+        try {
+            String srcFileName = URLDecoder.decode(filename, "UTF-8");
+            File file = new File(uploadPath + File.separator + srcFileName);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", Files.probeContentType(file.toPath()));
+            result = ResponseEntity.ok().headers(headers).body(FileCopyUtils.copyToByteArray(file));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
 
 }

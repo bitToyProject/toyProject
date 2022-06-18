@@ -1,5 +1,6 @@
 package kr.bora.api.texteditor.domain.entity;
 
+import kr.bora.api.files.domain.FileType;
 import kr.bora.api.team.domain.dto.TeamDto;
 import kr.bora.api.team.domain.dto.TeamResponseDto;
 import kr.bora.api.team.domain.entity.Team;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -19,12 +21,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "textEditor")
+@Audited(withModifiedFlag = true)
 public class TextEditor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Long id;
+    @Column(name = "text_edit_id", unique = true, nullable = false)
+    private Long textEditId;
 
     @Column(name = "title")
     private String title;
@@ -39,9 +42,13 @@ public class TextEditor {
     @JoinColumn(name = "editor_user")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "editor_team")
-    private Team team;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "editor_team")
+//    private Team team;
+
+    @Enumerated(EnumType.STRING)
+    private FileType fileType;
+
 
     //(swagger로 알려주기)
 

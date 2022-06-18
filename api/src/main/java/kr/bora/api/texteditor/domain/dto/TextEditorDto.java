@@ -1,5 +1,6 @@
 package kr.bora.api.texteditor.domain.dto;
 
+import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.team.domain.dto.TeamDto;
 import kr.bora.api.texteditor.domain.entity.TextEditor;
 import kr.bora.api.user.domain.User;
@@ -22,6 +23,8 @@ public class TextEditorDto {
     private String contents;
     private EditorUserDto userId;
     private TeamDto team;
+
+    private FileDto fileType;
 
     public TextEditorDto textEditorDto() {
         Long userId = SecurityUtil.getCurrentUserId();

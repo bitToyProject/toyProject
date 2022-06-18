@@ -1,6 +1,7 @@
 package kr.bora.api.files.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
+import kr.bora.api.texteditor.domain.entity.TextEditor;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.*;
@@ -36,4 +37,8 @@ public class Files extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "todo_id")
     private Todo todo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "textEditId")
+    public TextEditor textEditor;
 }
