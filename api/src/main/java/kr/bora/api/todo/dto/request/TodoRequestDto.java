@@ -42,7 +42,9 @@ public class TodoRequestDto {
 
     private TodoType todoType;
 
-    private FileDto fileType;
+    private FileDto fileDto;
+
+    private Long fileId;
 
     public TodoRequestDto toDto() {
         Long userId = SecurityUtil.getCurrentUserId();
@@ -56,6 +58,7 @@ public class TodoRequestDto {
                 .priority(TodoPriorityType.BASIC)
                 .point(point)
                 .todoType(TodoType.TODO)
+                .fileId(fileId)
                 .build();
     }
 
@@ -63,5 +66,11 @@ public class TodoRequestDto {
         this.nickname = nickname;
         return nickname;
     }
+
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
+    }
+
+
 
 }

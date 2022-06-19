@@ -37,8 +37,13 @@ public class Files extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "todo_id")
     private Todo todo;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "textEditId")
+//    public TextEditor textEditor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "textEditId")
-    public TextEditor textEditor;
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
+    }
+
 }

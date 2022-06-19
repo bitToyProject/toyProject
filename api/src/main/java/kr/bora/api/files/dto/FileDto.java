@@ -2,7 +2,6 @@ package kr.bora.api.files.dto;
 
 import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.domain.Files;
-import kr.bora.api.texteditor.domain.entity.TextEditor;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.AllArgsConstructor;
@@ -28,9 +27,9 @@ public class FileDto {
 
     private User userId;
 
+//    @Nullable
     private Todo todoId;
-
-    private TextEditor textEditorId;
+//    @Nullable
 
     private FileType fileType;
 
@@ -44,9 +43,13 @@ public class FileDto {
                 .fileType(fileType)
                 .user(userId)
                 .todo(todoId)
-                .textEditor(textEditorId)
+//                .textEditor(textEditorId)
                 .build();
         return files;
+    }
+
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
     }
 
 }

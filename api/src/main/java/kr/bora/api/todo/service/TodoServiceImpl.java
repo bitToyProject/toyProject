@@ -3,6 +3,7 @@ package kr.bora.api.todo.service;
 import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.domain.Files;
 import kr.bora.api.files.dto.FileDto;
+import kr.bora.api.files.dto.FileResponseDto;
 import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.service.FileUtil;
 import kr.bora.api.subtask.repository.SubTaskRepository;
@@ -29,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -78,7 +80,7 @@ public class TodoServiceImpl implements TodoService {
      */
     @Override
     @Transactional
-    public Long todoSave(TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile) {
+    public Long todoSave(TodoRequestDto todoRequestDto) {
 
         // 닉네임 가져오기
         UserResponseDto userNickname = getUserNickname();
@@ -90,14 +92,17 @@ public class TodoServiceImpl implements TodoService {
         // 파일 업로드 연관 Todo
         Long todoId = repository.save(todo).getTodoId();
 
-        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFile, FileType.TODO, todoId);
+//        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFile, FileType.TODO);
 
-        if (!fileDtoList.isEmpty()) {
-            for (FileDto fileDto : fileDtoList) {
-                Files filesSave = fileDto.toEntity();
-                fileRepository.save(filesSave);
-            }
-        }
+//        fileUtil.fileTypes(List<MultipartFile> files, FileType.TODO);
+        
+//
+//        if (!fileDtoList.isEmpty()) {
+//            for (FileDto fileDto : fileDtoList) {
+//                Files filesSave = fileDto.toEntity();
+//                fileRepository.save(filesSave);
+//            }
+//        }
 
         if (todoRequestDto.getAssignee() != null) {
             // asignee에게 알림 보내기
@@ -127,18 +132,21 @@ public class TodoServiceImpl implements TodoService {
      */
     @Override
     @Transactional
-    public void todoModify(Long todoId, TodoDto todoDto, TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile) {
+    public void todoModify(Long todoId, TodoDto todoDto, List<MultipartFile> multipartFile) {
 
         Todo todo = repository.getById(todoId);
 
-        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFile, FileType.TODO, todo.getTodoId());
+//        fileRepository.filesDelete(todoId);
 
-        if (!fileDtoList.isEmpty()) {
-            for (FileDto fileDto : fileDtoList) {
-                Files filesSave = fileDto.toEntity();
-                fileRepository.save(filesSave);
-            }
-        }
+//        // 기존 파일 삭제 후 다시 저장
+//        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFile, FileType.TODO);
+//
+//        if (!fileDtoList.isEmpty()) {
+//            for (FileDto fileDto : fileDtoList) {
+//                Files filesSave = fileDto.toEntity();
+//                fileRepository.save(filesSave);
+//            }
+//        }
         // todo 변경 메서드 모음
         changeTodo(todoDto, todo);
 
@@ -197,12 +205,10 @@ public class TodoServiceImpl implements TodoService {
         return userNickname;
     }
 
-    private FileDto getFileId(Long fileId) {
-        Files files = fileRepository.findById(fileId).get();
-        FileDto fileDto = FileDto.builder()
-                .fileId(files.getFileId())
-                .build();
-        return fileDto;
+    private FileResponseDto getFileId(Long fileId) {
+        FileResponseDto fileIds = fileRepository.findById(fileId)
+                .map(FileResponseDto::of).orElseThrow();
+        return fileIds;
     }
 
     private void changeTodo(TodoDto todoDto, Todo todo) {

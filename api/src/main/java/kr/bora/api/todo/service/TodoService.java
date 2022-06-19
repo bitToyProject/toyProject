@@ -18,11 +18,11 @@ public interface TodoService {
 
     PageResultDto<TodoDto, Object[]> todoList(PageRequestDto pageRequestDto);
 
-    Long todoSave(TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile);
+    Long todoSave(TodoRequestDto todoRequestDto);
 
     TodoDto todoRead(Long todoId);
 
-    void todoModify(Long todoId, TodoDto todoDto, TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile);
+    void todoModify(Long todoId, TodoDto todoDto,  List<MultipartFile> multipartFile);
 
     void todoRemove(Long todoId);
 
@@ -65,6 +65,7 @@ public interface TodoService {
                 .nickname(dto.getNickname())
                 .todoType(dto.getTodoType())
                 .fileType(FileType.TODO)
+                .fileId(dto.getFileId())
                 .build();
     }
 

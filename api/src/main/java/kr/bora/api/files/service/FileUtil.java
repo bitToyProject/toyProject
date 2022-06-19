@@ -3,12 +3,10 @@ package kr.bora.api.files.service;
 import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.domain.Files;
 import kr.bora.api.files.dto.FileDto;
-import kr.bora.api.files.dto.FileResponseDto;
 import kr.bora.api.files.exception.FileException;
 import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.util.MD5Generator;
-import kr.bora.api.texteditor.domain.entity.TextEditor;
-import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -35,12 +32,14 @@ public class FileUtil {
 
     private final FileRepository fileRepository;
 
+    private final TodoRepository todoRepository;
+
     private final String getRandomString() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     @Transactional
-    public List<FileDto> uploadFiles(List<MultipartFile> files, FileType fileType, Long id) {
+    public List<FileDto> uploadFiles(List<MultipartFile> files, FileType fileType) {
 
         /* 업로드 파일 정보를 담을 비어있는 리스트 */
         List<FileDto> attachList = new ArrayList<>();
@@ -66,17 +65,19 @@ public class FileUtil {
 
                 /* 파일 정보 저장 */
                 Long userId = SecurityUtil.getCurrentUserId();
-                FileDto attach = FileDto.builder()
-                        .originFilename(file.getOriginalFilename())
-                        .filename(saveName)
-                        .path(uploadPath)
-                        .fileType(fileType)
-                        .userId(User.builder().userId(userId).build())
-//                        .todoId(Todo.builder().todoId(id).build())
-                        .textEditorId(TextEditor.builder().textEditId(id).build())
-                        .build();
-                /* 파일 정보 추가 */
-                attachList.add(attach);
+                    FileDto attach = FileDto.builder()
+                            .originFilename(file.getOriginalFilename())
+                            .filename(saveName)
+                            .path(uploadPath)
+                            .fileType(fileType)
+                            .userId(User.builder().userId(userId).build())
+                            .build();
+
+                    /* 파일 정보 추가 */
+                    attachList.add(attach);
+                    Files filesSave = attach.toEntity();
+                    fileRepository.save(filesSave);
+
             } catch (Exception e) {
                 throw new FileException("[" + file.getOriginalFilename() + "] failed to save file...");
             }
@@ -85,8 +86,13 @@ public class FileUtil {
         return attachList;
     }
 
+    public static FileType fileTypes() {
+        return fileTypes();
+    }
+
     @Transactional(readOnly = true)
     public FileDto getFile(Long fileId) {
+
         Files files = fileRepository.findById(fileId).get();
 
         return FileDto.builder()

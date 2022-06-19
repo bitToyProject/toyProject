@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 
 @Table(name = "todos")
@@ -47,6 +48,8 @@ public class Todo extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private FileType fileType;
+
+    private Long fileId;
 
 
 
