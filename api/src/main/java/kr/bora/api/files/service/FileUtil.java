@@ -131,7 +131,7 @@ public class FileUtil {
             fileRepository.todoFilesUpdate(todoFiles.getFileId(), todoFiles.getFileType(), todoFiles.getTodoId());
         }
         // 새로 저장
-        if (multipartFiles != null && todoFileId != null) {
+        if (multipartFiles != null && todoId != null) {
             uploadFiles(multipartFiles, fileType, todoId, null);
         }
 
