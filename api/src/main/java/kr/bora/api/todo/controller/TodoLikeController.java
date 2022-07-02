@@ -20,8 +20,8 @@ public class TodoLikeController {
 
         boolean result = false;
 
-        if (todoLikeDto.toDto(todoId) != null) {
-            result = todoLikeService.addLike(todoLikeDto.toDto(todoId), todoId);
+        if (todoLikeDto.toLikeDto(todoId) != null) {
+            result = todoLikeService.addLike(todoLikeDto.toLikeDto(todoId), todoId);
         }
 
         return result ? ResponseEntity.ok("좋아요 등록") : ResponseEntity.ok("이미 좋아요를 눌렀습니다.");
@@ -30,7 +30,7 @@ public class TodoLikeController {
     @DeleteMapping("/like/{todoId}/{todoLikeId}")
     public ResponseEntity<String> addLikeCancel(TodoLikeRequestDto todoLikeDto, @PathVariable Long todoId, @PathVariable Long todoLikeId) {
 
-        todoLikeService.addLikeCancel(todoLikeDto.toDto(todoId), todoId, todoLikeId);
+        todoLikeService.addLikeCancel(todoLikeDto.toLikeDto(todoId), todoId, todoLikeId);
 
         return ResponseEntity.ok("좋아요 취소 완료");
     }

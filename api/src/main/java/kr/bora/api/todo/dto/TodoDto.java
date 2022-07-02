@@ -1,6 +1,8 @@
 package kr.bora.api.todo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import kr.bora.api.files.dto.FileDto;
+import kr.bora.api.todo.domain.TodoPriorityType;
 import kr.bora.api.todo.domain.TodoType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +31,7 @@ public class TodoDto {
 
     private String nickname;
 
-    private Integer priority;
+    private TodoPriorityType priority;
 
     private Integer point = 0;
     @JsonIgnore
@@ -41,5 +43,7 @@ public class TodoDto {
     private String modDate;
 
     private TodoType todoType;
+
+    private FileDto fileDto;
 
 }

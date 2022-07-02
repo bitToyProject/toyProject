@@ -1,11 +1,15 @@
 package kr.bora.api.texteditor.service;
 
+import kr.bora.api.files.domain.FileType;
 import kr.bora.api.texteditor.domain.dto.TextEditorDto;
 import kr.bora.api.texteditor.domain.entity.TextEditor;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface TextEditorService {
-    TextEditorDto saveEditor(TextEditorDto dto);
+    Long saveEditor(TextEditorDto dto, List<MultipartFile> multipartFile);
 
     TextEditorDto readEditor(Long id);
 
@@ -17,7 +21,7 @@ public interface TextEditorService {
     default TextEditorDto entityEditorDto(TextEditor textEditor) {
         TextEditorDto users = TextEditorDto.builder().build();
         return TextEditorDto.builder()
-                .id(textEditor.getId())
+                .id(textEditor.getTextEditId())
                 .userId(users.textEditorDto().getUserId())
                 .title(textEditor.getTitle())
                 .subtitle(textEditor.getSubtitle())
@@ -31,6 +35,7 @@ public interface TextEditorService {
                 .subtitle(dto.getSubtitle())
                 .contents(dto.getContents())
                 .user((dto.getUserId()).saveId(dto.getUserId()))
+                .fileType(FileType.TEXT_EDITOR)
                 .build();
     }
 

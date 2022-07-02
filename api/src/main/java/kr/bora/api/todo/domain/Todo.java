@@ -1,11 +1,14 @@
 package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
+import kr.bora.api.files.domain.FileType;
+import kr.bora.api.files.domain.Files;
 import kr.bora.api.user.domain.User;
 import lombok.*;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 
 @Table(name = "todos")
@@ -30,9 +33,11 @@ public class Todo extends BaseEntity {
     private Integer point;
 
     private String nickname;
+
     @LastModifiedDate
     private String doneTime;
-    private Integer priority;
+    @Enumerated(EnumType.ORDINAL)
+    private TodoPriorityType priority;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -40,7 +45,13 @@ public class Todo extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private TodoType todoType;
-    
+
+    @Enumerated(EnumType.STRING)
+    private FileType fileType;
+
+    private Long fileId;
+
+
 
     // == Todo 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
@@ -63,7 +74,7 @@ public class Todo extends BaseEntity {
         this.assignee = assignee;
     }
 
-    public void changePriority(Integer priority) {
+    public void changePriority(TodoPriorityType priority) {
         this.priority = priority;
     }
 

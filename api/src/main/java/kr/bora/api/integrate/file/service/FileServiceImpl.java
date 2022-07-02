@@ -2,16 +2,19 @@ package kr.bora.api.integrate.file.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
-import java.util.stream.Collectors;
 import kr.bora.api.integrate.exception.FileRequestFileNotException;
-import kr.bora.api.integrate.file.domain.entity.FileInfo;
 import kr.bora.api.integrate.file.domain.dto.ResFileInfo;
+import kr.bora.api.integrate.file.domain.entity.FileInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
 @Slf4j
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService{

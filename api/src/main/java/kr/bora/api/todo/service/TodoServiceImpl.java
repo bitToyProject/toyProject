@@ -1,5 +1,11 @@
 package kr.bora.api.todo.service;
 
+import kr.bora.api.files.domain.FileType;
+import kr.bora.api.files.domain.Files;
+import kr.bora.api.files.dto.FileDto;
+import kr.bora.api.files.dto.FileResponseDto;
+import kr.bora.api.files.repository.FileRepository;
+import kr.bora.api.files.service.FileUtil;
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.teamuser.repository.TeamUserRepository;
 import kr.bora.api.todo.domain.Todo;
@@ -12,6 +18,7 @@ import kr.bora.api.todo.repository.TodoFileRepository;
 import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
+import kr.bora.api.user.service.UserService;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,9 +26,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -36,7 +45,13 @@ public class TodoServiceImpl implements TodoService {
     private final UserRepository userRepository;
     private final TodoFileRepository todoFileRepository;
 
+    private final FileRepository fileRepository;
+
     private final TeamUserRepository teamUserRepository;
+    private final TodoNotiService todoNotiService;
+
+    private final UserService userService;
+    private final FileUtil fileUtil;
     /**
      * Todo 리스트
      *
@@ -65,16 +80,27 @@ public class TodoServiceImpl implements TodoService {
      */
     @Override
     @Transactional
-    public Long todoSave(TodoRequestDto todoRequestDto) {
+    public Long todoSave(TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile) {
 
+        // 닉네임 가져오기
         UserResponseDto userNickname = getUserNickname();
         todoRequestDto.setNickname(userNickname.getNickname());
 
+        // todo 엔티티 저장
         Todo todo = toEntitySaveTodo(todoRequestDto);
 
-        repository.save(todo);
+        // 파일 업로드 연관 Todo
 
-        return todoRequestDto.getTodoId();
+        Long todoId = repository.save(todo).getTodoId();
+
+        fileUtil.updateFiles(multipartFile, FileType.TODO, todoId,null);
+
+        if (todoRequestDto.getAssignee() != null) {
+            // asignee에게 알림 보내기
+            todoNotiService.send(todoRequestDto.getUserId(), todo, "assignee 알림");
+        }
+
+        return todoId;
     }
 
     /**
@@ -97,14 +123,25 @@ public class TodoServiceImpl implements TodoService {
      */
     @Override
     @Transactional
-    public void todoModify(Long todoId, TodoDto todoDto, TodoRequestDto todoRequestDto) {
+    public void todoModify(Long todoId, TodoDto todoDto, List<MultipartFile> multipartFile) {
 
         Todo todo = repository.getById(todoId);
 
+//        fileRepository.filesDelete(todoId);
+
+//        // 기존 파일 삭제 후 다시 저장
+//        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFile, FileType.TODO);
+//
+//        if (!fileDtoList.isEmpty()) {
+//            for (FileDto fileDto : fileDtoList) {
+//                Files filesSave = fileDto.toEntity();
+//                fileRepository.save(filesSave);
+//            }
+//        }
         // todo 변경 메서드 모음
         changeTodo(todoDto, todo);
 
-        changeAssignee(todo, todoRequestDto);
+//        changeAssignee(todo, todoRequestDto);
         repository.save(todo);
     }
 
@@ -119,6 +156,7 @@ public class TodoServiceImpl implements TodoService {
         // 닉네임 가져와서 -> change
         todo.changeAssignee(nickname);
     }
+
 
 
     /**
@@ -156,6 +194,12 @@ public class TodoServiceImpl implements TodoService {
         UserResponseDto userNickname = userRepository.findById(SecurityUtil.getCurrentUserId())
                 .map(UserResponseDto::of).orElseThrow();
         return userNickname;
+    }
+
+    private FileResponseDto getFileId(Long fileId) {
+        FileResponseDto fileIds = fileRepository.findById(fileId)
+                .map(FileResponseDto::of).orElseThrow();
+        return fileIds;
     }
 
     private void changeTodo(TodoDto todoDto, Todo todo) {

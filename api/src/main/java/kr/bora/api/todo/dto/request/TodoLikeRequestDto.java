@@ -17,7 +17,7 @@ public class TodoLikeRequestDto {
 
     private TodoDto todo;
 
-    public TodoLikeDto toDto(Long todoId) {
+    public TodoLikeDto toLikeDto(Long todoId) {
         Long userId = SecurityUtil.getCurrentUserId();
         return TodoLikeDto.builder()
                 .userId(TodoUserDto.builder().userId(userId).build())
