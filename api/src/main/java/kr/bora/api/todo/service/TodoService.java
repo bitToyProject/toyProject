@@ -18,7 +18,7 @@ public interface TodoService {
 
     PageResultDto<TodoDto, Object[]> todoList(PageRequestDto pageRequestDto);
 
-    Long todoSave(TodoRequestDto todoRequestDto);
+    Long todoSave(TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile);
 
     TodoDto todoRead(Long todoId);
 

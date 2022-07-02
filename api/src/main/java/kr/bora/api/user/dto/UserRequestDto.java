@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Builder
@@ -24,19 +26,19 @@ public class UserRequestDto {
 
     private Long userId;
     @Email
-//    @NotEmpty
+    @NotEmpty
     private String username;
-    //    @NotEmpty
+        @NotEmpty
     private String password;
-    //    @NotEmpty
+        @NotEmpty
     private String lastName;
-    //    @NotEmpty
+        @NotEmpty
     private String firstName;
 
     private String nickName;
-    //    @NotEmpty
+        @NotEmpty
     private String phoneNum;
-    //    @NotNull
+        @NotNull
     private Integer gender;
     private Authority authority;
 

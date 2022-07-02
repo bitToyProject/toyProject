@@ -51,11 +51,12 @@ public class TodoController {
      */
     @ApiOperation(value = "Todo 등록", notes = "Todo 리스트를 등록합니다.")
     @PostMapping("/save")
-    public ResponseEntity<String> todoSave(@Valid @RequestBody TodoRequestDto todoDto) {
-
-        service.todoSave(todoDto.toDto());
+    public ResponseEntity<String> todoSave(@Valid @RequestPart(value = "file", required = false) List<MultipartFile> files,
+                                           @RequestPart("todoDto") TodoRequestDto todoDto) {
+        service.todoSave(todoDto.toDto(), files);
         return ResponseEntity.ok("ToDo가 정상적으로 등록되었습니다.");
     }
+
 
     /**
      * Todo 상세 읽기

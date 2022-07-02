@@ -80,7 +80,7 @@ public class TodoServiceImpl implements TodoService {
      */
     @Override
     @Transactional
-    public Long todoSave(TodoRequestDto todoRequestDto) {
+    public Long todoSave(TodoRequestDto todoRequestDto, List<MultipartFile> multipartFile) {
 
         // 닉네임 가져오기
         UserResponseDto userNickname = getUserNickname();
@@ -90,19 +90,10 @@ public class TodoServiceImpl implements TodoService {
         Todo todo = toEntitySaveTodo(todoRequestDto);
 
         // 파일 업로드 연관 Todo
+
         Long todoId = repository.save(todo).getTodoId();
 
-//        List<FileDto> fileDtoList = fileUtil.uploadFiles(multipartFile, FileType.TODO);
-
-//        fileUtil.fileTypes(List<MultipartFile> files, FileType.TODO);
-        
-//
-//        if (!fileDtoList.isEmpty()) {
-//            for (FileDto fileDto : fileDtoList) {
-//                Files filesSave = fileDto.toEntity();
-//                fileRepository.save(filesSave);
-//            }
-//        }
+        fileUtil.updateFiles(multipartFile, FileType.TODO, todoId,null);
 
         if (todoRequestDto.getAssignee() != null) {
             // asignee에게 알림 보내기

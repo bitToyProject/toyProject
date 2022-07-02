@@ -27,11 +27,15 @@ public class FileDto {
 
     private User userId;
 
-//    @Nullable
-    private Todo todoId;
+    //    @Nullable
+    private Long todoId;
+
+    private Long textEditorId;
 //    @Nullable
 
     private FileType fileType;
+
+    private String deleteType;
 
 
     public Files toEntity() {
@@ -42,14 +46,12 @@ public class FileDto {
                 .path(path)
                 .fileType(fileType)
                 .user(userId)
-                .todo(todoId)
-//                .textEditor(textEditorId)
+                .todoId(todoId)
+                .textId(textEditorId)
+                .deleteYn(deleteType)
                 .build();
         return files;
     }
 
-    public void setFileId(Long fileId) {
-        this.fileId = fileId;
-    }
 
 }

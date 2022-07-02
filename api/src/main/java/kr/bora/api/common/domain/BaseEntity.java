@@ -21,4 +21,5 @@ public abstract class BaseEntity{
     @Column(name = "mod_date")
     private String modDate;
 
+
 }

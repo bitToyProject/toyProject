@@ -34,13 +34,11 @@ public class Files extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "todo_id")
-    private Todo todo;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "textEditId")
-//    public TextEditor textEditor;
+    private Long todoId;
+
+    private Long textId;
+
+    private String deleteYn;
 
     public void setFileId(Long fileId) {
         this.fileId = fileId;
