@@ -32,8 +32,8 @@ public interface FileRepository extends JpaRepository<Files, Long> {
     void todoFilesDelete(@Param("fileId") Long[] fileId, @Param("fileType") FileType fileType, @Param("todoId") Long todoId);
 
     @Modifying(clearAutomatically = true)
-    @Query("DELETE FROM Files f where f.fileId in (:fileId) and f.fileType=:fileType and f.textId =:textId")
-    void textFilesDelete(@Param("fileId") Long[] fileId, @Param("fileType") FileType fileType, @Param("textId") Long textId);
+    @Query("DELETE FROM Files f where f.fileType='TEXT_EDITOR'and f.textId =:textId") // 텍스터 에디터의 게시글이 사라지면 완전삭제
+    void textFilesDelete(@Param("textId") Long textId);
 
     @Modifying(clearAutomatically = true)
     @Query("DELETE FROM Files f where f.fileType='LOCAL' AND f.fileId IN (:fileId)")
