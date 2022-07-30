@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TextEditorRepository extends JpaRepository<TextEditor, Long> {
 
-    @Query("SELECT te, w FROM TextEditor te LEFT JOIN te.user w where te.id = :id")
+    @Query("SELECT te, w FROM TextEditor te LEFT JOIN te.user w where te.textEditId = :id")
     TextEditor getTextEditor(@Param("id") Long id);
 }

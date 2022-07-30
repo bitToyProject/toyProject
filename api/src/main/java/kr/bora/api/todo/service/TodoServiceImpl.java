@@ -1,9 +1,6 @@
 package kr.bora.api.todo.service;
 
 import kr.bora.api.files.domain.FileType;
-import kr.bora.api.files.domain.Files;
-import kr.bora.api.files.dto.FileDto;
-import kr.bora.api.files.dto.FileResponseDto;
 import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.service.FileUtil;
 import kr.bora.api.subtask.repository.SubTaskRepository;
@@ -30,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -93,7 +89,7 @@ public class TodoServiceImpl implements TodoService {
 
         Long todoId = repository.save(todo).getTodoId();
 
-        fileUtil.updateFiles(multipartFile, FileType.TODO, todoId,null);
+        fileUtil.updateFiles(multipartFile, FileType.TODO, todoId,null, null);
 
         if (todoRequestDto.getAssignee() != null) {
             // asignee에게 알림 보내기
@@ -196,11 +192,6 @@ public class TodoServiceImpl implements TodoService {
         return userNickname;
     }
 
-    private FileResponseDto getFileId(Long fileId) {
-        FileResponseDto fileIds = fileRepository.findById(fileId)
-                .map(FileResponseDto::of).orElseThrow();
-        return fileIds;
-    }
 
     private void changeTodo(TodoDto todoDto, Todo todo) {
         todo.changeTitle(todoDto.getTitle());

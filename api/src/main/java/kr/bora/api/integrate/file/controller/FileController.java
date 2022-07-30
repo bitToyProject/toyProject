@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 //@Api(tags = {"단일, 복수 파일"})
-@CrossOrigin(origins = "*")
 public class FileController {
 
     private final FileService fileService;

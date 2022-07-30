@@ -18,7 +18,6 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/reply")
-@CrossOrigin(origins ="*")
 public class TodoReplyController {
 
     private final TodoReplyService todoReplyService;

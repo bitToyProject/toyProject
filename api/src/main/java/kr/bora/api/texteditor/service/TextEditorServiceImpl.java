@@ -1,8 +1,6 @@
 package kr.bora.api.texteditor.service;
 
 import kr.bora.api.files.domain.FileType;
-import kr.bora.api.files.domain.Files;
-import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.service.FileUtil;
 import kr.bora.api.texteditor.domain.dto.TextEditorDto;
@@ -19,6 +17,7 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TextEditorServiceImpl implements TextEditorService {
 
     private final TextEditorRepository textEditorRepository;
@@ -28,49 +27,56 @@ public class TextEditorServiceImpl implements TextEditorService {
     private final FileRepository fileRepository;
 
     @Override
-    @Transactional(readOnly = true)
-    public TextEditorDto readEditor(Long id) {
-        TextEditor textEditor = textEditorRepository.getTextEditor(id);
-        log.info("textEditor 읽어오기", textEditor);
-        return entityEditorDto(textEditor);
+    public TextEditorDto.Response readEditor(Long textEditId) {
+
+        TextEditor textEditor = textEditorRepository.findById(textEditId)
+                .orElseThrow(() -> new IllegalArgumentException("텍스트 에디터를 열 수 없습니다. " + textEditId));
+
+        return new TextEditorDto.Response(textEditor);
     }
 
     @Override
     @Transactional
-    public Long saveEditor(TextEditorDto dto, List<MultipartFile> multipartFiles) {
+    public Long saveEditor(TextEditorDto.Request dto, List<MultipartFile> multipartFiles) {
 
-        TextEditor textEditor = dtoEditorEntity(dto);
+        TextEditor textEditor = dto.toEntity();
+
         textEditorRepository.save(textEditor);
-        log.info("textEditor !!!저장!!!", textEditor);
-
 
         Long textEditorId = textEditorRepository.save(textEditor).getTextEditId();
+
         // 파일 저장
-        fileUtil.uploadFiles(multipartFiles, FileType.TEXT_EDITOR, null, textEditorId);
+        if (textEditorId != null) {
+            fileUtil.uploadFiles(multipartFiles, FileType.TEXT_EDITOR, null, textEditorId);
+        }
 
         return textEditorId;
     }
 
     @Override
     @Transactional
-    public void modifyEditor(Long id, TextEditorDto dto) {
-        TextEditor existEditor = textEditorRepository.getById(id);
-//        textEditorRepository.save(dto); // 똑똑한 JPA가 알아서 해줌 (단, id값을 가지고 있어야 한다.)
+    public void modifyEditor(Long textEditId, TextEditorDto.Request dto, List<MultipartFile> multipartFile) {
+        TextEditor existEditor = textEditorRepository.getById(textEditId);
+
+        if (existEditor.getTextEditId() != null) {
+            fileUtil.updateFiles(multipartFile, FileType.TEXT_EDITOR, null, existEditor.getTextEditId(), null);
+        }
+
         changeTextEditor(dto, existEditor);
-        log.info("textEditor 수정해보자", existEditor);
+
         textEditorRepository.save(existEditor);
     }
 
     @Override
     @Transactional
-    public void removeEditor(Long id) {
-        textEditorRepository.deleteById(id);
-        log.info("삭제 완료!!");
+    public void removeEditor(Long textEditId) {
+        fileRepository.textFilesDelete(textEditId); // 파일 먼저 삭제
+        textEditorRepository.deleteById(textEditId);
     }
 
 
     // TextEditor 수정시 필요한 메소드
-    private void changeTextEditor(TextEditorDto dto, TextEditor textEditor) {
+    private void changeTextEditor(TextEditorDto.Request dto, TextEditor textEditor) {
         textEditor.changeTitle(dto.getTitle());
         textEditor.changeSubtitle(dto.getSubtitle());
         textEditor.changeContents(dto.getContents());

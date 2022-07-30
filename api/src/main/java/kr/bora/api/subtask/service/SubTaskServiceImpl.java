@@ -3,24 +3,24 @@ package kr.bora.api.subtask.service;
 import kr.bora.api.subtask.domain.SubTask;
 import kr.bora.api.subtask.domain.SubtaskType;
 import kr.bora.api.subtask.dto.SubTaskDto;
-import kr.bora.api.subtask.dto.request.SubTaskRequestDto;
+import kr.bora.api.subtask.repository.SubTaskReplyRepository;
 import kr.bora.api.subtask.repository.SubTaskRepository;
 import kr.bora.api.todo.domain.Todo;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j2
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class SubTaskServiceImpl implements SubTaskService {
 
     private final SubTaskRepository subTaskRepository;
+
+    private final SubTaskReplyRepository subTaskReplyRepository;
     /**
      * SubTask 등록
      *
@@ -30,12 +30,25 @@ public class SubTaskServiceImpl implements SubTaskService {
      */
     @Override
     @Transactional
-    public Long subTaskSave(SubTaskRequestDto subTaskDto, Long todoId) {
-
-        SubTask subTask = dtoToEntity(subTaskDto);
+    public Long subTaskSave(SubTaskDto.Request subTaskDto, Long todoId) {
+        SubTask subTask = subTaskDto.toEntity(todoId);
         subTaskRepository.save(subTask);
 
-        return subTaskDto.getSubTaskId();
+        return subTask.getSubTaskId();
+    }
+
+    /**
+     * SubTask 읽기
+     * @param subTaskId
+     * @return
+     */
+    @Override
+    public SubTaskDto.Response subTaskRead(Long subTaskId) {
+
+        SubTask subTask = subTaskRepository.findById(subTaskId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재 하지 않습니다. " + subTaskId));
+
+        return new SubTaskDto.Response(subTask);
     }
 
     /**
@@ -45,9 +58,11 @@ public class SubTaskServiceImpl implements SubTaskService {
      * @return
      */
     @Override
-    public List<SubTaskDto> subTaskList(Long todoId) {
-        List<SubTask> result = subtaskListOrderByRegDate(todoId);
-        return result.stream().map(this::entityToDto).collect(Collectors.toList());
+    public List<SubTaskDto.Response> subTaskList(Long todoId) {
+//        List<SubTask> result = subtaskListOrderByRegDate(todoId);
+        List<SubTask> subTasksList = subTaskRepository.getSubTasksByTodoOrderByRegDateDesc(Todo.builder().todoId(todoId).build());
+
+        return subTasksList.stream().map(SubTaskDto.Response::new).collect(Collectors.toList());
     }
 
     /**
@@ -58,7 +73,7 @@ public class SubTaskServiceImpl implements SubTaskService {
      */
     @Override
     @Transactional
-    public void subTaskModify(Long subTaskId, SubTaskDto subTaskDto) {
+    public void subTaskModify(Long subTaskId, SubTaskDto.Request subTaskDto) {
         SubTask subTask = subTaskRepository.getById(subTaskId);
         changeSubtask(subTaskDto, subTask);
         subTaskRepository.save(subTask);
@@ -75,29 +90,36 @@ public class SubTaskServiceImpl implements SubTaskService {
         subTaskRepository.deleteById(subTaskId);
     }
 
-
-    private List<SubTask> subtaskListOrderByRegDate(Long todoId) {
-        List<SubTask> result = subTaskRepository.getSubTasksByTodoOrderByRegDate(Todo.builder().todoId(todoId).build());
-        return result;
-    }
-
-    private void changeSubtask(SubTaskDto subTaskDto, SubTask subTask) {
+    // SubTask 수정 메서드
+    private void changeSubtask(SubTaskDto.Request subTaskDto, SubTask subTask) {
         subTask.changeTitle(subTaskDto.getTitle());
+
         subTask.changeStart(subTaskDto.getStart());
+
         subTask.changeEnd(subTaskDto.getEnd());
+
         subTask.changeAssignee(subTaskDto.getAssignee());
 
-        if (subTaskDto.getSubTaskType() == SubtaskType.DONE && subTask.getPoint() == 0) {
+        subTask.changeDoneTime(subTaskDto.getSubtaskType() == SubtaskType.DONE ? subTaskDto.getDoneTime() : subTaskDto.getModDate());
+
+        subTask.changeSubTaskType(subTaskDto.getSubtaskType());
+
+        changeSubtaskPoint(subTaskDto, subTask);
+    }
+
+    // SubTask Point 수정 메서드 분리
+    private void changeSubtaskPoint(SubTaskDto.Request subTaskDto, SubTask subTask) {
+        if (subTaskDto.getSubtaskType() == SubtaskType.DONE && subTask.getPoint() == 0) {
             subTask.changePoint(subTask.getPoint() + 10);
         }
 
-        if (!(subTaskDto.getSubTaskType() == SubtaskType.DONE) && subTask.getPoint() == 10) {
+        if (!(subTaskDto.getSubtaskType() == SubtaskType.DONE) && subTask.getPoint() == 10) {
             subTask.changePoint(subTask.getPoint() - 10);
         }else{
             subTask.changePoint(subTask.getPoint());
         }
-        subTask.changeDoneTime(subTaskDto.getSubTaskType() == SubtaskType.DONE ? subTaskDto.getDoneTime() : subTaskDto.getModDate());
-        subTask.changeSubTaskType(subTaskDto.getSubTaskType());
     }
+
+
 
 }

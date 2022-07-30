@@ -1,7 +1,11 @@
 package kr.bora.api.repository;
 
+import kr.bora.api.team.domain.entity.Team;
+import kr.bora.api.team.repository.TeamRepository;
+import kr.bora.api.teamuser.domain.entity.TeamUser;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.repository.TodoRepository;
+import kr.bora.api.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.test.context.support.WithMockUser;
 
+import java.time.temporal.Temporal;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -24,6 +29,9 @@ public class TodoRepositoryTest {
     @Autowired
     private TodoRepository todoRepository;
 
+    @Autowired
+    private TeamRepository teamRepository;
+
     @Test
     public void insertTodo() {
         IntStream.rangeClosed(1, 10).forEach(i -> {
@@ -31,16 +39,17 @@ public class TodoRepositoryTest {
 //                    .userId(SecurityUtil.getCurrentUserId())
 //                    .build();
 
-            Todo todo = Todo.builder()
-                    .title("알고리즘" + i)
-                    .description("알고리즘" + i + "문제 풀거야")
-                    .start("2022-03" + "-" + i)
-                    .end("2022-03" + "-" + i)
-                    .assignee("같이 푸는 사람" + i)
-                    .priority(1 + i)
-                    .build();
+//            Todo todo = Todo.builder()
+//                    .title("알고리즘" + i)
+//                    .description("알고리즘" + i + "문제 풀거야")
+//                    .start("2022-03" + "-" + i)
+//                    .end("2022-03" + "-" + i)
+//                    .assignee("같이 푸는 사람" + i)
+//                    .priority(1 + i)
+//                    .build();
 
-            todoRepository.save(todo);
+//            todoRepository.save(todo);
+
         });
     }
 

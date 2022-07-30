@@ -6,9 +6,13 @@ import kr.bora.api.user.dto.TokenRequestDto;
 import kr.bora.api.user.dto.UserRequestDto;
 import kr.bora.api.user.dto.UserResponseDto;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public interface AuthService {
     UserResponseDto signup(UserRequestDto userRequestDto);
-    TokenDto login(LoginRequestDto loginRequestDto);
+    TokenDto login(HttpServletRequest request, HttpServletResponse response, LoginRequestDto loginRequestDto);
+
     TokenDto reIssue(TokenRequestDto tokenRequestDto);
     boolean checkUsername(String username);
 }

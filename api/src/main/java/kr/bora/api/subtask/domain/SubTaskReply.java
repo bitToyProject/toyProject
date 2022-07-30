@@ -33,6 +33,7 @@ public class SubTaskReply extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+
     @Builder
     public SubTaskReply(Long subtaskReplyId, String text, String subtaskReplyer, SubTask subTask, User user) {
         this.subtaskReplyId = subtaskReplyId;

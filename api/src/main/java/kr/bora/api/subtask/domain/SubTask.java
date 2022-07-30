@@ -10,6 +10,7 @@ import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "subtasks")
 @Entity
@@ -47,11 +48,15 @@ public class SubTask extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "subTask", cascade = CascadeType.REMOVE)
+    private List<SubTaskReply> subTaskReplies;
+
     @Enumerated(EnumType.STRING)
     private SubtaskType subTaskType;
 
+
     @Builder
-    public SubTask(Long subTaskId, String title, String start, String end, String assignee, Integer point, String doneTime, Todo todo, User user, SubtaskType subTaskType) {
+    public SubTask(Long subTaskId, String title, String start, String end, String assignee, Integer point, String doneTime, Todo todo, User user, List<SubTaskReply> subTaskReplies, SubtaskType subTaskType) {
         this.subTaskId = subTaskId;
         this.title = title;
         this.start = start;
@@ -61,8 +66,11 @@ public class SubTask extends BaseEntity {
         this.doneTime = doneTime;
         this.todo = todo;
         this.user = user;
+        this.subTaskReplies = subTaskReplies;
         this.subTaskType = subTaskType;
     }
+
+
 
     // == Subtask 수정 시 변경 메서드 == //
     public void changeTitle(String title) {

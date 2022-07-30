@@ -24,7 +24,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/todos")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class TodoController {
 
     private final TodoService service;

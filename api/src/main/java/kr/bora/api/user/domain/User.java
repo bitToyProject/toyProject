@@ -1,6 +1,7 @@
 package kr.bora.api.user.domain;
 
 import kr.bora.api.department.domain.entity.Department;
+import kr.bora.api.socialAuth.domain.ProviderType;
 import kr.bora.api.todo.domain.TodoFile;
 import kr.bora.api.user.domain.reader.MailSender;
 import kr.bora.api.user.dto.UserResponseDto;
@@ -72,6 +73,11 @@ public class User{
     @JoinColumn(name = "department")
     private Department department;
 
+    @Enumerated(EnumType.STRING)
+    private ProviderType providerType;
+
+    private String oauthId;
+
 
 //    @Column(name = "part",)
 //    @Enumerated(EnumType.STRING)
@@ -105,7 +111,9 @@ public class User{
     public void changePhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
-
+    public void setUsername(String username) {
+        this.username = username;
+    }
     @Transient
     private MailSender mailSender;
 

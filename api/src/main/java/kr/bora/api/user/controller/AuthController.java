@@ -16,12 +16,13 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 @Api(tags={"1. Auth"})
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins ="*")
 @Log4j2
 public class AuthController {
 
@@ -37,10 +38,10 @@ public class AuthController {
 
     @ApiOperation(value="로그인", notes="로그인을 진행합니다.")
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<TokenDto> login(HttpServletRequest request, HttpServletResponse response, @RequestBody LoginRequestDto loginRequestDto) {
 //        boolean dup = mailService.isCheckedAuthMail(loginRequestDto.getUsername());
 //        Assert.isTrue(dup,"mail's confirmed");
-        return ResponseEntity.ok(authService.login(loginRequestDto));
+        return ResponseEntity.ok(authService.login(request, response,loginRequestDto));
 
     }
 

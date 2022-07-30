@@ -1,12 +1,7 @@
 package kr.bora.api.texteditor.domain.entity;
 
-import kr.bora.api.files.domain.FileType;
-import kr.bora.api.team.domain.dto.TeamDto;
-import kr.bora.api.team.domain.dto.TeamResponseDto;
-import kr.bora.api.team.domain.entity.Team;
-import kr.bora.api.texteditor.domain.dto.TextEditorDto;
+import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.User;
-import kr.bora.api.user.dto.UserResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +17,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "textEditor")
 @Audited(withModifiedFlag = true)
-public class TextEditor {
+public class TextEditor extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,26 +40,6 @@ public class TextEditor {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "editor_team")
 //    private Team team;
-
-    @Enumerated(EnumType.STRING)
-    private FileType fileType;
-
-
-    //(swagger로 알려주기)
-
-    // 재민오빠 파일업로드 되면 붙이기
-    // CRUD 가능하게끔
-
-//    public TextEditorDto toTextEditorDto(TextEditor entity) {
-//        return TextEditorDto.builder()
-//                .id(entity.getId())
-//                .title(entity.getTitle())
-//                .subtitle(entity.getSubtitle())
-//                .contents(entity.getContents())
-//                .userId(UserResponseDto.of(entity.getUser()))
-//                .team(TeamDto.builder().id(entity.getId()).build())
-//                .build();
-//    }
 
     // == TextEditor 수정시 변경 메소드 == //
 

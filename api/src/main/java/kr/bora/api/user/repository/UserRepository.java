@@ -9,10 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
+
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByusername(String username);
+
+    @Query("select u.userId from User u where u.oauthId=:oauthId")
+    Long findUserId(@Param("oauthId") String oauthId);
 
     boolean existsByusername(String username);
 

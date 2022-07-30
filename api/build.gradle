@@ -60,6 +60,8 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
     implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1'
     testImplementation 'org.springframework.security:spring-security-test:5.5.2'
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+
 
 // ###############################################SWAGGER############################################################
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'

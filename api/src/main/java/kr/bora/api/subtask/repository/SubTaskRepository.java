@@ -25,7 +25,7 @@ public interface SubTaskRepository extends JpaRepository<SubTask, Long> {
      * @param todo
      * @return
      */
-    List<SubTask> getSubTasksByTodoOrderByRegDate(Todo todo);
+    List<SubTask> getSubTasksByTodoOrderByRegDateDesc(Todo todo);
 
 
 }

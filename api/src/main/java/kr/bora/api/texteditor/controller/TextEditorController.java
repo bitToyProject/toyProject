@@ -1,11 +1,10 @@
 package kr.bora.api.texteditor.controller;
 
+import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.texteditor.domain.dto.TextEditorDto;
-import kr.bora.api.texteditor.domain.entity.TextEditor;
 import kr.bora.api.texteditor.service.TextEditorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.support.SimpleTriggerContext;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,33 +12,35 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 @RequestMapping("/edits")
 public class TextEditorController {
 
     private final TextEditorService textEditorService;
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveEditor(@RequestPart(value = "file", required = false) List<MultipartFile> files,
-                                             @RequestPart(value = "textEditorDto") TextEditorDto textEditorDto) {
-        textEditorService.saveEditor(textEditorDto.textEditorDto(), files);
-        return ResponseEntity.ok("성공");
+    public ResponseEntity<ApiResponse> saveEditor(@RequestPart(value = "file", required = false) List<MultipartFile> files,
+                                                  @RequestPart(value = "textEditorDto") TextEditorDto.Request textEditorDto) {
+        Long aLong = textEditorService.saveEditor(textEditorDto, files);
+        return ResponseEntity.ok(ApiResponse.success("response save data", textEditorDto));
     }
 
-    @GetMapping("/read/{id}")
-    public ResponseEntity<String> readEditor(@PathVariable Long id) {
-        textEditorService.readEditor(id);
-        return ResponseEntity.ok("불러오기 성공");
+    @GetMapping("/read/{textEditId}")
+    public ResponseEntity<ApiResponse> readEditor(@PathVariable Long textEditId) {
+        TextEditorDto.Response response = textEditorService.readEditor(textEditId);
+        return ResponseEntity.ok(ApiResponse.success("response read data", response));
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<String> modifyEditor(@PathVariable Long id, @RequestBody TextEditorDto dto) {
-        textEditorService.modifyEditor(id, dto);
-        return ResponseEntity.ok("업데이트 성공");
+    @PutMapping("/update/{textEditId}")
+    public ResponseEntity<ApiResponse> modifyEditor(@RequestPart(value = "file", required = false) List<MultipartFile> files,
+                                               @RequestPart(value = "textEditorDto") TextEditorDto.Request dto,
+                                               @PathVariable Long textEditId) {
+        textEditorService.modifyEditor(textEditId, dto, files);
+        return ResponseEntity.ok(ApiResponse.success("response update data", dto));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void removeEditor(@PathVariable Long id) {
-        textEditorService.removeEditor(id);
+    @DeleteMapping("/delete/{textEditId}")
+    public ResponseEntity<ApiResponse> removeEditor(@PathVariable Long textEditId) {
+        textEditorService.removeEditor(textEditId);
+        return ResponseEntity.ok(ApiResponse.success("response delete success", "성공적으로 삭제되었습니다."));
     }
 }
