@@ -8,6 +8,8 @@ import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.util.MD5Generator;
 import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
@@ -32,7 +34,7 @@ public class FileUtil {
 
     private final FileRepository fileRepository;
 
-    private final TodoRepository todoRepository;
+    private final UserRepository userRepository;
 
     private final String getRandomString() {
         return UUID.randomUUID().toString().replaceAll("-", "");
@@ -49,80 +51,61 @@ public class FileUtil {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        if (todoId == null || textId == null) {
-
-            /* 파일 개수만큼 forEach 실행 */
-            for (MultipartFile file : files) {
-                try {
-                    /* 파일 확장자 */
-                    final String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-                    /* 서버에 저장할 파일명 (랜덤 문자열 + 확장자) */
-                    final String saveName = new MD5Generator(file.getOriginalFilename()) + "." + extension;
-
-                    /* 업로드 경로에 saveName과 동일한 이름을 가진 파일 생성 */
-                    File target = new File(uploadPath, saveName);
-                    file.transferTo(target);
 
 
-                    /* 파일 정보 저장 */
-                    Long userId = SecurityUtil.getCurrentUserId();
-                    FileDto attach = FileDto.builder()
-                            .originFilename(file.getOriginalFilename())
-                            .filename(saveName)
-                            .path(uploadPath)
-                            .fileType(fileType)
-                            .userId(User.builder().userId(userId).build())
-                            .textEditorId(textId)
-                            .todoId(todoId)
-                            .deleteType("N")
-                            .build();
+        /* 파일 개수만큼 forEach 실행 */
+        for (MultipartFile file : files) {
+            try {
+                /* 파일 확장자 */
+                final String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+                /* 서버에 저장할 파일명 (랜덤 문자열 + 확장자) */
+                final String saveName = new MD5Generator(file.getOriginalFilename()) + "_" + getRandomString() + "." + extension;
 
-                    /* 파일 정보 추가 */
-                    attachList.add(attach);
-                    Files filesSave = attach.toEntity();
-                    if (filesSave.getDeleteYn() == "N") {
-                        fileRepository.save(filesSave);
-                    }
+                /* 업로드 경로에 saveName과 동일한 이름을 가진 파일 생성 */
+                File target = new File(uploadPath, saveName);
+                file.transferTo(target);
 
-                } catch (Exception e) {
-                    throw new FileException("[" + file.getOriginalFilename() + "] failed to save file...");
-                }
-            } // end of for}
 
-        }
+                /* 파일 정보 저장 */
+                Long userId = SecurityUtil.getCurrentUserId();
+                UserResponseDto uploader = getUserUploader();
+                FileDto attach = FileDto.builder()
+                        .originFilename(file.getOriginalFilename())
+                        .filename(saveName)
+                        .path(uploadPath)
+                        .fileType(fileType)
+                        .userId(User.builder().userId(userId).build().getUserId())
+                        .textEditorId(textId)
+                        .todoId(todoId)
+                        .nickname(fileType == FileType.LOCAL ? User.builder().nickName(uploader.getNickname()).build().getNickName() : null)
+                        .deleteType("N")
+                        .build();
+
+                /* 파일 정보 추가 */
+                attachList.add(attach);
+                Files filesSave = attach.toEntity();
+                fileRepository.save(filesSave);
+
+            } catch (Exception e) {
+                throw new FileException("[" + file.getOriginalFilename() + "] failed to save file...");
+            }
+        } // end of for}
+
         return attachList;
     }
 
     @Transactional(readOnly = true)
     public FileDto getFile(Long fileId, FileType fileType) {
 
-        Files files = fileRepository.findByFileIdAndFileType(fileId, fileType);
+        String getFileName = fileRepository.findByFileIdAndFileType(fileId, fileType);
 
         return FileDto.builder()
-                .fileId(fileId)
-                .originFilename(files.getOriginFilename())
-                .filename(files.getFilename())
-                .fileType(files.getFileType())
-                .path(files.getPath())
+                .filename(getFileName)
                 .build();
     }
 
-
     @Transactional
-    public void fileTodoDelete(Long[] fileId, FileType fileType, Long todoId) {
-
-        fileRepository.todoFilesDelete(fileId, fileType, todoId);
-
-    }
-
-    @Transactional
-    public void fileTextDelete(Long[] fileId, FileType fileType, Long textId) {
-        fileRepository.textFilesDelete(fileId, fileType, textId);
-    }
-
-
-    @Transactional
-    public void updateFiles(List<MultipartFile> multipartFiles, FileType fileType, Long todoId, Long textId) {
+    public void updateFiles(List<MultipartFile> multipartFiles, FileType fileType, Long todoId, Long textId, Long fileId) {
 
         List<Files> todoFileId = fileRepository.findByTodoFileId(fileType, todoId);
 
@@ -145,6 +128,34 @@ public class FileUtil {
         if (multipartFiles != null && textId != null) {
             uploadFiles(multipartFiles, fileType, null, textId);
         }
+
+        // Local File 수정
+        List<Files> localFileId = fileRepository.findByLocalFileId(fileId);
+        for (Files localFiles : localFileId) {
+            fileRepository.localFileUpdate(localFiles.getFileId(), localFiles.getFileType());
+        }
+
+        if (multipartFiles != null && fileId != null) {
+            uploadFiles(multipartFiles, fileType, null, null);
+        }
+    }
+
+    @Transactional
+    public void localFileRemove(Long fileId) {
+        String localFileUploader = fileRepository.getLocalFileUploader(fileId);
+
+        if (localFileUploader != null) {
+            fileRepository.localFilesDelete(fileId);
+        } else {
+            throw new IllegalArgumentException("로컬 파일 업로더만 삭제가 가능합니다.");
+        }
+    }
+
+    private UserResponseDto getUserUploader() {
+        UserResponseDto uploader = userRepository.findById(SecurityUtil.getCurrentUserId())
+                .map(UserResponseDto::of)
+                .orElseThrow();
+        return uploader;
     }
 
 }

@@ -1,5 +1,7 @@
 package kr.bora.api.files.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.domain.Files;
 import kr.bora.api.todo.domain.Todo;
@@ -13,7 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FileDto {
+    @JsonIgnore
     private Long fileId;
     private String originFilename;
 
@@ -25,7 +29,7 @@ public class FileDto {
 
     private String modDate;
 
-    private User userId;
+    private Long userId;
 
     //    @Nullable
     private Long todoId;
@@ -37,6 +41,7 @@ public class FileDto {
 
     private String deleteType;
 
+    private String nickname;
 
     public Files toEntity() {
         Files files = Files.builder()
@@ -45,7 +50,7 @@ public class FileDto {
                 .filename(filename)
                 .path(path)
                 .fileType(fileType)
-                .user(userId)
+                .user(User.builder().userId(userId).build())
                 .todoId(todoId)
                 .textId(textEditorId)
                 .deleteYn(deleteType)

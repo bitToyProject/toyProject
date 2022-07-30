@@ -1,5 +1,6 @@
 package kr.bora.api.files.controller;
 
+import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.files.service.FileUtil;
@@ -20,6 +21,7 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -34,17 +36,9 @@ public class FilesController {
     private String uploadPath;
 
     @PostMapping("/save")
-    public ResponseEntity<String> filesSave(@RequestPart(value = "files", required = false) List<MultipartFile> multipartFiles,
-                                            @RequestParam FileType fileType,
-                                            @RequestParam(required = false) Long todoId,
-                                            @RequestParam(required = false) Long textId) {
+    public ResponseEntity<ApiResponse> filesSave(@RequestPart(value = "files", required = false) List<MultipartFile> multipartFiles) {
 
-        if (fileType != null) {
-
-            fileUtil.uploadFiles(multipartFiles, fileType, todoId, textId);
-        }
-
-        return ResponseEntity.ok("파일 등록 성공");
+        return ResponseEntity.ok(ApiResponse.success("LOCAL 파일 등록 성공", fileUtil.uploadFiles(multipartFiles, FileType.LOCAL, null, null)));
     }
 
 
@@ -71,12 +65,21 @@ public class FilesController {
 
         String filename = fileDto.getFilename();
 
+        String extensionName = filename.substring(filename.lastIndexOf(".") + 1);
+
+        String[] ext = {"jpg", "jpeg", "png", "gif", "bmp"};
+
         try {
             String srcFileName = URLDecoder.decode(filename, "UTF-8");
             File file = new File(uploadPath + File.separator + srcFileName);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", String.valueOf(MediaType.IMAGE_JPEG));
-            result = ResponseEntity.ok().headers(headers).body(FileCopyUtils.copyToByteArray(file));
+
+            if (Arrays.stream(ext).anyMatch(e -> e.contains(extensionName))) { //이미지 확장자 중 단 하나라도 ext name의 값을 포함하고 있다면 이미지를 보여줌
+                result = ResponseEntity.ok().headers(headers).body(FileCopyUtils.copyToByteArray(file));
+            } else {
+                throw new RuntimeException("이미지 확장자가 아닙니다." + extensionName);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,35 +89,23 @@ public class FilesController {
     }
 
 
-    @PutMapping("/update")
-    public ResponseEntity<String> updateFileList(@RequestPart(value = "files", required = false) List<MultipartFile> multipartFiles,
-                                                 @RequestParam FileType fileType,
-                                                 @RequestParam(required = false) Long todoId,
-                                                 @RequestParam(required = false) Long textId) {
+    @PutMapping("/update/{fileId}")
+    public ResponseEntity<ApiResponse> updateFileList(@RequestPart(value = "files", required = false) List<MultipartFile> multipartFiles,
+                                                @PathVariable Long fileId) {
 
-        fileUtil.updateFiles(multipartFiles, fileType, todoId, textId);
+        fileUtil.updateFiles(multipartFiles, FileType.LOCAL, null, null, fileId);
 
 
-        return ResponseEntity.ok("성공");
+        return ResponseEntity.ok(ApiResponse.success("성공", fileId + "번 파일이 수정되었습니다. " + FileType.LOCAL));
     }
 
-//    @DeleteMapping("/remove/{fileId}")
-//    public ResponseEntity<String> removeFileList(@PathVariable("fileId") Long[] fileId,
-//                                                 @RequestParam FileType fileType,
-//                                                 @RequestParam(required = false) Long todoId,
-//                                                 @RequestParam(required = false) Long textId) {
-//
-//        if (fileType == FileType.TODO && todoId != null) {
-//            fileUtil.fileTodoDelete(fileId, fileType, todoId);
-//        }
-//
-//        if (fileType == FileType.TEXT_EDITOR && textId != null) {
-//            fileUtil.fileTextDelete(fileId, fileType, todoId);
-//        }
-//
-//        return ResponseEntity.ok("파일이 성공적으로 삭제 되었습니다.");
-//    }
+    @DeleteMapping("/remove/{fileId}")
+    public ResponseEntity<ApiResponse> removeFileList(@PathVariable Long fileId,
+                                                      @RequestParam(defaultValue = "LOCAL") FileType fileType) {
+        fileUtil.localFileRemove(fileId);
 
+        return ResponseEntity.ok(ApiResponse.success("response delete success", FileType.LOCAL + "파일이 성공적으로 삭제 되었습니다."));
+    }
 
 
 }

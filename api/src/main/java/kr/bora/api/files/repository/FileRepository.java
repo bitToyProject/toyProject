@@ -23,13 +23,21 @@ public interface FileRepository extends JpaRepository<Files, Long> {
     @Query("SELECT f from Files f where f.textId=:textId and f.fileType =:fileType and f.deleteYn ='N'")
     List<Files> findByTextFileId(@Param("fileType") FileType fileType, @Param("textId") Long textId);
 
+    @Query("SELECT f from Files f where f.fileId=:fileId and f.fileType ='LOCAL' and f.deleteYn ='N'")
+    List<Files> findByLocalFileId(@Param("fileId") Long fileId);
+
+
     @Modifying(clearAutomatically = true)
     @Query("DELETE FROM Files f where f.fileId in (:fileId) and f.fileType=:fileType and f.todoId =:todoId")
-    void todoFilesDelete(@Param("fileId") Long[] fileId, @Param("fileType") FileType fileType, @Param("todoId")Long todoId);
+    void todoFilesDelete(@Param("fileId") Long[] fileId, @Param("fileType") FileType fileType, @Param("todoId") Long todoId);
 
     @Modifying(clearAutomatically = true)
     @Query("DELETE FROM Files f where f.fileId in (:fileId) and f.fileType=:fileType and f.textId =:textId")
-    void textFilesDelete(@Param("fileId") Long[] fileId, @Param("fileType") FileType fileType, @Param("textId")Long textId);
+    void textFilesDelete(@Param("fileId") Long[] fileId, @Param("fileType") FileType fileType, @Param("textId") Long textId);
+
+    @Modifying(clearAutomatically = true)
+    @Query("DELETE FROM Files f where f.fileType='LOCAL' AND f.fileId IN (:fileId)")
+    void localFilesDelete(@Param("fileId") Long fileId);
 
     @Modifying
     @Transactional
@@ -41,5 +49,14 @@ public interface FileRepository extends JpaRepository<Files, Long> {
     @Query("UPDATE Files f SET f.deleteYn = 'Y', f.modDate=current_timestamp where f.fileId IN (:fileId) and f.fileType=:fileType and f.textId =:textId")
     void textFilesUpdate(@Param("fileId") Long fileId, @Param("fileType") FileType fileType, @Param("textId") Long textId);
 
-    Files findByFileIdAndFileType(@Param("fileId") Long fileId, @Param("fileType") FileType fileType);
+    @Modifying
+    @Transactional
+    @Query("UPDATE Files f SET f.deleteYn='Y', f.modDate=current_timestamp where f.fileId IN(:fileId) and f.fileType=:fileType")
+    void localFileUpdate(@Param("fileId") Long fileId, @Param("fileType") FileType fileType);
+
+    @Query("SELECT f.filename from Files f where f.fileId=:fileId and f.fileType=:fileType and f.deleteYn='N'")
+    String findByFileIdAndFileType(@Param("fileId") Long fileId, @Param("fileType") FileType fileType);
+
+    @Query("SELECT f.user.nickName from Files f where f.fileId IN(:fileId) and f.fileType='LOCAL'")
+    String getLocalFileUploader(@Param("fileId") Long fileId);
 }
