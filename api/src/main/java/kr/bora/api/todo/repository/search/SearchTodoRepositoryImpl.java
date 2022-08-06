@@ -7,21 +7,22 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import kr.bora.api.todo.domain.QTodo;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.dto.searchPageDto.SearchCondition;
 import kr.bora.api.user.domain.QUser;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
-@Log4j2
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
 public class SearchTodoRepositoryImpl extends QuerydslRepositorySupport implements SearchTodoRepository {
 //
 //    public final JPAQueryFactory queryFactory;
@@ -114,19 +115,12 @@ public class SearchTodoRepositoryImpl extends QuerydslRepositorySupport implemen
         tuple.groupBy(todo);
 
         //page 처리
-        log.info(pageable.getOffset());
-        log.info(pageable.getPageSize());
-
         tuple.offset(pageable.getOffset());
         tuple.limit(pageable.getPageSize());
 
         List<Tuple> result = tuple.fetch();
 
-        log.info(result);
-
         long count = tuple.fetchCount();
-
-        log.info("count : " + count);
 
         return new PageImpl<Object[]>(result.stream().map(t->t.toArray()).collect(Collectors.toList()), pageable, count);
     }

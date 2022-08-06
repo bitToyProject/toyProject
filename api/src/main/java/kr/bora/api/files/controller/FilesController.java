@@ -4,7 +4,6 @@ import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.files.service.FileUtil;
-import kr.bora.api.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -16,7 +15,8 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,9 +35,10 @@ public class FilesController {
     private String uploadPath;
 
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse> filesSave(@RequestPart(value = "files", required = false) List<MultipartFile> multipartFiles) {
+    public ResponseEntity<ApiResponse> filesSave(@RequestPart(value = "files") List<MultipartFile> multipartFiles) {
 
         return ResponseEntity.ok(ApiResponse.success("LOCAL 파일 등록 성공", fileUtil.uploadFiles(multipartFiles, FileType.LOCAL, null, null)));
+
     }
 
 
@@ -74,10 +75,10 @@ public class FilesController {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", String.valueOf(MediaType.IMAGE_JPEG));
 
-            if (Arrays.stream(ext).anyMatch(e -> e.contains(extensionName))) { //이미지 확장자 중 단 하나라도 ext name의 값을 포함하고 있다면 이미지를 보여줌
+            if (Arrays.stream(ext).anyMatch(e -> e.contains(extensionName))) { // 이미지 확장자 중 단 하나라도 extensionname의 값을 포함하고 있다면 이미지를 보여줌
                 result = ResponseEntity.ok().headers(headers).body(FileCopyUtils.copyToByteArray(file));
             } else {
-                throw new RuntimeException("이미지 확장자가 아닙니다." + extensionName);
+                throw new RuntimeException("이미지 확장자가 아닙니다. " + extensionName);
             }
 
         } catch (IOException e) {
@@ -90,17 +91,25 @@ public class FilesController {
 
     @PutMapping("/update/{fileId}")
     public ResponseEntity<ApiResponse> updateFileList(@RequestPart(value = "files", required = false) List<MultipartFile> multipartFiles,
-                                                @PathVariable Long fileId) {
+                                                      @PathVariable Long fileId) {
 
         fileUtil.updateFiles(multipartFiles, FileType.LOCAL, null, null, fileId);
 
 
         return ResponseEntity.ok(ApiResponse.success("성공", fileId + "번 파일이 수정되었습니다. " + FileType.LOCAL));
     }
+//
 
+    /**
+     * Local 파일 완전 삭제
+     *
+     * @param fileId
+     * @return
+     */
     @DeleteMapping("/remove/{fileId}")
-    public ResponseEntity<ApiResponse> removeFileList(@PathVariable Long fileId,
+    public ResponseEntity<ApiResponse> removeFileList(@PathVariable("fileId") Long fileId,
                                                       @RequestParam(defaultValue = "LOCAL") FileType fileType) {
+
         fileUtil.localFileRemove(fileId);
 
         return ResponseEntity.ok(ApiResponse.success("response delete success", FileType.LOCAL + "파일이 성공적으로 삭제 되었습니다."));

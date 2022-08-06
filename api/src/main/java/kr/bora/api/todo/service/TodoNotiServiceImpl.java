@@ -4,9 +4,9 @@ import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoNotification;
 import kr.bora.api.todo.dto.TodoNotiDto;
 import kr.bora.api.todo.dto.TodoNotificationsDto;
-import kr.bora.api.todo.dto.TodoUserDto;
 import kr.bora.api.todo.repository.EmitterRepository;
 import kr.bora.api.todo.repository.TodoNotiRepository;
+import kr.bora.api.user.domain.User;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +48,6 @@ public class TodoNotiServiceImpl implements TodoNotiService {
                     .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
                     .forEach(entry -> sendToClient(emitter, entry.getKey(), entry.getValue()));
         }
-
         return emitter;
 
     }
@@ -61,7 +60,6 @@ public class TodoNotiServiceImpl implements TodoNotiService {
                     .name("sse")
                     .data(data)
             );
-
         } catch (IOException e) {
             emitterRepository.deleteById(id);
             log.error("SSE 연결 오류", e);
@@ -70,9 +68,9 @@ public class TodoNotiServiceImpl implements TodoNotiService {
 
     @Override
     @Transactional
-    public void send(TodoUserDto user, Todo todo, String content) {
-        TodoNotification todoNotification = createTodoNotification(user, todo, content);
-        String id = String.valueOf(user.getUserId());
+    public void send(Long userId, Todo todo, String content) {
+        TodoNotification todoNotification = createTodoNotification(userId, todo, content);
+        String id = String.valueOf(userId);
         todoNotiRepository.save(todoNotification);
         Map<String, SseEmitter> sseEmitters = emitterRepository.findAllStartWithById(id);
         sseEmitters.forEach((key, emitter) -> {
@@ -81,16 +79,15 @@ public class TodoNotiServiceImpl implements TodoNotiService {
         });
     }
 
-    private TodoNotification createTodoNotification(TodoUserDto user, Todo todo, String content) {
+    private TodoNotification createTodoNotification(Long userId, Todo todo, String content) {
         return TodoNotification.builder()
-                .receiver(user.saveId(TodoUserDto.builder().userId(user.getUserId()).build()))
+                .receiver(User.builder().userId(userId).build())
                 .content(content)
                 .todo(todo)
                 .url("/todos/read/" + todo.getTodoId())
                 .isRead(false)
                 .build();
     }
-
     @Override
     @Transactional
     public TodoNotificationsDto findAllById() {

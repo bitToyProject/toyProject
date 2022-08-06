@@ -3,14 +3,17 @@ package kr.bora.api.todo.domain;
 import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.User;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
-
+@Table(name = "todo_noti")
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Audited(withModifiedFlag = true)
+@ToString(exclude = {"receiver", "todo"})
 public class TodoNotification extends BaseEntity {
 
     @Id

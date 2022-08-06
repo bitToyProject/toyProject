@@ -3,7 +3,6 @@ package kr.bora.api.todo.service;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoReply;
 import kr.bora.api.todo.dto.TodoReplyDto;
-import kr.bora.api.todo.dto.request.TodoReplyRequestDto;
 import kr.bora.api.todo.repository.TodoReplyRepository;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
@@ -31,12 +30,12 @@ public class TodoReplyServiceImpl implements TodoReplyService {
      */
     @Override
     @Transactional
-    public Long todoReplySave(TodoReplyRequestDto todoReplyDto, Long todoId) {
+    public Long todoReplySave(TodoReplyDto.Request todoReplyDto, Long todoId) {
         UserResponseDto replyer = getUserNickname();
 
         todoReplyDto.setTodoReplyer(replyer.getNickname());
 
-        TodoReply todoReply = dtoTodoReplyEntity(todoReplyDto);
+        TodoReply todoReply = todoReplyDto.toEntity(todoId);
         todoReplyRepository.save(todoReply);
 
         return todoReplyDto.getTodoReplyId();
@@ -49,9 +48,11 @@ public class TodoReplyServiceImpl implements TodoReplyService {
      * @return
      */
     @Override
-    public List<TodoReplyDto> todoReplyList(Long todoId) {
-        List<TodoReply> result = todoReplyRepository.getTodoRepliesByTodoOrderByRegDate(Todo.builder().todoId(todoId).build());
-        return result.stream().map(this::entityTodoReplyDto).collect(Collectors.toList());
+    public List<TodoReplyDto.Response> todoReplyList(Long todoId) {
+        List<TodoReply> result = todoReplyRepository.
+                getTodoRepliesByTodoOrderByRegDate(Todo.builder().todoId(todoId).build());
+
+        return result.stream().map(TodoReplyDto.Response::new).collect(Collectors.toList());
     }
 
     /**
@@ -60,8 +61,17 @@ public class TodoReplyServiceImpl implements TodoReplyService {
      * @param todoRno
      */
     @Override
+    @Transactional
     public void todoReplyRemove(Long todoRno) {
-        todoReplyRepository.deleteById(todoRno);
+        Long loginUserId = SecurityUtil.getCurrentUserId();
+
+        Long todoReplyerId = todoReplyRepository.getTodoReplyer(todoRno);
+
+        if (loginUserId == todoReplyerId) {
+            todoReplyRepository.deleteById(todoRno);
+        } else {
+            throw new IllegalArgumentException("댓글 작성자 본인만 삭제가 가능합니다.");
+        }
     }
 
     // 댓글 작성자 - 현재 사용자 닉네임

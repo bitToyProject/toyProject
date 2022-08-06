@@ -31,10 +31,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User user = super.loadUser(userRequest);
-        String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        System.out.println("registrationId = " + registrationId);
-        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getTokenUri();
-        System.out.println("userNameAttributeName = " + userNameAttributeName);
+        userRequest.getClientRegistration().getRegistrationId();
+        userRequest.getClientRegistration().getProviderDetails().getTokenUri();
         try {
             return this.process(userRequest, user);
         } catch (AuthenticationException ex) {
@@ -55,7 +53,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User users;
         if (userOptional.isPresent()) {//회원가입 o
             users = userOptional.get();
-            System.out.println("users = " + users.getUserId());
+//            System.out.println("users = " + users.getUserId());
             if (providerType != users.getProviderType()) {
                 throw new OAuthProviderMissMatchException(
                         "Looks like you're signed up with " + providerType +
@@ -78,7 +76,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .password("Soclal Login User is No password")
                 .title(Title.BEGINNER)
                 .avatar(Avatar.DEFAULTMAN)
-                .gender(0)
+                .gender(userInfo.getGender() == null ? "MALE" : userInfo.getGender())
                 .nickName(userInfo.getName())
                 .providerType(providerType)
                 .authority(Authority.ROLE_USER)

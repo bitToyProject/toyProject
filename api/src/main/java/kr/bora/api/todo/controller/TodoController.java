@@ -6,8 +6,8 @@ package kr.bora.api.todo.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.todo.dto.TodoDto;
-import kr.bora.api.todo.dto.request.TodoRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageRequestDto;
 import kr.bora.api.todo.dto.searchPageDto.PageResultDto;
 import kr.bora.api.todo.service.TodoService;
@@ -50,10 +50,11 @@ public class TodoController {
      */
     @ApiOperation(value = "Todo 등록", notes = "Todo 리스트를 등록합니다.")
     @PostMapping("/save")
-    public ResponseEntity<String> todoSave(@Valid @RequestPart(value = "file", required = false) List<MultipartFile> files,
-                                           @RequestPart("todoDto") TodoRequestDto todoDto) {
-        service.todoSave(todoDto.toDto(), files);
-        return ResponseEntity.ok("ToDo가 정상적으로 등록되었습니다.");
+    public ResponseEntity<ApiResponse> todoSave(@Valid @RequestPart(value = "file", required = false) List<MultipartFile> files,
+                                                @RequestPart("todoDto") TodoDto.Request todoDto) {
+        service.todoSave(todoDto, files);
+
+        return ResponseEntity.ok(ApiResponse.success("response save data", todoDto));
     }
 
 
@@ -65,9 +66,9 @@ public class TodoController {
      */
     @ApiOperation(value = "Todo 확인", notes = "Todo를 확인합니다.")
     @GetMapping("/read/{todoId}")
-    public ResponseEntity<TodoDto> todoRead(@ApiParam(value = "Todo 번호", required = true) @PathVariable("todoId") Long todoId) {
-
-        return ResponseEntity.ok(service.todoRead(todoId));
+    public ResponseEntity<ApiResponse> todoRead(@ApiParam(value = "Todo 번호", required = true) @PathVariable("todoId") Long todoId) {
+        TodoDto.Response response = service.todoRead(todoId);
+        return ResponseEntity.ok(ApiResponse.success("response read data", response));
     }
 
     /**
@@ -79,13 +80,13 @@ public class TodoController {
      */
     @ApiOperation(value = "Todo 변경", notes = " Todo를 변경합니다.")
     @PutMapping("/modify/{todoId}")
-    public ResponseEntity<String> todoModify(@ApiParam(value = "Todo 번호", required = true) @PathVariable("todoId") Long todoId,
-                                             @Valid @RequestPart("todoDto") TodoDto todoDto,
-                                             @RequestPart(value = "file", required = false) List<MultipartFile> files) {
+    public ResponseEntity<ApiResponse> todoModify(@ApiParam(value = "Todo 번호", required = true) @PathVariable("todoId") Long todoId,
+                                                  @Valid @RequestPart("todoDto") TodoDto.Request todoDto,
+                                                  @RequestPart(value = "file", required = false) List<MultipartFile> files) {
 
         service.todoModify(todoId, todoDto, files);
 
-        return ResponseEntity.ok(todoId + "번 TODO가 수정되었습니다.");
+        return ResponseEntity.ok(ApiResponse.success("response update data", todoDto));
     }
 
     /**
@@ -96,17 +97,17 @@ public class TodoController {
      */
     @ApiOperation(value = "Todo 삭제", notes = "Todo를 삭제합니다.")
     @DeleteMapping("/remove/{todoId}")
-    public ResponseEntity<String> todoRemove(@ApiParam(value = "Todo 번호", required = true) @PathVariable("todoId") Long todoId) {
+    public ResponseEntity<ApiResponse> todoRemove(@ApiParam(value = "Todo 번호", required = true) @PathVariable("todoId") Long todoId) {
 
         service.todoRemove(todoId);
 
-        return ResponseEntity.ok("Todo가 정상적으로 삭제 되었습니다.");
+        return ResponseEntity.ok(ApiResponse.success("response delete success", todoId + "번 Todo가 삭제되었습니다."));
     }
 
     @GetMapping("/assignee/noti/{todoId}")
-    public ResponseEntity<List<String>> noti(SecurityUtil securityUtil, @PathVariable("todoId") Long todoId) {
+    public ResponseEntity<List<String>> noti( @PathVariable("todoId") Long todoId) {
         // 해당 toto 글에서 협력자이므로 pathvariable 준비
-        Long currentUserId = securityUtil.getCurrentUserId();
+        Long currentUserId = SecurityUtil.getCurrentUserId();
 
         List<String> assignee = service.findAssignee(currentUserId);
 

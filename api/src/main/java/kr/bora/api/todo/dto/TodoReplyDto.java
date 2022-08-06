@@ -1,39 +1,88 @@
 package kr.bora.api.todo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.todo.domain.TodoReply;
+import kr.bora.api.user.domain.User;
+import kr.bora.api.user.util.SecurityUtil;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
+
 public class TodoReplyDto {
 
-    private Long todoReplyId;
-
-    private TodoUserDto userId;
-
-    private Long todoId;
-
-    private String text;
-
-    private String todoReplyer;
-
-    private String regDate;
-
-    private String modDate;
-
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     @Builder
-    public TodoReplyDto(Long todoReplyId, TodoUserDto userId, Long todoId, String text, String todoReplyer, String regDate, String modDate) {
-        this.todoReplyId = todoReplyId;
-        this.userId = userId;
-        this.todoId = todoId;
-        this.text = text;
-        this.todoReplyer = todoReplyer;
-        this.regDate = regDate;
-        this.modDate = modDate;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Request {
+
+        private Long todoReplyId;
+
+        private User userId;
+
+        private Long todoId;
+
+        private String text;
+
+        private String todoReplyer;
+
+        private String regDate;
+
+        private String modDate;
+
+        // 댓글 작성자는 회원의 닉네임으로 한다.
+        public String setTodoReplyer(String todoReplyer) {
+            this.todoReplyer = todoReplyer;
+            return todoReplyer;
+        }
+
+        /* Dto -> Entity */
+        public TodoReply toEntity(Long todoId) {
+            Long userId = SecurityUtil.getCurrentUserId();
+            return TodoReply.builder()
+                    .todo(Todo.builder().todoId(todoId).build())
+                    .user(User.builder().userId(userId).build())
+                    .text(text)
+                    .todoReplyer(todoReplyer)
+                    .build();
+        }
+
     }
 
-    public void setTodoReplyer(String todoReplyer) {
-        this.todoReplyer = todoReplyer;
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class Response {
+        private Long todoReplyId;
+
+        private Long userId;
+
+        private Long todoId;
+
+        private String text;
+
+        private String todoReplyer;
+
+        private String regDate;
+
+        private String modDate;
+
+        /* Entity -> Dto */
+        public Response(TodoReply todoReply) {
+            this.todoReplyId = todoReply.getTodoRno();
+            this.todoId = todoReply.getTodo().getTodoId();
+            this.userId = todoReply.getUser().getUserId();
+            this.text = todoReply.getText();
+            this.todoReplyer = todoReply.getTodoReplyer();
+            this.regDate = todoReply.getRegDate();
+            this.modDate = todoReply.getModDate();
+
+        }
     }
+
 }

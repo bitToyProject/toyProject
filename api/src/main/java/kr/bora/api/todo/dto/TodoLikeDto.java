@@ -1,21 +1,35 @@
 package kr.bora.api.todo.dto;
 
+import kr.bora.api.todo.domain.Todo;
+import kr.bora.api.todo.domain.TodoLike;
+import kr.bora.api.user.domain.User;
+import kr.bora.api.user.util.SecurityUtil;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
+
 public class TodoLikeDto {
 
-    private Long todoLikeId;
-    private TodoUserDto userId;
-    private Long todoId;
-
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     @Builder
-    public TodoLikeDto(Long todoLikeId, TodoUserDto userId, Long todoId) {
-        this.todoLikeId = todoLikeId;
-        this.userId = userId;
-        this.todoId = todoId;
+    public static class Request {
+
+        private Long todoLikeId;
+
+        private User userId;
+        private Long todoId;
+
+        public TodoLike toEntity(Long todoId) {
+            Long userId = SecurityUtil.getCurrentUserId();
+            return TodoLike.builder()
+                    .user(User.builder().userId(userId).build())
+                    .todo(Todo.builder().todoId(todoId).build())
+                    .build();
+        }
     }
+
 }

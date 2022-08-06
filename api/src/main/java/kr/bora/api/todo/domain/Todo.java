@@ -1,24 +1,25 @@
 package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
-import kr.bora.api.files.domain.FileType;
-import kr.bora.api.files.domain.Files;
 import kr.bora.api.user.domain.User;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.annotation.Nullable;
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "todos")
 @Entity
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString(exclude = {"user"})
-@Audited(withModifiedFlag = true)
 @Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Audited(withModifiedFlag = true)
+@ToString(exclude = {"user", "todoReplies"})
+@DynamicInsert // @PrePersist의 다른 방법, 컬럼에 @ColumnDefault("값") 선언 해야함(기본 값 설정)
 public class Todo extends BaseEntity {
 
     @Id
@@ -30,12 +31,15 @@ public class Todo extends BaseEntity {
     private String end;
     private String description;
     private String assignee;
+    @ColumnDefault("0")
     private Integer point;
 
     private String nickname;
 
     @LastModifiedDate
     private String doneTime;
+    @Enumerated(EnumType.STRING)
+    private TodoType todoType;
     @Enumerated(EnumType.ORDINAL)
     private TodoPriorityType priority;
 
@@ -43,15 +47,8 @@ public class Todo extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    private TodoType todoType;
-
-    @Enumerated(EnumType.STRING)
-    private FileType fileType;
-
-    private Long fileId;
-
-
+    @OneToMany(mappedBy = "todo", cascade = CascadeType.REMOVE)
+    private List<TodoReply> todoReplies;
 
     // == Todo 수정 시 변경 메서드 == //
     public void changeTitle(String title) {
@@ -90,9 +87,9 @@ public class Todo extends BaseEntity {
         this.doneTime = doneTime;
     }
 
-    @PrePersist
-    public void defaultTodoPoint() {
-        this.point = this.point == null ? 0 : this.point;
-    }
+//    @PrePersist
+//    public void defaultTodoPoint() {
+//        this.point = this.point == null ? 0 : this.point;
+//    }
 
 }

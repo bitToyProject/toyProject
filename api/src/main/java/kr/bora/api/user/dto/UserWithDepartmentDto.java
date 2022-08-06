@@ -21,7 +21,7 @@ public class UserWithDepartmentDto {
 
     private String lastName;
 
-    private Integer gender;
+    private String gender;
 
     private String phoneNumber;
 

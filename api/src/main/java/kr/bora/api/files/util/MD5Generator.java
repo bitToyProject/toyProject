@@ -1,7 +1,5 @@
 package kr.bora.api.files.util;
 
-import org.springframework.context.annotation.Configuration;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

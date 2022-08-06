@@ -4,8 +4,6 @@ import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,10 +13,11 @@ import java.util.List;
 @Table(name = "subtasks")
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(exclude = "todo")
+@AllArgsConstructor
 @Audited(withModifiedFlag = true)
-@DynamicInsert
+@ToString(exclude = {"todo", "user", "subTaskReplies"})
 public class SubTask extends BaseEntity {
 
     @Id
@@ -34,7 +33,6 @@ public class SubTask extends BaseEntity {
 
     private String assignee;
 
-    @ColumnDefault("0")
     private Integer point;
 
     @LastModifiedDate
@@ -53,23 +51,6 @@ public class SubTask extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private SubtaskType subTaskType;
-
-
-    @Builder
-    public SubTask(Long subTaskId, String title, String start, String end, String assignee, Integer point, String doneTime, Todo todo, User user, List<SubTaskReply> subTaskReplies, SubtaskType subTaskType) {
-        this.subTaskId = subTaskId;
-        this.title = title;
-        this.start = start;
-        this.end = end;
-        this.assignee = assignee;
-        this.point = point;
-        this.doneTime = doneTime;
-        this.todo = todo;
-        this.user = user;
-        this.subTaskReplies = subTaskReplies;
-        this.subTaskType = subTaskType;
-    }
-
 
 
     // == Subtask 수정 시 변경 메서드 == //
@@ -100,6 +81,9 @@ public class SubTask extends BaseEntity {
         this.doneTime = doneTime;
     }
 
+    /**
+     * Insert 되기 전(persist 되기 전) 실행
+     */
     @PrePersist
     public void defaultSubtaskPoint() {
         this.point = this.point == null ? 0 : this.point;

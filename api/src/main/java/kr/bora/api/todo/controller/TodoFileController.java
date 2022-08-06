@@ -41,24 +41,24 @@ public class TodoFileController {
     @Value("${bora.upload.path}")
     private String uploadPath;
 
-//    @GetMapping("/display/{todoId}")
-//    public ResponseEntity<byte[]> getFile(String imgName) {
-//        ResponseEntity<byte[]> result = null;
-//
-//        try {
-//            String srcFileName = URLDecoder.decode(imgName, "UTF-8");
-//            File file = new File(uploadPath + File.separator + srcFileName);
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.add("Content-Type", Files.probeContentType(file.toPath()));
-//            result = ResponseEntity.ok().headers(headers).body(FileCopyUtils.copyToByteArray(file));
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return result;
-//    }
+    @GetMapping("/display/{todoId}")
+    public ResponseEntity<byte[]> getFile(String imgName) {
+        ResponseEntity<byte[]> result = null;
+
+        try {
+            String srcFileName = URLDecoder.decode(imgName, "UTF-8");
+            File file = new File(uploadPath + File.separator + srcFileName);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", Files.probeContentType(file.toPath()));
+            result = ResponseEntity.ok().headers(headers).body(FileCopyUtils.copyToByteArray(file));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
     @PutMapping("/update_file/{todoId}/{todoFileId}")
     public ResponseEntity<List<TodoFileRequestDto>> updateFile(List<MultipartFile> files, @PathVariable("todoId") Long todoId) {

@@ -12,7 +12,8 @@ public interface SubTaskReplyRepository extends JpaRepository<SubTaskReply, Long
 
     List<SubTaskReply> getSubTaskRepliesBySubTaskOrderByRegDate(SubTask subTask);
 
-    @Query("select sbr.subtaskReplyer from SubTaskReply sbr where sbr.subtaskReplyId =:subtaskReplyId")
-    String getSubTaskReplyer(@Param("subtaskReplyId") Long subtaskReplyId);
+    @Query("select sbr.user.userId from SubTaskReply sbr where sbr.subtaskReplyId =:subtaskReplyId")
+    Long getSubTaskReplyer(@Param("subtaskReplyId") Long subtaskReplyId);
+
 
 }

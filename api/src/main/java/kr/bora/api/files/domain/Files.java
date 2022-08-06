@@ -1,20 +1,19 @@
 package kr.bora.api.files.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
-import kr.bora.api.texteditor.domain.entity.TextEditor;
-import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.user.domain.User;
 import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
-
+@Table(name = "files")
 @Entity
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Builder
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Audited(withModifiedFlag = true)
+@ToString(exclude = {"user"})
 public class Files extends BaseEntity {
 
     @Id

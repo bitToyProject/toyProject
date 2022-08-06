@@ -19,7 +19,7 @@ public class UserResponseDto {
 
     private String lastName;
 
-    private Integer gender;
+    private String gender;
 
     private String phoneNumber;
 
@@ -30,7 +30,7 @@ public class UserResponseDto {
                            String nickname,
                            String firstName,
                            String lastName,
-                           Integer gender,
+                           String gender,
                            String phoneNumber,
                            Avatar avatar) {
         this.username = username;

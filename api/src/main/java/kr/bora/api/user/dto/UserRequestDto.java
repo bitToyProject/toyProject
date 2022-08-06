@@ -1,5 +1,6 @@
 package kr.bora.api.user.dto;
 
+import kr.bora.api.socialAuth.domain.ProviderType;
 import kr.bora.api.user.domain.Authority;
 import kr.bora.api.user.domain.Avatar;
 import kr.bora.api.user.domain.Title;
@@ -21,25 +22,24 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Log4j2
 public class UserRequestDto {
 
     private Long userId;
     @Email
     @NotEmpty
     private String username;
-        @NotEmpty
+    @NotEmpty
     private String password;
-        @NotEmpty
+    @NotEmpty
     private String lastName;
-        @NotEmpty
+    @NotEmpty
     private String firstName;
 
     private String nickName;
-        @NotEmpty
+    @NotEmpty
     private String phoneNum;
-        @NotNull
-    private Integer gender;
+    @NotNull
+    private String gender;
     private Authority authority;
 
     private Title title;
@@ -60,6 +60,7 @@ public class UserRequestDto {
                 .title(Title.STARTER)
                 .authority(Authority.ROLE_USER)
                 .avatar(avatar)
+                .providerType(ProviderType.LOCAL)
                 .build();
     }
 
@@ -82,8 +83,6 @@ public class UserRequestDto {
     }
 
     public User saveId(UserRequestDto dto) {
-
-        log.info("asdasdsa" + dto.userId);
         return User.builder().userId(dto.userId).build();
     }
 
@@ -91,15 +90,15 @@ public class UserRequestDto {
     public User toPasswordEncoding() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return User.builder()
-            .userId(userId)
-            .password(encoder.encode(password))
-            .authority(authority)
-            .phoneNum(phoneNum)
-            .nickName(nickName)
-            .firstName(firstName)
-            .lastName(lastName)
-            .gender(gender)
-            .avatar(avatar)
-            .build();
+                .userId(userId)
+                .password(encoder.encode(password))
+                .authority(authority)
+                .phoneNum(phoneNum)
+                .nickName(nickName)
+                .firstName(firstName)
+                .lastName(lastName)
+                .gender(gender)
+                .avatar(avatar)
+                .build();
     }
 }

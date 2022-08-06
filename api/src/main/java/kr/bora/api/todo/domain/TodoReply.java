@@ -2,19 +2,19 @@ package kr.bora.api.todo.domain;
 
 import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.User;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
-@Entity
 @Table(name = "todoReply")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 @Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Audited(withModifiedFlag = true)
+@ToString(exclude = {"todo", "user"})
 public class TodoReply extends BaseEntity {
 
     @Id
@@ -33,13 +33,14 @@ public class TodoReply extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Builder
-    public TodoReply(Long todoRno, String text, String todoReplyer, Todo todo, User user) {
-        this.todoRno = todoRno;
+
+    // 댓글 수정 메서드 ---> 필요 시 사용
+    public void changeReplyText(String text) {
         this.text = text;
-        this.todoReplyer = todoReplyer;
-        this.todo = todo;
-        this.user = user;
     }
 
 }
+
+
+
+

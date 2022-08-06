@@ -34,24 +34,28 @@ public class SecurityUtil {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         int socialIdLength = authentication.getName().getBytes().length;
-        Long findSocialUserId = userRepository.findUserId(authentication.getName());
 
-        // 구글 로그인시 -> subId가 pk(21자리)
-        if (socialIdLength == 21) {
-            Long googleUserId = findSocialUserId;
-            return googleUserId;
-        }
+        if (socialIdLength == 21 || socialIdLength== 10 || socialIdLength == 43) {
 
-        //카카오 로그인시 -> 고유 id 10자리
-        if (socialIdLength == 10) {
-            Long kakaoUserId = findSocialUserId;
-            return kakaoUserId;
-        }
+            Long findSocialUserId = userRepository.findUserId(authentication.getName());
 
-        //네이버 로그인시 -> 고유 id 43자리
-        if (socialIdLength == 43) {
-            Long naverUserId = findSocialUserId;
-            return naverUserId;
+            // 구글 로그인시 -> subId가 pk(21자리)
+            if (socialIdLength == 21) {
+                Long googleUserId = findSocialUserId;
+                return googleUserId;
+            }
+
+            //카카오 로그인시 -> 고유 id 10자리
+            if (socialIdLength == 10) {
+                Long kakaoUserId = findSocialUserId;
+                return kakaoUserId;
+            }
+
+            //네이버 로그인시 -> 고유 id 43자리
+            if (socialIdLength == 43) {
+                Long naverUserId = findSocialUserId;
+                return naverUserId;
+            }
         }
 
         if (authentication == null || authentication.getName() == null) {

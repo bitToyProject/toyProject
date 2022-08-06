@@ -2,21 +2,19 @@ package kr.bora.api.texteditor.domain.entity;
 
 import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
-@Getter
-@Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "textEditor")
+@Entity
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Audited(withModifiedFlag = true)
+@ToString(exclude = {"user"})
 public class TextEditor extends BaseEntity {
 
     @Id

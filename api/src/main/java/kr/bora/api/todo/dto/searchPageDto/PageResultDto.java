@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 @NoArgsConstructor
 public class PageResultDto<DTO, EN> {
 
-    private List<DTO> dtoList;
+    private List<DTO> todoList;
 
     private int totalPage;
 
@@ -33,7 +33,7 @@ public class PageResultDto<DTO, EN> {
     private List<Integer> pageList;
 
     public PageResultDto(Page<EN> result, Function<EN, DTO> fn) {
-        dtoList = result.stream().map(fn).collect(Collectors.toList());
+        todoList = result.stream().map(fn).collect(Collectors.toList());
 
         totalPage = result.getTotalPages();
 

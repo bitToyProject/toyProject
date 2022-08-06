@@ -20,7 +20,7 @@ public class TextEditorController {
     @PostMapping("/save")
     public ResponseEntity<ApiResponse> saveEditor(@RequestPart(value = "file", required = false) List<MultipartFile> files,
                                                   @RequestPart(value = "textEditorDto") TextEditorDto.Request textEditorDto) {
-        Long aLong = textEditorService.saveEditor(textEditorDto, files);
+        textEditorService.saveEditor(textEditorDto, files);
         return ResponseEntity.ok(ApiResponse.success("response save data", textEditorDto));
     }
 
@@ -32,10 +32,10 @@ public class TextEditorController {
 
     @PutMapping("/update/{textEditId}")
     public ResponseEntity<ApiResponse> modifyEditor(@RequestPart(value = "file", required = false) List<MultipartFile> files,
-                                               @RequestPart(value = "textEditorDto") TextEditorDto.Request dto,
-                                               @PathVariable Long textEditId) {
-        textEditorService.modifyEditor(textEditId, dto, files);
-        return ResponseEntity.ok(ApiResponse.success("response update data", dto));
+                                                    @RequestPart(value = "textEditorDto") TextEditorDto.Request textEditDto,
+                                                    @PathVariable Long textEditId) {
+        textEditorService.modifyEditor(textEditId, textEditDto, files);
+        return ResponseEntity.ok(ApiResponse.success("response update data", textEditDto));
     }
 
     @DeleteMapping("/delete/{textEditId}")

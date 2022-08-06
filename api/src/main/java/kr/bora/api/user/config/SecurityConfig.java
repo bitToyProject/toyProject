@@ -146,8 +146,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers("/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/oauth/**",
-                        "/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/reply/**/**", "/department", "/team", "/teams", "/upload/**/**", "/files/**/**/**")
+                .antMatchers("/auth/**/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/oauth/**","/like/**/**", "/edits/**","/todonoti/**/**/**",
+                        "/auth/**", "/user/**/**", "/chat/**", "/todos/**/**", "/mail/**", "/todoreply/**/**", "/department", "/team", "/teams", "/upload/**/**", "/files/**/**/**")
                 .permitAll()
                 .anyRequest().authenticated()
 

@@ -53,7 +53,7 @@ public class User{
     private String phoneNum;
 
     @Column(name = "gender",nullable = false)
-    private Integer gender;
+    private String gender;
 
     @Column(name = "indi_title",nullable = false)
     @Enumerated(EnumType.STRING)
@@ -104,7 +104,7 @@ public class User{
         this.lastName = lastName;
     }
 
-    public void changeGender(Integer gender) {
+    public void changeGender(String gender) {
         this.gender = gender;
     }
 

@@ -4,8 +4,6 @@ import kr.bora.api.socialAuth.domain.ProviderType;
 
 import java.util.Map;
 
-import static kr.bora.api.socialAuth.domain.ProviderType.GOOGLE;
-
 public class OAuth2UserInfoFactory {
     public static OAuth2UserInfo getOAuth2UserInfo(ProviderType providerType, Map<String, Object> attributes) {
         switch (providerType) {

@@ -23,6 +23,7 @@ public class SubTaskDto {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Request {
         private Todo todo;
 

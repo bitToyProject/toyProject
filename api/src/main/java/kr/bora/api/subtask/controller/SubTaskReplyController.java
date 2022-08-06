@@ -1,5 +1,6 @@
 package kr.bora.api.subtask.controller;
 
+import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.subtask.dto.SubTaskReplyDto;
 import kr.bora.api.subtask.service.SubTaskReplyService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,9 @@ public class SubTaskReplyController {
      * @return
      */
     @PostMapping("/save/{subTaskId}")
-    public ResponseEntity save(@RequestBody SubTaskReplyDto.Request subTaskDto, @PathVariable Long subTaskId) {
-
-        return ResponseEntity.ok(subTaskReplyService.subtaskReplySave(subTaskDto, subTaskId));
+    public ResponseEntity<ApiResponse> save(@RequestBody SubTaskReplyDto.Request subTaskDto, @PathVariable Long subTaskId) {
+        subTaskReplyService.subtaskReplySave(subTaskDto, subTaskId);
+        return ResponseEntity.ok(ApiResponse.success("response save success", subTaskDto));
     }
 
     /**
@@ -33,9 +34,9 @@ public class SubTaskReplyController {
      * @return
      */
     @GetMapping("/list/{subTaskId}")
-    public ResponseEntity <List<SubTaskReplyDto.Response>> list(@PathVariable Long subTaskId) {
-
-        return ResponseEntity.ok(subTaskReplyService.subtaskReplyList(subTaskId));
+    public ResponseEntity <ApiResponse> list(@PathVariable Long subTaskId) {
+        List<SubTaskReplyDto.Response> responseList = subTaskReplyService.subtaskReplyList(subTaskId);
+        return ResponseEntity.ok(ApiResponse.success("response list data", responseList));
     }
 
     /**
@@ -44,9 +45,9 @@ public class SubTaskReplyController {
      * @return
      */
     @DeleteMapping("/remove/{subTaskRno}")
-    public ResponseEntity<String> subTaskReplyRemove(@PathVariable Long subTaskRno) {
+    public ResponseEntity<ApiResponse> subTaskReplyRemove(@PathVariable Long subTaskRno) {
         subTaskReplyService.subtaskReplyRemove(subTaskRno);
 
-        return ResponseEntity.ok(subTaskRno + "번 SubtaskReply가 성공적으로 삭제되었습니다.");
+        return ResponseEntity.ok(ApiResponse.success("response delete data", subTaskRno + "번 SubtaskReply가 성공적으로 삭제되었습니다."));
     }
 }

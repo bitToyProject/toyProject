@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/todonoti")
 public class TodoNotificationController {
 
     private final TodoNotiService todoNotiService;

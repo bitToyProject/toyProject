@@ -25,6 +25,7 @@ public class SubTaskReplyServiceImpl implements SubTaskReplyService {
 
     /**
      * SubTaskReply 등록 비즈니스 로직
+     *
      * @param subTaskReplyDto
      * @param subtaskId
      * @return
@@ -44,6 +45,7 @@ public class SubTaskReplyServiceImpl implements SubTaskReplyService {
 
     /**
      * SubTaskReply 목록 비즈니스 로직
+     *
      * @param subtaskId
      * @return
      */
@@ -65,16 +67,18 @@ public class SubTaskReplyServiceImpl implements SubTaskReplyService {
     @Override
     @Transactional
     public void subtaskReplyRemove(Long subtaskRno) {
+        Long loginUserId = SecurityUtil.getCurrentUserId();
 
-        UserResponseDto replyer = getUserNickname();
+        Long subTaskReplyerId = subTaskReplyRepository.getSubTaskReplyer(subtaskRno);
 
-        String subTaskReplyer = subTaskReplyRepository.getSubTaskReplyer(subtaskRno);
+        // null처리 필요
 
-        if (replyer.getNickname() == subTaskReplyer) {
+        if (loginUserId == subTaskReplyerId) {
             subTaskReplyRepository.deleteById(subtaskRno);
         } else {
-            throw new IllegalArgumentException("댓글 작성자만 삭제가 가능합니다.");
+            throw new IllegalArgumentException("댓글 작성자 본인만 삭제가 가능합니다.");
         }
+
     }
 
     private UserResponseDto getUserNickname() {
