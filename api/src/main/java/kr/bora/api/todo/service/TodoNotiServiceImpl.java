@@ -106,7 +106,7 @@ public class TodoNotiServiceImpl implements TodoNotiService {
             sendToClient(emitter, key, new TodoNotiDto.NotiResponse(todoNotification));
         });
     }
-
+    // 알림 data 저장 내역
     private TodoNotification createTodoNotification(Long userId, Todo todo, String content) {
         return TodoNotification.builder()
                 .receiver(User.builder().userId(userId).build())

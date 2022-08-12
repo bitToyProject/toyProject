@@ -27,5 +27,13 @@ public interface SubTaskRepository extends JpaRepository<SubTask, Long> {
      */
     List<SubTask> getSubTasksByTodoOrderByRegDateDesc(Todo todo);
 
+    /**
+     * 사용자 삭제 시 subTask 데이터 삭제
+     *
+     * @param userId
+     */
+    @Modifying(clearAutomatically = true)
+    @Query("DELETE FROM SubTask sb where sb.user.userId =:userId")
+    void deleteSubTaskByUserId(@Param("userId") long userId);
 
 }

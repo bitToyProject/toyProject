@@ -23,6 +23,10 @@ public interface UserService {
 
     CommonResponse<UserResponseDto> deleteUser(UserRequestDto dto);
 
+    String getTempPassword();
+
+    void updatePassword(String tempPassword, String username);
+
    default User dtoEntity(UserRequestDto userRequestDto, PasswordEncoder passwordEncoder) {
         User entity = User.builder()
                 .userId(userRequestDto.getUserId())
