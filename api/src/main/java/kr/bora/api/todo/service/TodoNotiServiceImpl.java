@@ -1,5 +1,7 @@
 package kr.bora.api.todo.service;
 
+import kr.bora.api.common.exception.BoraException;
+import kr.bora.api.common.exception.ErrorCode;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoNotification;
 import kr.bora.api.todo.dto.TodoNotiDto;
@@ -30,26 +32,52 @@ public class TodoNotiServiceImpl implements TodoNotiService {
 
     private final TodoNotiRepository todoNotiRepository;
 
-    @Override
-    public SseEmitter subscribe(String lastEventId) {
-        Long userId = SecurityUtil.getCurrentUserId();
+//    @Override
+//    public SseEmitter subscribe(String lastEventId) {
+//        Long userId = SecurityUtil.getCurrentUserId();
+//        String id = userId + "_" + System.currentTimeMillis();
+//
+//        SseEmitter emitter = emitterRepository.save(id, new SseEmitter(DEFAULT_TIMEOUT));
+//        emitter.onCompletion(() -> emitterRepository.deleteById(id));
+//        emitter.onTimeout(() -> emitterRepository.deleteById(id));
+//
+//        // 503 에러 방지 -> 더미 이벤트 전송
+//        sendToClient(emitter, id, "EventStream Created. [userId=" + userId + "]");
+//
+//        if (!lastEventId.isEmpty()) {
+//            Map<String, Object> events = emitterRepository.findAllEventCacheStartWithId(String.valueOf(userId));
+//            events.entrySet().stream()
+//                    .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
+//                    .forEach(entry -> sendToClient(emitter, entry.getKey(), entry.getValue()));
+//        }
+//        return emitter;
+//
+//    }
+
+    public SseEmitter subscribe(Long userId, String lastEventId) {
+        // 1
         String id = userId + "_" + System.currentTimeMillis();
 
+        // 2
         SseEmitter emitter = emitterRepository.save(id, new SseEmitter(DEFAULT_TIMEOUT));
+
         emitter.onCompletion(() -> emitterRepository.deleteById(id));
         emitter.onTimeout(() -> emitterRepository.deleteById(id));
 
-        // 503 에러 방지 -> 더미 이벤트 전송
-        sendToClient(emitter, id, "EventStream Created. [userId=" + userId + "]");
+        // 3
+        // 503 에러를 방지하기 위한 더미 이벤트 전송
+        sendToClient(emitter, id, "eventStream Created. [userId=" + userId + "]");
 
+        // 4
+        // 클라이언트가 미수신한 Event 목록이 존재할 경우 전송하여 Event 유실을 예방
         if (!lastEventId.isEmpty()) {
             Map<String, Object> events = emitterRepository.findAllEventCacheStartWithId(String.valueOf(userId));
             events.entrySet().stream()
                     .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
                     .forEach(entry -> sendToClient(emitter, entry.getKey(), entry.getValue()));
         }
-        return emitter;
 
+        return emitter;
     }
 
     public void sendToClient(SseEmitter emitter, String id, Object data) {
@@ -75,7 +103,7 @@ public class TodoNotiServiceImpl implements TodoNotiService {
         Map<String, SseEmitter> sseEmitters = emitterRepository.findAllStartWithById(id);
         sseEmitters.forEach((key, emitter) -> {
             emitterRepository.saveEventCache(key, todoNotification);
-            sendToClient(emitter, key, TodoNotiDto.from(todoNotification));
+            sendToClient(emitter, key, new TodoNotiDto.NotiResponse(todoNotification));
         });
     }
 
@@ -91,9 +119,11 @@ public class TodoNotiServiceImpl implements TodoNotiService {
     @Override
     @Transactional
     public TodoNotificationsDto findAllById() {
+
         Long userId = SecurityUtil.getCurrentUserId();
-        List<TodoNotiDto> responses = todoNotiRepository.findAllByNotiId(userId).stream()
-                .map(TodoNotiDto::from)
+
+        List<TodoNotiDto.NotiResponse> responses = todoNotiRepository.findAllByReceiverUserId(userId).stream()
+                .map(TodoNotiDto.NotiResponse::new)
                 .collect(Collectors.toList());
 
         long unreadCount = responses.stream()
@@ -107,9 +137,8 @@ public class TodoNotiServiceImpl implements TodoNotiService {
     @Transactional
     public void readNotification(Long id) throws Exception {
         TodoNotification todoNotification = todoNotiRepository.findById(id)
-                .orElseThrow(() -> new Exception("존재하지 않는 알림입니다."));
+                .orElseThrow(() -> new BoraException(ErrorCode.NOT_EXIST_ALRAM, "존재하지 않는 알림입니다."));
 
         todoNotification.read();
-
     }
 }

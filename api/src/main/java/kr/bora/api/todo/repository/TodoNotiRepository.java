@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface TodoNotiRepository extends JpaRepository<TodoNotification, Long> {
 
-    List<TodoNotification> findAllByNotiId(Long id);
+    List<TodoNotification> findAllByReceiverUserId(Long id);
 
     /**
      * Todo 삭제 시 TodoNoti 데이터 삭제

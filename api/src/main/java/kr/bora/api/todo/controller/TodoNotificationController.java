@@ -1,11 +1,13 @@
 package kr.bora.api.todo.controller;
 
+import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.todo.dto.TodoNotificationsDto;
 import kr.bora.api.todo.service.TodoNotiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
@@ -17,10 +19,27 @@ public class TodoNotificationController {
 
     /**
      * @title 로그인 한 유저 sse 연결
+//     */
+//    @GetMapping(value="/subscribe", produces = "text/event-stream")
+//    public SseEmitter subscribe(@RequestParam(value = "lastEventId", required = false, defaultValue = "") String lastEventId) {
+//        return todoNotiService.subscribe(lastEventId);
+//    }
+
+    /**
+     * @title 로그인 한 유저 sse 연결 - 테스트용
      */
-    @GetMapping(value="/subscribe", produces = "text/event-stream")
-    public SseEmitter subscribe(@RequestParam(value = "lastEventId", required = false, defaultValue = "") String lastEventId) {
-        return todoNotiService.subscribe(lastEventId);
+    @GetMapping(value = "/subscribe/{id}", produces = "text/event-stream")
+    public SseEmitter subscribe(@PathVariable Long id,
+                                @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
+        return todoNotiService.subscribe(id, lastEventId);
+    }
+
+    @GetMapping("/test")
+    public ModelAndView noti() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("notification");
+        return mv;
     }
 
     /**
@@ -36,8 +55,9 @@ public class TodoNotificationController {
      */
 
     @PatchMapping("/notifications/{notiId}")
-    public ResponseEntity<Void> readNotification(@PathVariable Long notiId) throws Exception {
+    public ResponseEntity<ApiResponse> readNotification(@PathVariable Long notiId) throws Exception {
         todoNotiService.readNotification(notiId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok(ApiResponse.success("Response Read Notifications", notiId + "번 Todo 알림을 읽었습니다."));
     }
+
 }

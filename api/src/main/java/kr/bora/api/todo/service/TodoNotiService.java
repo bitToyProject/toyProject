@@ -6,7 +6,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 public interface TodoNotiService {
 
-    SseEmitter subscribe(String lastEventId);
+    SseEmitter subscribe(Long userId, String lastEventId);
 
     void send(Long userId, Todo todo, String content);
 
