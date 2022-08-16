@@ -1,15 +1,13 @@
 package kr.bora.api.borateam.domain.dto;
 
-import kr.bora.api.borateam.domain.Team;
+import kr.bora.api.borateam.domain.BoraTeam;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.util.SecurityUtil;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-public class TeamDto {
+import java.util.List;
 
+public class BoraTeamDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -18,10 +16,13 @@ public class TeamDto {
         private String teamName;
         private String memo;
 
-        public Team toEntity() {
+        private List<String> nickname;
+
+        public BoraTeam toEntity() {
             Long userId = SecurityUtil.getCurrentUserId();
-            return Team.builder()
-                    .user(User.builder().userId(userId).build())
+            return BoraTeam.builder()
+//                    .participants(User.builder().userId(userId).build())
+//                    .nickname(nickname)
                     .teamName(teamName)
                     .memo(memo)
                     .build();
@@ -37,10 +38,10 @@ public class TeamDto {
         private String teamName;
         private String memo;
 
-        public TeamResponse(Team team) {
-            this.id = team.getId();
-            this.teamName = team.getTeamName();
-            this.memo = team.getMemo();
+        public TeamResponse(BoraTeam boraTeam) {
+            this.id = boraTeam.getId();
+            this.teamName = boraTeam.getTeamName();
+            this.memo = boraTeam.getMemo();
         }
     }
 

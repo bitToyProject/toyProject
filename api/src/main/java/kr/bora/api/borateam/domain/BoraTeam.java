@@ -6,6 +6,8 @@ import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Audited(withModifiedFlag = true)
-public class Team extends BaseEntity {
+public class BoraTeam extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_id")
@@ -25,9 +27,13 @@ public class Team extends BaseEntity {
     @Column(name = "memo")
     private String memo;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToMany(mappedBy = "boraTeam", cascade = CascadeType.ALL)
+    private List<User> participants = new ArrayList<>();
+
+    public void addParticipants(User user) {
+        this.participants.add(user);
+        user.updateTeam(this);
+    }
 
     public void changeTeamName(String teamName) {
         this.teamName = teamName;
