@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,17 +23,14 @@ public class BoraTeamServiceImpl implements BoraTeamService {
 
     private final UserRepository userRepository;
 
-
     @Override
     @Transactional
-    public BoraTeamDto.TeamResponse saveTeam(BoraTeamDto.TeamRequest dto, String nickname) {
+    public BoraTeamDto.TeamResponse saveTeam(BoraTeamDto.TeamRequest dto) {
         boolean dup = repository.checkExistTeamName(dto.getTeamName());
         Assert.isTrue(!dup, "해당 이름의 팀이 이미 존재합니다.");
+
         BoraTeam boraTeamEntity = dto.toEntity();
-        List<User> participants = userRepository.findByNickName(nickname);
-        for (User user : participants) {
-            boraTeamEntity.addParticipants(user);
-        }
+
         BoraTeam result = repository.save(boraTeamEntity);
         return new BoraTeamDto.TeamResponse(result);
     }
@@ -58,9 +54,4 @@ public class BoraTeamServiceImpl implements BoraTeamService {
         repository.deleteById(teamId);
     }
 
-    private UserResponseDto getUserNickname() {
-        UserResponseDto userNickname = userRepository.findById(SecurityUtil.getCurrentUserId())
-                .map(UserResponseDto::of).orElseThrow();
-        return userNickname;
-    }
 }

@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.util.List;
 
+
 public class BoraTeamDto {
     @Getter
     @NoArgsConstructor
@@ -20,9 +21,8 @@ public class BoraTeamDto {
 
         public BoraTeam toEntity() {
             Long userId = SecurityUtil.getCurrentUserId();
-            return BoraTeam.builder()
-//                    .participants(User.builder().userId(userId).build())
-//                    .nickname(nickname)
+          return  BoraTeam.builder()
+                    .leaderId(userId)
                     .teamName(teamName)
                     .memo(memo)
                     .build();

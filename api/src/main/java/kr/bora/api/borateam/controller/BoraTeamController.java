@@ -12,11 +12,12 @@ public class BoraTeamController {
 
     private final BoraTeamService service;
 
-    @PostMapping("/saves/{nickname}")
-    public ResponseEntity<ApiResponse> registerTeam(@RequestBody BoraTeamDto.TeamRequest command, @PathVariable String nickname){
+    @PostMapping("/saves")
+    public ResponseEntity<ApiResponse> registerTeam(@RequestBody BoraTeamDto.TeamRequest command){
 
-        return ResponseEntity.ok(ApiResponse.success("팀 등록 성공", service.saveTeam(command, nickname)));
+        return ResponseEntity.ok(ApiResponse.success("팀 등록 성공", service.saveTeam(command)));
     }
+
 
     @PutMapping("/modify/{teamId}")
     public ResponseEntity<ApiResponse> modifyTeam(@PathVariable Long teamId, @RequestBody BoraTeamDto.TeamRequest teamRequest) {

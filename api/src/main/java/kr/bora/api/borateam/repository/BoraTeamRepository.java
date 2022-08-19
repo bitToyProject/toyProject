@@ -8,9 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface BoraTeamRepository extends JpaRepository<BoraTeam, Long> {
 
-    @Query("select case when count(t) > 0 then true else false end from Team t where t.teamName =:teamName")
+    @Query("select case when count(t) > 0 then true else false end from BoraTeam t where t.teamName =:teamName")
     boolean checkExistTeamName(@Param("teamName") String teamName);
 
+    BoraTeam findByTeamName(String name);
 //    @Query("select t.user.nickName from BoraTeam t where t.user.username=:username")
 //    String findByUsername(@Param("username") String username);
 }

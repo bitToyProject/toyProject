@@ -18,8 +18,10 @@ import java.util.List;
 public class BoraTeam extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "team_id")
+    @Column(name = "bora_team_id")
     private Long id;
+
+    private Long leaderId;
 
     @Column(name = "team_name")
     private String teamName;
@@ -27,13 +29,6 @@ public class BoraTeam extends BaseEntity {
     @Column(name = "memo")
     private String memo;
 
-    @OneToMany(mappedBy = "boraTeam", cascade = CascadeType.ALL)
-    private List<User> participants = new ArrayList<>();
-
-    public void addParticipants(User user) {
-        this.participants.add(user);
-        user.updateTeam(this);
-    }
 
     public void changeTeamName(String teamName) {
         this.teamName = teamName;

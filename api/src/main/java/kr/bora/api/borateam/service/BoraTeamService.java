@@ -4,9 +4,10 @@ import kr.bora.api.borateam.domain.dto.BoraTeamDto;
 
 public interface BoraTeamService {
 
-    BoraTeamDto.TeamResponse saveTeam(BoraTeamDto.TeamRequest dto, String nickname);
+    BoraTeamDto.TeamResponse saveTeam(BoraTeamDto.TeamRequest dto);
 
     BoraTeamDto.TeamResponse modifyTeam(Long teamId, BoraTeamDto.TeamRequest dto);
 
     void deleteTeam(Long teamId);
+
 }
