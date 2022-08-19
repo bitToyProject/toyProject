@@ -1,0 +1,16 @@
+#app:
+#  auth:
+#    token-secret: devbeekei-token-secret-key
+#    token-expiration-time: 1209600000
+#  oauth2:
+#    authorized-redirect-uris:
+#      - http://localhost:8080/auth/token
+
+app:
+  auth:
+    tokenSecret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+    tokenExpiry: 1800000 # 30분
+    refreshTokenExpiry: 3600000 # 1시간
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth/redirect

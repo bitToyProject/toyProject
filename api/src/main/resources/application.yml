@@ -1,11 +1,24 @@
 spring:
   profiles:
-    include: app, oauth, cors
+#    include: app, oauth, cors
+    include: app, cors, oauth
   datasource:
     url: jdbc:log4jdbc:mysql://localhost:3306/roots?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&autoReconnection=true
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: root
     password: root
+  redis:
+    host: localhost
+    port: 6379
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: noreply.bora@gmail.com
+    password: wshwvhmrdyvooptz
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true #ssl 또는 tls 방식으로 보안 처리 -> tls 선택, ssl경우 필요 없음
+    protocol: smtp
   jpa:
     open-in-view: false
     generate-ddl: true

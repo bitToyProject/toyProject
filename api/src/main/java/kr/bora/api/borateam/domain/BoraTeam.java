@@ -16,12 +16,13 @@ import java.util.List;
 @Builder
 @Audited(withModifiedFlag = true)
 public class BoraTeam extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bora_team_id")
     private Long id;
 
-    private Long leaderId;
+    private Long leaderId; // nickname으로 바꾸기
 
     @Column(name = "team_name")
     private String teamName;

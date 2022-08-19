@@ -1,5 +1,7 @@
 package kr.bora.api.files.controller;
 
+import kr.bora.api.common.exception.BoraException;
+import kr.bora.api.common.exception.ErrorCode;
 import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.dto.FileDto;
@@ -78,7 +80,7 @@ public class FilesController {
             if (Arrays.stream(ext).anyMatch(e -> e.contains(extensionName))) { // 이미지 확장자 중 단 하나라도 extensionname의 값을 포함하고 있다면 이미지를 보여줌
                 result = ResponseEntity.ok().headers(headers).body(FileCopyUtils.copyToByteArray(file));
             } else {
-                throw new RuntimeException("이미지 확장자가 아닙니다. " + extensionName);
+                throw new BoraException(ErrorCode.NOT_IMG_EXTENSION, extensionName);
             }
 
         } catch (IOException e) {

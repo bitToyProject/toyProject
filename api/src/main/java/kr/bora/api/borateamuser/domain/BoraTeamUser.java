@@ -1,6 +1,7 @@
 package kr.bora.api.borateamuser.domain;
 
 import kr.bora.api.borateam.domain.BoraTeam;
+import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.user.domain.User;
 import lombok.*;
 import org.hibernate.envers.Audited;
@@ -13,10 +14,11 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Audited(withModifiedFlag = true)
-public class BoraTeamUser {
+public class BoraTeamUser extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bora_team_user_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

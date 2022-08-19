@@ -17,11 +17,9 @@ public class BoraTeamDto {
         private String teamName;
         private String memo;
 
-        private List<String> nickname;
-
         public BoraTeam toEntity() {
             Long userId = SecurityUtil.getCurrentUserId();
-          return  BoraTeam.builder()
+            return BoraTeam.builder()
                     .leaderId(userId)
                     .teamName(teamName)
                     .memo(memo)
@@ -33,7 +31,7 @@ public class BoraTeamDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class TeamResponse{
+    public static class TeamResponse {
         private Long id;
         private String teamName;
         private String memo;

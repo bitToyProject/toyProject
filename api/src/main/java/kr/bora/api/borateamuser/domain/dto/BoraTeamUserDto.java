@@ -36,10 +36,14 @@ public class BoraTeamUserDto {
 
         private String nickname;
 
+        private String regDate;
 
         public BoraTeamUserResponse(BoraTeamUser boraTeamUser) {
             this.teamName = boraTeamUser.getBoraTeam().getTeamName();
             this.nickname = boraTeamUser.getUser().getNickName();
+            this.regDate = boraTeamUser.getRegDate();
         }
     }
+
+
 }

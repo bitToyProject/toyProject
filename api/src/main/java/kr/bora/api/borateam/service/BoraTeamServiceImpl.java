@@ -3,6 +3,9 @@ package kr.bora.api.borateam.service;
 import kr.bora.api.borateam.domain.dto.BoraTeamDto;
 import kr.bora.api.borateam.domain.BoraTeam;
 import kr.bora.api.borateam.repository.BoraTeamRepository;
+import kr.bora.api.borateamuser.repository.BoraTeamUserRepository;
+import kr.bora.api.common.exception.BoraException;
+import kr.bora.api.common.exception.ErrorCode;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
@@ -18,16 +21,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class BoraTeamServiceImpl implements BoraTeamService {
     private final BoraTeamRepository repository;
-
-    private final UserRepository userRepository;
+    private final BoraTeamUserRepository boraTeamUserRepository;
 
     @Override
-    @Transactional
     public BoraTeamDto.TeamResponse saveTeam(BoraTeamDto.TeamRequest dto) {
-        boolean dup = repository.checkExistTeamName(dto.getTeamName());
-        Assert.isTrue(!dup, "해당 이름의 팀이 이미 존재합니다.");
+
+        teamDupCheckValid(dto);
 
         BoraTeam boraTeamEntity = dto.toEntity();
 
@@ -36,10 +38,9 @@ public class BoraTeamServiceImpl implements BoraTeamService {
     }
 
     @Override
-    @Transactional
     public BoraTeamDto.TeamResponse modifyTeam(Long teamId, BoraTeamDto.TeamRequest dto) {
-        boolean dup = repository.checkExistTeamName(dto.getTeamName());
-        Assert.isTrue(!dup, "해당 이름의 팀이 이미 존재합니다.");
+
+        teamDupCheckValid(dto);
 
         BoraTeam boraTeam = repository.getById(teamId);
         boraTeam.changeTeamName(dto.getTeamName());
@@ -51,7 +52,22 @@ public class BoraTeamServiceImpl implements BoraTeamService {
 
     @Override
     public void deleteTeam(Long teamId) {
-        repository.deleteById(teamId);
+        Long loginUserId = SecurityUtil.getCurrentUserId();
+        Long boraTeamLeaderId = repository.getLeaderId(teamId);
+
+        if (loginUserId == boraTeamLeaderId) {
+            boraTeamUserRepository.deleteBoraTeamUserByByTeamId(teamId);
+            repository.deleteById(teamId);
+        } else {
+            throw new IllegalArgumentException("팀장만 팀을 삭제 할 수 있습니다.");
+        }
+    }
+
+    private void teamDupCheckValid(BoraTeamDto.TeamRequest dto) {
+        boolean dup = repository.checkExistTeamName(dto.getTeamName());
+        if (dup) {
+            throw new BoraException(ErrorCode.EXIST_DUP_TEAM, "팀 이름이 이미 존재합니다.");
+        }
     }
 
 }

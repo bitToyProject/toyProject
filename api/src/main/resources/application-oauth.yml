@@ -1,0 +1,51 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+#          github:
+#            client-id: 6c34d9a6903231c5a301
+#            client-secret: 비밀키
+#            scope: name,email,avatar_url
+          google:
+            client-name: google
+            client-id: 206547958432-9bokst256udvu7njrklh7id0do6ten62.apps.googleusercontent.com
+            client-secret: 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
+            authorization-grant-type: authorization_code
+            scope: profile,email
+          naver:
+            clientId: 'hIroIYSwEyKzWByX_nQB'
+            clientSecret: 'QjAgsg7mNI'
+            clientAuthenticationMethod: post
+            authorizationGrantType: authorization_code
+            redirectUri: "http://localhost:8080/login/oauth2/code/naver"
+            scope:
+                - nickname
+                - email
+                - profile_image
+                - gender
+            clientName: Naver
+          kakao:
+            clientId: '9213222ad26d20e713fa87ce1d20e9a6'
+            clientSecret: 'PW38cM93b83b5QGc5KOlHswrHrjGsYuM'
+            clientAuthenticationMethod: post
+            authorizationGrantType: authorization_code
+            redirectUri: "http://localhost:8080/login/oauth2/code/kakao"
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+              - gender
+            clientName: Kakao
+              # Provider 설정
+        provider:
+          naver:
+            authorizationUri: https://nid.naver.com/oauth2.0/authorize
+            tokenUri: https://nid.naver.com/oauth2.0/token
+            userInfoUri: https://openapi.naver.com/v1/nid/me
+            userNameAttribute: response
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
