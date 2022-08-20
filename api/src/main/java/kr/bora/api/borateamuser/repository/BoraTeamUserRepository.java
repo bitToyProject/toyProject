@@ -14,6 +14,8 @@ public interface BoraTeamUserRepository extends JpaRepository<BoraTeamUser, Long
 
     List<BoraTeamUser> findBoraTeamUserByBoraTeamId(Long teamId);
 
+    List<BoraTeamUser> findBoraTeamUserByUser(Long leaderId);
+
     @Query("select case when count(t) > 0 then true else false end from BoraTeamUser t where t.user.nickName =:nickName")
     boolean checkExistNickname(@Param("nickName") String nickName);
 

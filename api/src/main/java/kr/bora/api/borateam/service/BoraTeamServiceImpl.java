@@ -3,7 +3,9 @@ package kr.bora.api.borateam.service;
 import kr.bora.api.borateam.domain.dto.BoraTeamDto;
 import kr.bora.api.borateam.domain.BoraTeam;
 import kr.bora.api.borateam.repository.BoraTeamRepository;
+import kr.bora.api.borateamuser.domain.BoraTeamUser;
 import kr.bora.api.borateamuser.repository.BoraTeamUserRepository;
+import kr.bora.api.borateamuser.service.BoraTeamUserService;
 import kr.bora.api.common.exception.BoraException;
 import kr.bora.api.common.exception.ErrorCode;
 import kr.bora.api.user.domain.User;
@@ -26,6 +28,8 @@ public class BoraTeamServiceImpl implements BoraTeamService {
     private final BoraTeamRepository repository;
     private final BoraTeamUserRepository boraTeamUserRepository;
 
+    private final BoraTeamUserService teamUserService;
+
     @Override
     public BoraTeamDto.TeamResponse saveTeam(BoraTeamDto.TeamRequest dto) {
 
@@ -34,6 +38,15 @@ public class BoraTeamServiceImpl implements BoraTeamService {
         BoraTeam boraTeamEntity = dto.toEntity();
 
         BoraTeam result = repository.save(boraTeamEntity);
+
+        // 팀을 만든 팀장은 팀 유저에도 등록 되어야 한다.
+        BoraTeamUser firstTeamMate = BoraTeamUser.builder()
+                .user(User.builder().userId(boraTeamEntity.getLeaderId()).build())
+                .boraTeam(result)
+                .teamName(result.getTeamName())
+                .build();
+        boraTeamUserRepository.save(firstTeamMate);
+
         return new BoraTeamDto.TeamResponse(result);
     }
 
