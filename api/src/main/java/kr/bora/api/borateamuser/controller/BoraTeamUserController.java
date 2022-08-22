@@ -31,4 +31,12 @@ public class BoraTeamUserController {
         List<BoraTeamUserDto.BoraTeamUserResponse> teamUsers = service.findTeamUsers(teamId);
         return ResponseEntity.ok(ApiResponse.success(teamUsers.get(0).getTeamName()+" 팀 구성원", teamUsers));
     }
+
+    @DeleteMapping("/delete/{nickname}")
+    public ResponseEntity<ApiResponse> deleteTeamUsers(@PathVariable String nickname) {
+
+        service.deleteTeamUser(nickname);
+
+        return ResponseEntity.ok(ApiResponse.success("삭제 성공", nickname + "을 강퇴"));
+    }
 }

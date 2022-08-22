@@ -17,11 +17,13 @@ public class BoraTeamDto {
         private String teamName;
         private String memo;
 
-        public BoraTeam toEntity() {
+
+        public BoraTeam toEntity(String leader) {
             Long userId = SecurityUtil.getCurrentUserId();
             return BoraTeam.builder()
                     .leaderId(userId)
                     .teamName(teamName)
+                    .leaderNickname(leader)
                     .memo(memo)
                     .build();
         }
@@ -34,12 +36,15 @@ public class BoraTeamDto {
     public static class TeamResponse {
         private Long id;
         private String teamName;
+
+        private String teamLeader;
         private String memo;
 
         public TeamResponse(BoraTeam boraTeam) {
             this.id = boraTeam.getId();
             this.teamName = boraTeam.getTeamName();
             this.memo = boraTeam.getMemo();
+            this.teamLeader = boraTeam.getLeaderNickname();
         }
     }
 

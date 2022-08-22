@@ -30,6 +30,8 @@ public class BoraTeam extends BaseEntity {
     @Column(name = "memo")
     private String memo;
 
+    @Column(name = "leader")
+    private String leaderNickname;
 
     public void changeTeamName(String teamName) {
         this.teamName = teamName;

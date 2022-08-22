@@ -20,9 +20,11 @@ public class BoraTeamUserDto {
 
         public BoraTeamUser toEntity(User user, BoraTeam boraTeam) {
             return BoraTeamUser.builder()
+                    .teamMembers(user.getNickName())
+                    .teamLeader(boraTeam.getLeaderNickname())
+                    .teamName(boraTeam.getTeamName())
                     .boraTeam(boraTeam)
                     .user(user)
-                    .teamName(boraTeam.getTeamName())
                     .build();
         }
     }
