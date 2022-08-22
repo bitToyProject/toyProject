@@ -60,7 +60,7 @@ public class BoraTeamUserService {
         if (!nickname.equals(leader.getLeaderNickname())) {
             boraTeamUserRepository.deleteBoraTeamUser(nickname, leader.getTeamName());
         } else {
-            throw new IllegalArgumentException("팀장 본인은 강퇴 시킬 수 없습니다. 팀을 삭제하세요");
+            throw new BoraException(ErrorCode.NOT_TEAM_OUT_USER, "팀장 본인은 강퇴 시킬 수 없습니다. 팀을 삭제하세요");
         }
     }
 

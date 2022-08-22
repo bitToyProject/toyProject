@@ -16,7 +16,9 @@ public enum ErrorCode {
 
     NOT_EXIST_ALRAM(HttpStatus.CONFLICT, "C005", "NOT_EXIST_ALARM"),
     EXIST_DUP_TEAM(HttpStatus.CONFLICT, "C006", "EXIST_DUP_TEAM"),
-    EXIST_DUP_TEAM_USER(HttpStatus.CONFLICT, "C007", "EXIST_DUP_TEAM_USER");
+    EXIST_DUP_TEAM_USER(HttpStatus.CONFLICT, "C007", "EXIST_DUP_TEAM_USER"),
+
+    NOT_TEAM_OUT_USER(HttpStatus.CONFLICT, "C008", "NOT_TEAM_OUT_USER");
 
     private final HttpStatus status;
     private final String code;
