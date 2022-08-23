@@ -31,6 +31,7 @@ public class Todo extends BaseEntity {
     private String end;
     private String description;
     private String assignee;
+
     @ColumnDefault("0")
     private Integer point;
 

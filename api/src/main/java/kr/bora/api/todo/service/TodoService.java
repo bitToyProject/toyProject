@@ -11,11 +11,11 @@ public interface TodoService {
 
     PageResultDto<TodoDto, Object[]> todoList(PageRequestDto pageRequestDto);
 
-    Long todoSave(TodoDto.Request todoDto, List<MultipartFile> multipartFile);
+    Long todoSave(TodoDto.Request todoDto, List<MultipartFile> multipartFile, String teamName);
 
     TodoDto.Response todoRead(Long todoId);
 
-    void todoModify(Long todoId, TodoDto.Request todoDto,  List<MultipartFile> multipartFile);
+    void todoModify(Long todoId, TodoDto.Request todoDto,  List<MultipartFile> multipartFile, String teamName);
 
     void todoRemove(Long todoId);
 

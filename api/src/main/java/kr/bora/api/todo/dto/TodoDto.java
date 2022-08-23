@@ -2,6 +2,7 @@ package kr.bora.api.todo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import kr.bora.api.borateamuser.domain.BoraTeamUser;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoPriorityType;
 import kr.bora.api.todo.domain.TodoType;
@@ -22,7 +23,7 @@ public class TodoDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+//    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Request{
         private Long todoId;
 
@@ -60,7 +61,7 @@ public class TodoDto {
         }
 
 
-        public Todo toEntity() {
+        public Todo toEntity(String teamUser) {
             Long userId = SecurityUtil.getCurrentUserId();
             return Todo.builder()
                     .user(User.builder().userId(userId).build())
@@ -68,7 +69,7 @@ public class TodoDto {
                     .start(start)
                     .end(end)
                     .description(description)
-                    .assignee(assignee)
+                    .assignee(assignee=teamUser)
                     .nickname(nickname)
                     .priority(TodoPriorityType.BASIC)
                     .point(point)

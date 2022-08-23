@@ -51,8 +51,9 @@ public class TodoController {
     @ApiOperation(value = "Todo 등록", notes = "Todo 리스트를 등록합니다.")
     @PostMapping("/save")
     public ResponseEntity<ApiResponse> todoSave(@Valid @RequestPart(value = "file", required = false) List<MultipartFile> files,
-                                                @RequestPart("todoDto") TodoDto.Request todoDto) {
-        service.todoSave(todoDto, files);
+                                                @RequestPart("todoDto") TodoDto.Request todoDto,
+                                                @RequestParam(required = false) String teamName) {
+        service.todoSave(todoDto, files, teamName);
 
         return ResponseEntity.ok(ApiResponse.success("response save data", todoDto));
     }
@@ -82,9 +83,10 @@ public class TodoController {
     @PutMapping("/modify/{todoId}")
     public ResponseEntity<ApiResponse> todoModify(@ApiParam(value = "Todo 번호", required = true) @PathVariable("todoId") Long todoId,
                                                   @Valid @RequestPart("todoDto") TodoDto.Request todoDto,
-                                                  @RequestPart(value = "file", required = false) List<MultipartFile> files) {
+                                                  @RequestPart(value = "file", required = false) List<MultipartFile> files,
+                                                  @RequestParam(required = false) String teamName) {
 
-        service.todoModify(todoId, todoDto, files);
+        service.todoModify(todoId, todoDto, files, teamName);
 
         return ResponseEntity.ok(ApiResponse.success("response update data", todoDto));
     }

@@ -1,10 +1,14 @@
 package kr.bora.api.todo.service;
 
+import kr.bora.api.borateam.repository.BoraTeamRepository;
+import kr.bora.api.borateamuser.domain.BoraTeamUser;
+import kr.bora.api.borateamuser.domain.dto.BoraTeamUserDto;
+import kr.bora.api.borateamuser.repository.BoraTeamUserRepository;
+import kr.bora.api.borateamuser.service.BoraTeamUserService;
 import kr.bora.api.files.domain.FileType;
 import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.service.FileUtil;
 import kr.bora.api.subtask.repository.SubTaskRepository;
-import kr.bora.api.teamuser.repository.TeamUserRepository;
 import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoPriorityType;
 import kr.bora.api.todo.domain.TodoType;
@@ -15,6 +19,7 @@ import kr.bora.api.todo.repository.TodoLikeRepository;
 import kr.bora.api.todo.repository.TodoNotiRepository;
 import kr.bora.api.todo.repository.TodoReplyRepository;
 import kr.bora.api.todo.repository.TodoRepository;
+import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.service.UserService;
@@ -29,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -47,10 +53,13 @@ public class TodoServiceImpl implements TodoService {
     private final TodoNotiRepository todoNotiRepository;
     private final TodoReplyRepository todoReplyRepository;
 
-    private final TeamUserRepository teamUserRepository;
     private final TodoNotiService todoNotiService;
 
-    private final UserService userService;
+    private final BoraTeamRepository boraTeamRepository;
+
+    private final BoraTeamUserRepository boraTeamUserRepository;
+
+    private final BoraTeamUserService boraTeamUserService;
     private final FileUtil fileUtil;
 
     /**
@@ -77,21 +86,36 @@ public class TodoServiceImpl implements TodoService {
 
     /**
      * Todo 저장 (파일 업로드 포함)
+     *
      * @param todoRequestDto
      * @param multipartFile
      * @return
      */
     @Override
     @Transactional
-    public Long todoSave(TodoDto.Request todoRequestDto, List<MultipartFile> multipartFile) {
+    public Long todoSave(TodoDto.Request todoRequestDto, List<MultipartFile> multipartFile, String teamName) {
 
         // 닉네임 가져오기
         UserResponseDto userNickname = getUserNickname();
         todoRequestDto.setNickname(userNickname.getNickname());
 
-        // todo 엔티티 저장
-        Todo todo = todoRequestDto.toEntity();
+        Todo todo;
 
+        // 팀유저 ->
+        List<BoraTeamUser> teamUsers = boraTeamUserRepository.findBoraTeamUserByBoraTeamTeamName(teamName);
+        List<String> collect = teamUsers.stream().map(BoraTeamUser::getTeamMembers)
+                .collect(Collectors.toList());
+
+        List<User> collect1 = teamUsers.stream().map(BoraTeamUser::getUser).collect(Collectors.toList());
+
+        if (collect.isEmpty()) {
+            todo = todoRequestDto.toEntity(null);
+        } else {
+            todo = todoRequestDto.toEntity(collect.get(0));
+        }
+
+//        // todo 엔티티 저장
+//        todo = todoRequestDto.toEntity(nickname);
         // 파일 업로드 연관 Todo
 
         Long todoId = todoRepository.save(todo).getTodoId();
@@ -100,10 +124,10 @@ public class TodoServiceImpl implements TodoService {
             fileUtil.uploadFiles(multipartFile, FileType.TODO, todoId, null);
         }
 //
-//        // asignee에게 알림 보내기
-//        if (todoRequestDto.getAssignee() != null) {
-             todoNotiService.send(todoRepository.save(todo).getUser().getUserId(), todo, "assignee 알림");
-//        }
+        // asignee에게 알림 보내기
+        if (todoRequestDto.getAssignee() != null) {
+            todoNotiService.send(collect1.get(0).getUserId(), todo, "assignee 알림");
+        }
 
         return todoId;
     }
@@ -128,13 +152,14 @@ public class TodoServiceImpl implements TodoService {
 
     /**
      * Todo 수정(파일 업로드 포함)
+     *
      * @param todoId
      * @param todoDto
      * @param multipartFile
      */
     @Override
     @Transactional
-    public void todoModify(Long todoId, TodoDto.Request todoDto, List<MultipartFile> multipartFile) {
+    public void todoModify(Long todoId, TodoDto.Request todoDto, List<MultipartFile> multipartFile, String teamName) {
 
         Todo todo = todoRepository.getById(todoId);
 
@@ -145,20 +170,27 @@ public class TodoServiceImpl implements TodoService {
         // todo 변경 메서드 모음
         changeTodo(todoDto, todo);
 
-//      changeAssignee(todo, todoRequestDto);
+        changeAssignee(todo, teamName);
         todoRepository.save(todo);
     }
 
 
     // Assignee 변경
-    private void changeAssignee(Todo todo, TodoDto.Request todoRequestDto) {
+    private void changeAssignee(Todo todo, String teamName) {
 
         // 사용자 닉네임 값 가져오기
-        UserResponseDto userNickname = getUserNickname();
-        String nickname = todoRequestDto.setNickname(userNickname.getNickname());
+//        UserResponseDto userNickname = userRepository.findById(SecurityUtil.getCurrentUserId())
+//                .map(UserResponseDto::of).orElseThrow();
+//        UserResponseDto userNickname = getUserNickname();
+//        String nickname = todoRequestDto.setNickname(userNickname.getNickname());
+
+//        BoraTeamUserDto boraTeamUserDto
+        List<BoraTeamUser> teamUsers = boraTeamUserRepository.findBoraTeamUserByBoraTeamTeamName(teamName);
+        List<String> collect = teamUsers.stream().map(BoraTeamUser::getTeamMembers)
+                .collect(Collectors.toList());
 
         // 닉네임 가져와서 -> change
-        todo.changeAssignee(nickname);
+        todo.changeAssignee(collect.get(1));
     }
 
 
@@ -196,6 +228,7 @@ public class TodoServiceImpl implements TodoService {
 
     /**
      * Todo 데이터 삭제 시 연관관계 데이터 삭제 메서드
+     *
      * @param todoId
      */
     private void deleteTodoRelate(Long todoId) {
