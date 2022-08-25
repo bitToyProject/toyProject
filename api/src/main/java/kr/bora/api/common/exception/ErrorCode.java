@@ -18,7 +18,8 @@ public enum ErrorCode {
     EXIST_DUP_TEAM(HttpStatus.CONFLICT, "C006", "EXIST_DUP_TEAM"),
     EXIST_DUP_TEAM_USER(HttpStatus.CONFLICT, "C007", "EXIST_DUP_TEAM_USER"),
 
-    NOT_TEAM_OUT_USER(HttpStatus.CONFLICT, "C008", "NOT_TEAM_OUT_USER");
+    NOT_TEAM_OUT_USER(HttpStatus.CONFLICT, "C008", "NOT_TEAM_OUT_USER"),
+    UNAUTHORIZE_TOKEN(HttpStatus.CONFLICT, "C009", "UNAUTHORIZE_TOKEN");
 
     private final HttpStatus status;
     private final String code;

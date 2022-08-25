@@ -2,6 +2,8 @@ package kr.bora.api.user.service;
 
 
 import io.jsonwebtoken.lang.Assert;
+import kr.bora.api.common.exception.BoraException;
+import kr.bora.api.common.exception.ErrorCode;
 import kr.bora.api.common.util.RedisUtil;
 import kr.bora.api.mailauth.repository.MailAuthRepository;
 import kr.bora.api.notification.slack.factory.SlackFactory;
@@ -37,11 +39,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    //    private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-
-    private final AppProperties appProperties;
-
 
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
@@ -51,7 +49,6 @@ public class AuthServiceImpl implements AuthService {
     private final static String REFRESH_TOKEN = "refresh_token";
 
     private final MailAuthRepository mailAuthRepository;
-
     private final RedisUtil redisUtil;
 
 
@@ -123,9 +120,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void logout(String accessToken, String refreshToken) {
 
-
         if (!tokenProvider.validateToken(accessToken)) {
-            throw new IllegalArgumentException("권한이 없는 토큰입니다.");
+            throw new BoraException(ErrorCode.UNAUTHORIZE_TOKEN, "권한이 없는 토큰 입니다.");
         }
 
         Authentication authentication = tokenProvider.getAuthentication(accessToken);
