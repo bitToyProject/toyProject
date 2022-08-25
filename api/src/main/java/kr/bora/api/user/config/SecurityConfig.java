@@ -1,5 +1,6 @@
 package kr.bora.api.user.config;
 
+import kr.bora.api.common.util.RedisUtil;
 import kr.bora.api.socialAuth.handler.OAuth2AuthenticationFailureHandler;
 import kr.bora.api.socialAuth.handler.OAuth2AuthenticationSuccessHandler;
 import kr.bora.api.socialAuth.properties.AppProperties;
@@ -49,6 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final RefreshTokenRepository refreshTokenRepository;
 
     private final UserRepository userRepository;
+
+    private final RedisUtil redisUtil;
+
     /*
      * auth 매니저 설정
      * */
@@ -61,12 +65,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     /*
      * 토큰 필터 설정
      * */
     @Bean
     public JwtFilter tokenAuthenticationFilter() {
-        return new JwtFilter(tokenProvider);
+        return new JwtFilter(tokenProvider, redisUtil);
     }
 
     /*
@@ -91,7 +96,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 refreshTokenRepository,
                 oAuth2AuthorizationRequestBasedOnCookieRepository(),
                 userRepository
-
         );
     }
 

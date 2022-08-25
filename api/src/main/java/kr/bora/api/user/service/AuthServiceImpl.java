@@ -4,6 +4,7 @@ package kr.bora.api.user.service;
 import io.jsonwebtoken.lang.Assert;
 import kr.bora.api.common.exception.BoraException;
 import kr.bora.api.common.exception.ErrorCode;
+import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.common.util.RedisUtil;
 import kr.bora.api.mailauth.repository.MailAuthRepository;
 import kr.bora.api.notification.slack.factory.SlackFactory;
@@ -26,6 +27,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,9 +91,12 @@ public class AuthServiceImpl implements AuthService {
         refreshTokenRepository.save(refreshToken);
         tokenDto.setUserName(loginRequestDto.getUsername());
 
+        // 쿠키에 저장할지 redis에 저장할지 선택
         int cookieMaxAge = (int) (THREE_DAYS_MSEC / 60);
         CookieUtils.deleteCookie(request, response, REFRESH_TOKEN); // 리프레시 토큰을 3일간 쿠키에 저장
         CookieUtils.addCookie(response, REFRESH_TOKEN, refreshToken.getValue(), cookieMaxAge);
+
+//        redisUtil.set(authentication.getName(), refreshToken, tokenDto.getAccessTokenExpiresIn());
 
         return tokenDto;
     }
@@ -104,6 +109,10 @@ public class AuthServiceImpl implements AuthService {
         RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName());
 
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+
+        // redis로 RefreshToken 업데이트
+//        redisUtil.set(authentication.getName(), tokenDto.getRefreshToken(), tokenDto.getAccessTokenExpiresIn());
+
         RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
 
         refreshTokenRepository.save(newRefreshToken);
@@ -113,6 +122,7 @@ public class AuthServiceImpl implements AuthService {
         int cookieMaxAge = (int) (THREE_DAYS_MSEC / 60);
         CookieUtils.deleteCookie(request, response, REFRESH_TOKEN); // 리프레시 토큰을 3일간 쿠키에 저장
         CookieUtils.addCookie(response, REFRESH_TOKEN, refreshToken.getValue(), cookieMaxAge);
+
 
         return tokenDto;
     }
@@ -127,10 +137,12 @@ public class AuthServiceImpl implements AuthService {
         Authentication authentication = tokenProvider.getAuthentication(accessToken);
         String userId = authentication.getName();
 
+        System.out.println("userId = " + userId);
+
         refreshTokenRepository.deleteBykey(userId);
 
         Long expiration = tokenProvider.remainExpiration(accessToken);
-        redisUtil.setBlackList(accessToken, "access_token", expiration);
+        redisUtil.setBlackList(accessToken, "logout_access_token", expiration);
 
     }
 

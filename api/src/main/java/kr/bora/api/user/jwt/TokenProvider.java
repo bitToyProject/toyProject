@@ -123,7 +123,8 @@ public class TokenProvider {
     // redis - 엑세스 토큰 남은 유효시간
     public Long remainExpiration(String token) {
         try {
-            return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getExpiration().getTime() - new Date().getTime();
+            return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getExpiration().getTime()
+                    - new Date().getTime();
         } catch (ExpiredJwtException e) {
             return -1L;
         }
