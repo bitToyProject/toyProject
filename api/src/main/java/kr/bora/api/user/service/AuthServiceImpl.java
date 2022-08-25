@@ -56,7 +56,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserResponseDto signup(UserRequestDto userRequestDto) {
+        boolean dupUsername = checkUsername(userRequestDto.getUsername());
 
+        if (dupUsername) {
+            throw new BoraException(ErrorCode.DUPLICATE_USERNAME, "아이디가 중복입니다. 다시 입력하세요");
+        }
         User user = userRequestDto.toUserforSave(passwordEncoder);
         UserResponseDto response = UserResponseDto.of(userRepository.save(user));
 
@@ -136,8 +140,6 @@ public class AuthServiceImpl implements AuthService {
 
         Authentication authentication = tokenProvider.getAuthentication(accessToken);
         String userId = authentication.getName();
-
-        System.out.println("userId = " + userId);
 
         refreshTokenRepository.deleteBykey(userId);
 

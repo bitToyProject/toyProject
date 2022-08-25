@@ -10,7 +10,6 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
 
     @Override
     public String getId() {
-        System.out.println("attributes = " + attributes);
         return attributes.get("id").toString();
     }
 
@@ -28,7 +27,6 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account"); // 카카오 계정정보 모음
 
         String gender = (String) kakaoAccount.get("gender");
-        System.out.println("gender = " + gender);
         if (gender.equals("male")) {
             return "male";
         } else {
