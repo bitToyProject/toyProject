@@ -3,6 +3,7 @@ package kr.bora.api.user.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import kr.bora.api.common.util.RedisUtil;
 import kr.bora.api.socialAuth.domain.info.AuthToken;
 import kr.bora.api.user.dto.TokenDto;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,13 +25,16 @@ import java.util.stream.Collectors;
 public class TokenProvider {
     private static final String AUTHORITIES_KEY = "role";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7 ;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;
     //    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;// 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
 
     private final Key key;
 
-    public TokenProvider(@Value("${jwt.secret}") String secretKey) {
+    private final RedisUtil redisUtil;
+
+    public TokenProvider(@Value("${jwt.secret}") String secretKey, RedisUtil redisUtil) {
+        this.redisUtil = redisUtil;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -70,7 +73,7 @@ public class TokenProvider {
                 .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
-        log.info("accessToken========{}",accessToken);
+        log.info("accessToken========{}", accessToken);
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
@@ -78,6 +81,7 @@ public class TokenProvider {
                 .refreshToken(refreshToken)
                 .build();
     }
+
     //로컬 / 소셜 동시 권한 부여 -> 권한 부여 받고 로컬 로직으로 빠지고 소셜은 소셜 로직으로 빠진다.
     public Authentication getAuthentication(String accessToken) {
         // 토큰 복호화
@@ -100,6 +104,9 @@ public class TokenProvider {
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+            if (redisUtil.hasKeyBlackList(token)) {
+                return false;
+            }
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
@@ -112,6 +119,16 @@ public class TokenProvider {
         }
         return false;
     }
+
+    // redis - 엑세스 토큰 남은 유효시간
+    public Long remainExpiration(String token) {
+        try {
+            return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getExpiration().getTime() - new Date().getTime();
+        } catch (ExpiredJwtException e) {
+            return -1L;
+        }
+    }
+
 
     private Claims parseClaims(String accessToken) {
         try {

@@ -2,6 +2,7 @@ package kr.bora.api.user.service;
 
 
 import io.jsonwebtoken.lang.Assert;
+import kr.bora.api.common.util.RedisUtil;
 import kr.bora.api.mailauth.repository.MailAuthRepository;
 import kr.bora.api.notification.slack.factory.SlackFactory;
 import kr.bora.api.notification.slack.service.SlackService;
@@ -50,6 +51,8 @@ public class AuthServiceImpl implements AuthService {
     private final static String REFRESH_TOKEN = "refresh_token";
 
     private final MailAuthRepository mailAuthRepository;
+
+    private final RedisUtil redisUtil;
 
 
     @Override
@@ -115,6 +118,24 @@ public class AuthServiceImpl implements AuthService {
         CookieUtils.addCookie(response, REFRESH_TOKEN, refreshToken.getValue(), cookieMaxAge);
 
         return tokenDto;
+    }
+
+    @Override
+    public void logout(String accessToken, String refreshToken) {
+
+
+        if (!tokenProvider.validateToken(accessToken)) {
+            throw new IllegalArgumentException("권한이 없는 토큰입니다.");
+        }
+
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
+        String userId = authentication.getName();
+
+        refreshTokenRepository.deleteBykey(userId);
+
+        Long expiration = tokenProvider.remainExpiration(accessToken);
+        redisUtil.setBlackList(accessToken, "access_token", expiration);
+
     }
 
     @Override

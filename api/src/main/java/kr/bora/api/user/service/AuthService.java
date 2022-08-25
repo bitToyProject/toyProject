@@ -11,6 +11,8 @@ public interface AuthService {
     TokenDto login(HttpServletRequest request, HttpServletResponse response, LoginRequestDto loginRequestDto);
 
     TokenDto reIssue(HttpServletRequest request, HttpServletResponse response, TokenRequestDto tokenRequestDto);
+
+    void logout(String accessToken, String refreshToken);
     boolean checkUsername(String username);
 
 }
