@@ -1,15 +1,10 @@
 package kr.bora.api.user.controller;
 
-import com.mysema.commons.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import kr.bora.api.mailauth.service.MailSendServiceImpl;
-import kr.bora.api.user.dto.TokenDto;
-import kr.bora.api.user.dto.LoginRequestDto;
-import kr.bora.api.user.dto.TokenRequestDto;
-import kr.bora.api.user.dto.UserRequestDto;
-import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.dto.*;
 import kr.bora.api.user.service.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -47,8 +42,8 @@ public class AuthController {
 
     @ApiOperation(value="토큰 재발급", notes="토큰을 재발급 합니다.")
     @PostMapping("/reissue")
-    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
-        return ResponseEntity.ok(authService.reIssue(tokenRequestDto));
+    public ResponseEntity<TokenDto> reissue(HttpServletRequest request, HttpServletResponse response, @RequestBody TokenRequestDto tokenRequestDto) {
+        return ResponseEntity.ok(authService.reIssue(request, response,tokenRequestDto));
     }
 
     @ApiOperation(value="username 중복체크", notes="username이 중복인지 체크합니다.")

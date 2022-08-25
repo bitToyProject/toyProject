@@ -1,6 +1,7 @@
 package kr.bora.api.user.service;
 
 
+import io.jsonwebtoken.lang.Assert;
 import kr.bora.api.mailauth.repository.MailAuthRepository;
 import kr.bora.api.notification.slack.factory.SlackFactory;
 import kr.bora.api.notification.slack.service.SlackService;
@@ -8,11 +9,7 @@ import kr.bora.api.socialAuth.properties.AppProperties;
 import kr.bora.api.socialAuth.util.CookieUtils;
 import kr.bora.api.user.domain.RefreshToken;
 import kr.bora.api.user.domain.User;
-import kr.bora.api.user.dto.LoginRequestDto;
-import kr.bora.api.user.dto.TokenDto;
-import kr.bora.api.user.dto.TokenRequestDto;
-import kr.bora.api.user.dto.UserRequestDto;
-import kr.bora.api.user.dto.UserResponseDto;
+import kr.bora.api.user.dto.*;
 import kr.bora.api.user.jwt.TokenProvider;
 import kr.bora.api.user.repository.RefreshTokenRepository;
 import kr.bora.api.user.repository.UserRepository;
@@ -29,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -42,6 +40,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
 
     private final AppProperties appProperties;
+
 
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
@@ -84,6 +83,7 @@ public class AuthServiceImpl implements AuthService {
         RefreshToken refreshToken = RefreshToken.builder()
                 .key(authentication.getName())
                 .value(tokenDto.getRefreshToken())
+                .username(loginRequestDto.getUsername())
                 .build();
 
         refreshTokenRepository.save(refreshToken);
@@ -97,18 +97,22 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public TokenDto reIssue(TokenRequestDto tokenRequestDto) {
+    public TokenDto reIssue(HttpServletRequest request, HttpServletResponse response, TokenRequestDto tokenRequestDto) {
 
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
         RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName());
 
-
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-
         RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
 
         refreshTokenRepository.save(newRefreshToken);
+
+        tokenDto.setUserName(refreshToken.getUsername());
+
+        int cookieMaxAge = (int) (THREE_DAYS_MSEC / 60);
+        CookieUtils.deleteCookie(request, response, REFRESH_TOKEN); // 리프레시 토큰을 3일간 쿠키에 저장
+        CookieUtils.addCookie(response, REFRESH_TOKEN, refreshToken.getValue(), cookieMaxAge);
 
         return tokenDto;
     }
@@ -117,5 +121,6 @@ public class AuthServiceImpl implements AuthService {
     public boolean checkUsername(String username) {
         return userRepository.existsByusername(username);
     }
+
 
 }
