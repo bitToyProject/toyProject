@@ -29,7 +29,6 @@ public class CookieUtils {
         cookie.setHttpOnly(true);
         cookie.setMaxAge(maxAge);
         response.addCookie(cookie);
-        System.out.println("cookie = " + cookie.getValue());
     }
 
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {
@@ -41,7 +40,6 @@ public class CookieUtils {
                     cookie.setPath("/");
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
-                    System.out.println("cookie.getValue() = " + cookie.getValue());
                 }
             }
         }
