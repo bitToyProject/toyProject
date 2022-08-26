@@ -1,6 +1,7 @@
 package kr.bora.api.user.dto;
 
 import kr.bora.api.department.domain.dto.DepartmentDto;
+import kr.bora.api.socialAuth.domain.ProviderType;
 import kr.bora.api.user.domain.Avatar;
 import kr.bora.api.user.domain.User;
 import lombok.Builder;
@@ -25,6 +26,8 @@ public class UserResponseDto {
 
     private Avatar avatar;
 
+    private ProviderType providerType;
+
     @Builder
     public UserResponseDto(String username,
                            String nickname,
@@ -32,7 +35,8 @@ public class UserResponseDto {
                            String lastName,
                            String gender,
                            String phoneNumber,
-                           Avatar avatar) {
+                           Avatar avatar,
+                           ProviderType providerType) {
         this.username = username;
         this.nickname = nickname;
         this.firstName = firstName;
@@ -40,6 +44,7 @@ public class UserResponseDto {
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.avatar = avatar;
+        this.providerType = providerType;
     }
 
     public static UserResponseDto of(User user) {
@@ -49,7 +54,8 @@ public class UserResponseDto {
                 user.getLastName(),
                 user.getGender(),
                 user.getPhoneNum(),
-                user.getAvatar());
+                user.getAvatar(),
+                user.getProviderType());
     }
 
 }

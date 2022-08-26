@@ -9,6 +9,7 @@ import kr.bora.api.user.dto.*;
 import kr.bora.api.user.service.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Log4j2
+@Slf4j
 public class AuthController {
 
     private final AuthServiceImpl authService;
@@ -29,13 +30,13 @@ public class AuthController {
 
     @ApiOperation(value = "회원 가입", notes = "회원을 등록합니다.")
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@Valid @RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<UserDto.UserResponse> signup(@Valid @RequestBody UserDto.UserRequest userRequestDto) {
         return ResponseEntity.ok(authService.signup(userRequestDto));
     }
 
     @ApiOperation(value = "로그인", notes = "로그인을 진행합니다.")
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(HttpServletRequest request, HttpServletResponse response, @RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<TokenDto> login(HttpServletRequest request, HttpServletResponse response, @RequestBody AuthDto.LoginRequest loginRequestDto) {
 //        boolean dup = mailService.isCheckedAuthMail(loginRequestDto.getUsername());
 //        Assert.isTrue(dup,"mail's confirmed");
         return ResponseEntity.ok(authService.login(request, response, loginRequestDto));
@@ -44,7 +45,7 @@ public class AuthController {
 
     @ApiOperation(value = "토큰 재발급", notes = "토큰을 재발급 합니다.")
     @PostMapping("/reissue")
-    public ResponseEntity<TokenDto> reissue(HttpServletRequest request, HttpServletResponse response, @RequestBody TokenRequestDto tokenRequestDto) {
+    public ResponseEntity<TokenDto> reissue(HttpServletRequest request, HttpServletResponse response, @RequestBody TokenDto.TokenRequest tokenRequestDto) {
         return ResponseEntity.ok(authService.reIssue(request, response, tokenRequestDto));
     }
 
@@ -55,7 +56,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<ApiResponse> logout(@RequestBody TokenRequestDto tokenRequestDto) {
+    public ResponseEntity<ApiResponse> logout(@RequestBody TokenDto.TokenRequest tokenRequestDto) {
 
         authService.logout(tokenRequestDto.getAccessToken(), tokenRequestDto.getRefreshToken());
 

@@ -1,15 +1,12 @@
 package kr.bora.api.user.service;
 
 
-import io.jsonwebtoken.lang.Assert;
 import kr.bora.api.common.exception.BoraException;
 import kr.bora.api.common.exception.ErrorCode;
-import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.common.util.RedisUtil;
 import kr.bora.api.mailauth.repository.MailAuthRepository;
 import kr.bora.api.notification.slack.factory.SlackFactory;
 import kr.bora.api.notification.slack.service.SlackService;
-import kr.bora.api.socialAuth.properties.AppProperties;
 import kr.bora.api.socialAuth.util.CookieUtils;
 import kr.bora.api.user.domain.RefreshToken;
 import kr.bora.api.user.domain.User;
@@ -27,11 +24,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -53,23 +48,21 @@ public class AuthServiceImpl implements AuthService {
     private final MailAuthRepository mailAuthRepository;
     private final RedisUtil redisUtil;
 
-
     @Override
-    public UserResponseDto signup(UserRequestDto userRequestDto) {
-        boolean dupUsername = checkUsername(userRequestDto.getUsername());
+    public UserDto.UserResponse signup(UserDto.UserRequest userRequest) {
+        boolean dupUsername = checkUsername(userRequest.getUsername());
 
         if (dupUsername) {
             throw new BoraException(ErrorCode.DUPLICATE_USERNAME, "아이디가 중복입니다. 다시 입력하세요");
         }
-        User user = userRequestDto.toUserforSave(passwordEncoder);
-        UserResponseDto response = UserResponseDto.of(userRepository.save(user));
+        User user = userRequest.toEntity(passwordEncoder);
+        User saveUser = userRepository.save(user);
 
-        return response;
+        return new UserDto.UserResponse(saveUser);
     }
 
     @Override
-    public TokenDto login(HttpServletRequest request, HttpServletResponse response, LoginRequestDto loginRequestDto) {
-
+    public TokenDto login(HttpServletRequest request, HttpServletResponse response, AuthDto.LoginRequest loginRequestDto) {
         UsernamePasswordAuthenticationToken authenticationToken = loginRequestDto.toAuthentication();
         Authentication authentication = null;
         try {
@@ -106,7 +99,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public TokenDto reIssue(HttpServletRequest request, HttpServletResponse response, TokenRequestDto tokenRequestDto) {
+    public TokenDto reIssue(HttpServletRequest request, HttpServletResponse response, TokenDto.TokenRequest tokenRequestDto) {
 
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 

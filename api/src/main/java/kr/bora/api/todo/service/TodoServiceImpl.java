@@ -20,6 +20,7 @@ import kr.bora.api.todo.repository.TodoNotiRepository;
 import kr.bora.api.todo.repository.TodoReplyRepository;
 import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.UserDto;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.service.UserService;
@@ -96,7 +97,7 @@ public class TodoServiceImpl implements TodoService {
     public Long todoSave(TodoDto.Request todoRequestDto, List<MultipartFile> multipartFile, String teamName) {
 
         // 닉네임 가져오기
-        UserResponseDto userNickname = getUserNickname();
+        UserDto.UserResponse userNickname = getUserNickname();
         todoRequestDto.setNickname(userNickname.getNickname());
 
         Todo todo;
@@ -244,9 +245,9 @@ public class TodoServiceImpl implements TodoService {
     }
 
     // Todo 작성자 - 현재 사용자 닉네임
-    private UserResponseDto getUserNickname() {
-        UserResponseDto userNickname = userRepository.findById(SecurityUtil.getCurrentUserId())
-                .map(UserResponseDto::of).orElseThrow();
+    private UserDto.UserResponse getUserNickname() {
+        UserDto.UserResponse userNickname = userRepository.findById(SecurityUtil.getCurrentUserId())
+                .map(UserDto.UserResponse::new).orElseThrow();
         return userNickname;
     }
 

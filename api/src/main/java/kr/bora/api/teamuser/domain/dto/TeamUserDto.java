@@ -3,7 +3,6 @@ package kr.bora.api.teamuser.domain.dto;
 import kr.bora.api.team.domain.dto.TeamDto;
 import kr.bora.api.teamuser.domain.entity.TeamUser;
 import kr.bora.api.user.domain.User;
-import kr.bora.api.user.dto.UserRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

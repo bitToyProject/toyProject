@@ -32,6 +32,13 @@ public class BoraTeamUserController {
         return ResponseEntity.ok(ApiResponse.success(teamUsers.get(0).getTeamName()+" 팀 구성원", teamUsers));
     }
 
+    @GetMapping("/finds")
+    public ResponseEntity<ApiResponse> findTeamUsers(@RequestParam String teamName) {
+        List<BoraTeamUserDto.BoraTeamUserResponse> teamUsers = service.findTeamName(teamName);
+        return ResponseEntity.ok(ApiResponse.success(teamUsers.get(0).getTeamName()+" 팀 구성원", teamUsers));
+    }
+
+
     @DeleteMapping("/delete/{nickname}")
     public ResponseEntity<ApiResponse> deleteTeamUsers(@PathVariable String nickname) {
 

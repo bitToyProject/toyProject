@@ -22,4 +22,12 @@ public class TokenDto {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    @Getter
+    @NoArgsConstructor
+    public static class TokenRequest{
+        private String accessToken;
+        private String refreshToken;
+    }
+
 }

@@ -1,10 +1,9 @@
 package kr.bora.api.user.domain;
 
+import kr.bora.api.borateam.domain.BoraTeam;
 import kr.bora.api.department.domain.entity.Department;
 import kr.bora.api.socialAuth.domain.ProviderType;
-import kr.bora.api.todo.domain.TodoFile;
 import kr.bora.api.user.domain.reader.MailSender;
-import kr.bora.api.user.dto.UserResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +32,7 @@ public class User{
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
     //username은 이메일이다.
     @Column(name="username", nullable = false, length = 50)
     private String username;
@@ -49,7 +49,7 @@ public class User{
     @Column(name = "nick_name", nullable = true, length = 20)
     private String nickName;
 
-    @Column(name = "phone_num", nullable = false, length = 13)
+    @Column(name = "phone_num", length = 13)
     private String phoneNum;
 
     @Column(name = "gender",nullable = false)
@@ -77,12 +77,6 @@ public class User{
     private ProviderType providerType;
 
     private String oauthId;
-
-
-//    @Column(name = "part",)
-//    @Enumerated(EnumType.STRING)
-//    private Part part;
-
 
     public String toString(){
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);

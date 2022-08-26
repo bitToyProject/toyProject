@@ -21,11 +21,6 @@ public class SecurityUtil {
         this.userRepository = userRepository;
     }
 
-//    @Autowired
-//    private void setUserRepository(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
-
 
     // SecurityContext 에 유저 정보가 저장되는 시점
     // Request 가 들어올 때 JwtFilter 의 doFilter 에서 저장

@@ -49,7 +49,7 @@ public class TeamUser {
             .team(TeamResponseDto.builder().id(result.getTeam().getId())
                 .teamName(result.getTeam().getTeamName())
                 .build())
-            .user(UserResponseDto.of(result.getUser())).build();
+            .user(UserDto.toUserList(result.getUser())).build();
     }
     public static TeamUserResponse toResponseList(TeamUser entity) {
         return entity.toResponse(entity);

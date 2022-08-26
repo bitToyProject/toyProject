@@ -8,6 +8,7 @@ import kr.bora.api.files.dto.FileDto;
 import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.util.MD5Generator;
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.UserDto;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
@@ -67,7 +68,7 @@ public class FileUtil {
 
                     /* 파일 정보 저장 */
                     Long userId = SecurityUtil.getCurrentUserId();
-                    UserResponseDto nick = getUserNickname();
+                    UserDto.UserResponse nick = getUserNickname();
                     FileDto attach = FileDto.builder()
                             .originFilename(file.getOriginalFilename())
                             .filename(saveName)
@@ -153,11 +154,11 @@ public class FileUtil {
         }
     }
 
-    private UserResponseDto getUserNickname() {
-        UserResponseDto replyer = userRepository.findById(SecurityUtil.getCurrentUserId())
-                .map(UserResponseDto::of)
+    private UserDto.UserResponse getUserNickname() {
+        UserDto.UserResponse nickname = userRepository.findById(SecurityUtil.getCurrentUserId())
+                .map(UserDto.UserResponse::new)
                 .orElseThrow();
-        return replyer;
+        return nickname;
     }
 
 }

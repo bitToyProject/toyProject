@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Ref;
 
 public interface AuthService {
-    UserResponseDto signup(UserRequestDto userRequestDto);
-    TokenDto login(HttpServletRequest request, HttpServletResponse response, LoginRequestDto loginRequestDto);
 
-    TokenDto reIssue(HttpServletRequest request, HttpServletResponse response, TokenRequestDto tokenRequestDto);
+    UserDto.UserResponse signup(UserDto.UserRequest userRequest);
+
+    TokenDto login(HttpServletRequest request, HttpServletResponse response, AuthDto.LoginRequest loginRequestDto);
+
+    TokenDto reIssue(HttpServletRequest request, HttpServletResponse response, TokenDto.TokenRequest tokenRequestDto);
 
     void logout(String accessToken, String refreshToken);
     boolean checkUsername(String username);

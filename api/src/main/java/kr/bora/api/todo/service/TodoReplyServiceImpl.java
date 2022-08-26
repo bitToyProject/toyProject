@@ -4,6 +4,7 @@ import kr.bora.api.todo.domain.Todo;
 import kr.bora.api.todo.domain.TodoReply;
 import kr.bora.api.todo.dto.TodoReplyDto;
 import kr.bora.api.todo.repository.TodoReplyRepository;
+import kr.bora.api.user.dto.UserDto;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
@@ -31,7 +32,7 @@ public class TodoReplyServiceImpl implements TodoReplyService {
     @Override
     @Transactional
     public Long todoReplySave(TodoReplyDto.Request todoReplyDto, Long todoId) {
-        UserResponseDto replyer = getUserNickname();
+        UserDto.UserResponse replyer = getUserNickname();
 
         todoReplyDto.setTodoReplyer(replyer.getNickname());
 
@@ -75,9 +76,9 @@ public class TodoReplyServiceImpl implements TodoReplyService {
     }
 
     // 댓글 작성자 - 현재 사용자 닉네임
-    private UserResponseDto getUserNickname() {
-        UserResponseDto replyer = userRepository.findById(SecurityUtil.getCurrentUserId())
-                .map(UserResponseDto::of)
+    private UserDto.UserResponse getUserNickname() {
+        UserDto.UserResponse replyer = userRepository.findById(SecurityUtil.getCurrentUserId())
+                .map(UserDto.UserResponse::new)
                 .orElseThrow();
         return replyer;
     }

@@ -21,6 +21,12 @@ public class BoraTeamUser extends BaseEntity {
     @Column(name = "bora_team_user_id")
     private Long id;
 
+    private String teamName;
+
+    private String teamLeader;
+
+    private String teamMembers;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "bora_team_id")
     private BoraTeam boraTeam;
@@ -29,10 +35,5 @@ public class BoraTeamUser extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String teamName;
-
-    private String teamLeader;
-
-    private String teamMembers;
 
 }

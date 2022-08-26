@@ -4,6 +4,7 @@ import kr.bora.api.subtask.domain.SubTask;
 import kr.bora.api.subtask.domain.SubTaskReply;
 import kr.bora.api.subtask.dto.SubTaskReplyDto;
 import kr.bora.api.subtask.repository.SubTaskReplyRepository;
+import kr.bora.api.user.dto.UserDto;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
@@ -33,7 +34,7 @@ public class SubTaskReplyServiceImpl implements SubTaskReplyService {
     @Override
     @Transactional
     public Long subtaskReplySave(SubTaskReplyDto.Request subTaskReplyDto, Long subtaskId) {
-        UserResponseDto replyer = getUserNickname();
+        UserDto.UserResponse replyer = getUserNickname();
         subTaskReplyDto.setSubtaskReplyer(replyer.getNickname());
 
         SubTaskReply subTaskReply = subTaskReplyDto.toEntity(subtaskId);
@@ -81,9 +82,9 @@ public class SubTaskReplyServiceImpl implements SubTaskReplyService {
 
     }
 
-    private UserResponseDto getUserNickname() {
-        UserResponseDto replyer = userRepository.findById(SecurityUtil.getCurrentUserId())
-                .map(UserResponseDto::of)
+    private UserDto.UserResponse getUserNickname() {
+        UserDto.UserResponse replyer = userRepository.findById(SecurityUtil.getCurrentUserId())
+                .map(UserDto.UserResponse::new)
                 .orElseThrow();
         return replyer;
     }

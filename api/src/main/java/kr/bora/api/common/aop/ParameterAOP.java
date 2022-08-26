@@ -1,12 +1,13 @@
 package kr.bora.api.common.aop;
 
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-@Log4j2
+@Slf4j
 public class ParameterAOP {
 //
 //    @Pointcut("execution(* kr.bora.api.*.controller..*.*(..))")

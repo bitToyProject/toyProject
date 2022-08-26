@@ -71,5 +71,11 @@ public class BoraTeamUserService {
         return boraTeamUsers.stream().map(BoraTeamUserDto.BoraTeamUserResponse::new).collect(Collectors.toList());
     }
 
+    public List<BoraTeamUserDto.BoraTeamUserResponse> findTeamName(String teamName) {
+
+        List<BoraTeamUser> boraTeamUsers = boraTeamUserRepository.findBoraTeamUserByBoraTeamTeamName(teamName);
+
+        return boraTeamUsers.stream().map(BoraTeamUserDto.BoraTeamUserResponse::new).collect(Collectors.toList());
+    }
 
 }

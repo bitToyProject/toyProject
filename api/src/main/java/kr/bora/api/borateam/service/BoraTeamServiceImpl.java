@@ -9,6 +9,7 @@ import kr.bora.api.borateamuser.service.BoraTeamUserService;
 import kr.bora.api.common.exception.BoraException;
 import kr.bora.api.common.exception.ErrorCode;
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.UserDto;
 import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
@@ -35,7 +36,7 @@ public class BoraTeamServiceImpl implements BoraTeamService {
 
         teamDupCheckValid(dto);
 
-        UserResponseDto userNickname = getUserNickname();
+        UserDto.UserResponse userNickname = getUserNickname();
 
         String nickname = userNickname.getNickname();
 
@@ -99,10 +100,9 @@ public class BoraTeamServiceImpl implements BoraTeamService {
     }
 
 
-    // Todo 작성자 - 현재 사용자 닉네임
-    private UserResponseDto getUserNickname() {
-        UserResponseDto userNickname = userRepository.findById(SecurityUtil.getCurrentUserId())
-                .map(UserResponseDto::of).orElseThrow();
+    private UserDto.UserResponse getUserNickname() {
+        UserDto.UserResponse userNickname = userRepository.findById(SecurityUtil.getCurrentUserId())
+                .map(UserDto.UserResponse::new).orElseThrow();
         return userNickname;
     }
 

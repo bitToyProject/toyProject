@@ -11,7 +11,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class TeamUserResponse {
     private Long id;
-    private UserResponseDto user;
+    private UserResponseDto userResponseDto;
+    private UserDto user;
     private TeamResponseDto team;
 
 }
