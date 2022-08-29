@@ -62,11 +62,9 @@ public class UserServiceImpl implements UserService {
         User user = userRequest.toEntity(passwordEncoder);
 
         User modifyUser = repository.getById(user.getUserId());
-
         modifyUser.changePassword(user.getPassword());
         modifyUser.changeNickname(user.getNickName());
 
-        repository.save(modifyUser);
     }
 
     @Override
