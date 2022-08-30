@@ -13,6 +13,7 @@ import kr.bora.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -73,16 +74,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private User createUser(OAuth2UserInfo userInfo, ProviderType providerType) {
         User user = User.builder()
                 .username(userInfo.getEmail())
-                .password("Soclal Login User is No password")
+                .password("Thank you for Social User!")
                 .title(Title.BEGINNER)
                 .avatar(Avatar.DEFAULTMAN)
-                .gender(userInfo.getGender() == null ? "MALE" : userInfo.getGender())
                 .nickName(userInfo.getName())
                 .providerType(providerType)
                 .authority(Authority.ROLE_USER)
-                .firstName(userInfo.getName())
-                .lastName(userInfo.getName())
-                .phoneNum("00")
+                .phoneNum(null)
                 .oauthId(userInfo.getId())
                 .build();
         return userRepository.save(user);

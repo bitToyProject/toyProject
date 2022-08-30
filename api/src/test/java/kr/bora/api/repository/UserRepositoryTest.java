@@ -1,6 +1,7 @@
 package kr.bora.api.repository;
 
 import kr.bora.api.user.domain.Authority;
+import kr.bora.api.user.domain.Avatar;
 import kr.bora.api.user.domain.Title;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.repository.UserRepository;
@@ -30,13 +31,11 @@ public class UserRepositoryTest {
             User user = User.builder()
                     .username("user" + i + "@naver.com")
                     .password(passwordEncoder.encode("woals1212!"))
-                    .lastName("park"+i)
-                    .firstName("jaemin"+i)
-                    .gender(1)
                     .nickName("nick"+i)
                     .phoneNum("0506560"+i)
                     .authority(Authority.ROLE_USER)
                     .title(Title.BEGINNER)
+                    .avatar(Avatar.DEFAULTMAN)
                     .build();
 
             userRepository.save(user);

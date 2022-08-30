@@ -1,6 +1,5 @@
 package kr.bora.api.user.domain;
 
-import kr.bora.api.borateam.domain.BoraTeam;
 import kr.bora.api.department.domain.entity.Department;
 import kr.bora.api.socialAuth.domain.ProviderType;
 import kr.bora.api.user.domain.reader.MailSender;
@@ -27,7 +26,7 @@ import javax.persistence.*;
 @Slf4j
 @Audited(withModifiedFlag = true)
 public class User{
-//notnull : username , password , phonenum, fisrnma,lastname,gender
+//notnull : username , password , phonenum, gender
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,26 +39,17 @@ public class User{
     @Column(name="password", nullable = false)
     private String password;
 
-    @Column(name = "last_name", nullable = false, length = 10)
-    private String lastName;
-
-    @Column(name = "first_name", nullable = false,length = 30)
-    private String firstName;
-
     @Column(name = "nick_name", nullable = true, length = 20)
     private String nickName;
 
     @Column(name = "phone_num", length = 13)
     private String phoneNum;
 
-    @Column(name = "gender",nullable = false)
-    private String gender;
-
-    @Column(name = "indi_title",nullable = false)
+    @Column(name = "indi_title")
     @Enumerated(EnumType.STRING)
     private Title title;
 
-    @Column(name = "avatar",nullable = false)
+    @Column(name = "avatar")
     @Enumerated(EnumType.ORDINAL)
     private Avatar avatar;
 
@@ -89,25 +79,13 @@ public class User{
     public void changeNickname(String nickName) {
         this.nickName = nickName;
     }
-
-    public void changeFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void changeLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void changeGender(String gender) {
-        this.gender = gender;
-    }
-
     public void changePhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
     public void setUsername(String username) {
         this.username = username;
     }
+
     @Transient
     private MailSender mailSender;
 

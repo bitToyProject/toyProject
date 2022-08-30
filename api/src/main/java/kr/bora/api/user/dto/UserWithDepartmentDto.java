@@ -21,8 +21,6 @@ public class UserWithDepartmentDto {
 
     private String lastName;
 
-    private String gender;
-
     private String phoneNumber;
 
     private DepartmentDto departmentDto;
@@ -32,9 +30,6 @@ public class UserWithDepartmentDto {
                 .userId(user.getUserId())
                 .username(user.getUsername())
                 .nickname(user.getNickName())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .gender(user.getGender())
                 .phoneNumber(user.getPhoneNum())
                 .departmentDto(user.getDepartment().toDto())
                 .build();
