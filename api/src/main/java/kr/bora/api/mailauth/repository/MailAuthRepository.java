@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@Repository
 public interface MailAuthRepository extends JpaRepository<AuthMail,Long> {
     @Query(value = "SELECT a.authMailKey FROM AuthMail a WHERE a.authMail =:authmail")
     String findAuthMailKeyByAuthMail(@Param("authmail") String authmail);

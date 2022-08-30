@@ -1,5 +1,6 @@
 package kr.bora.api.mailauth.api;
 
+import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.common.response.CommonResponse;
 import kr.bora.api.common.response.Status;
 import kr.bora.api.mailauth.domain.dto.AuthMailDto;
@@ -13,7 +14,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/mail")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class MailController {
 
     private final MailSendServiceImpl mss;
@@ -24,12 +24,13 @@ public class MailController {
         return ResponseEntity.ok("메일 인증이 성공되었습니다. 로그인 해주세요");
     }
 
-    @PostMapping("/check")
-    public ResponseEntity<CommonResponse> checkAuthMail(@Valid @RequestBody AuthMailDto authMailDto) {
-        if (mss.checkMailAuthKey(authMailDto)) {
-            return ResponseEntity.ok(CommonResponse.success());
+    @GetMapping("/check")
+    public ResponseEntity<ApiResponse> checkAuthMail(String username, String authKey) {
+
+        if (mss.checkMailAuthKey(username, authKey)) {
+            return ResponseEntity.ok(ApiResponse.success(username+"인증이 완료되었습니다.", "로그인 해주세요." ));
         } else {
-            return ResponseEntity.ok(CommonResponse.fail(Status.PARAMETER_ERROR));
+            return ResponseEntity.ok(ApiResponse.fail());
         }
     }
 }

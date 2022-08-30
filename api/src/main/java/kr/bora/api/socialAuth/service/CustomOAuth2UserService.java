@@ -92,7 +92,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         if (userInfo.getName() != null && !user.getUsername().equals(userInfo.getEmail())) {
             user.setUsername(userInfo.getEmail());
         }
-
         return user;
     }
 }

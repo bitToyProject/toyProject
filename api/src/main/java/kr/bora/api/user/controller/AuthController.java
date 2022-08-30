@@ -3,6 +3,8 @@ package kr.bora.api.user.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import kr.bora.api.common.exception.BoraException;
+import kr.bora.api.common.exception.ErrorCode;
 import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.mailauth.service.MailSendServiceImpl;
 import kr.bora.api.user.dto.*;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,9 +40,13 @@ public class AuthController {
     @ApiOperation(value = "로그인", notes = "로그인을 진행합니다.")
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(HttpServletRequest request, HttpServletResponse response, @RequestBody AuthDto.LoginRequest loginRequestDto) {
-//        boolean dup = mailService.isCheckedAuthMail(loginRequestDto.getUsername());
-//        Assert.isTrue(dup,"mail's confirmed");
-        return ResponseEntity.ok(authService.login(request, response, loginRequestDto));
+        boolean dup = mailService.isCheckedAuthMail(loginRequestDto.getUsername());
+
+        if (!dup) {
+            throw new BoraException(ErrorCode.CHECKED_USER_AUTH_EMAIL, "이메일 인증을 먼저 해주세요.");
+        } else {
+            return ResponseEntity.ok(authService.login(request, response, loginRequestDto));
+        }
 
     }
 
