@@ -5,7 +5,6 @@ import kr.bora.api.todo.domain.TodoReply;
 import kr.bora.api.todo.dto.TodoReplyDto;
 import kr.bora.api.todo.repository.TodoReplyRepository;
 import kr.bora.api.user.dto.UserDto;
-import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;

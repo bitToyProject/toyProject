@@ -5,7 +5,6 @@ import kr.bora.api.subtask.domain.SubTaskReply;
 import kr.bora.api.subtask.dto.SubTaskReplyDto;
 import kr.bora.api.subtask.repository.SubTaskReplyRepository;
 import kr.bora.api.user.dto.UserDto;
-import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
