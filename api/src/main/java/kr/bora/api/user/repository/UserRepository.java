@@ -1,6 +1,7 @@
 package kr.bora.api.user.repository;
 
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.dto.UserDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,7 @@
 package kr.bora.api.user.service;
 
 import kr.bora.api.mailauth.MailUtil;
+import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -2,10 +2,12 @@ package kr.bora.api.user.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.user.dto.*;
 import kr.bora.api.user.service.MailTempPwdService;
 import kr.bora.api.user.service.UserService;
 import kr.bora.api.user.service.UserServiceImpl;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
@@ -73,4 +75,5 @@ public class UserController {
 
         return ResponseEntity.ok("임시 패스워드 발급 성공");
     }
+
 }

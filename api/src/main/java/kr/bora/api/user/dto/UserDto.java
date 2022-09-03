@@ -33,7 +33,7 @@ public class UserDto {
         private String password;
         private String nickName;
         @NotBlank
-        @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대폰 번호를 입력해주세요.")
+        @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대폰 번호를 입력해주세요. (ex)01012341234")
         private String phoneNum;
 
         private Authority authority;
@@ -82,11 +82,11 @@ public class UserDto {
     @AllArgsConstructor
     @Builder
     public static class userInfoModify {
-        @NotBlank(message = "새로운 password값이 필수 있니다.")
+        @NotBlank(message = "새로운 password 입력은 필수 입니다.")
         @Pattern(regexp = "^.*(?=^.{8,20}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$",
                 message = "비밀번호는 8~20자리의 숫자,문자,특수문자로 이루어져야합니다.")
         private String password;
-        @NotBlank(message = "새로운 passwordCheck값이 필수 입니다.")
+        @NotBlank(message = "새로운 password 입력은 필수 입니다.")
         private String checkPassword;
         private String nickname;
 
@@ -120,6 +120,16 @@ public class UserDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class MailTempPwdDto {
+        private String toAddress;
+        private String title;
+        private String message;
+        private String fromAddress;
+    }
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MailFindUsernameDto{
         private String toAddress;
         private String title;
         private String message;
