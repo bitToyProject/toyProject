@@ -94,8 +94,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 tokenProvider,
                 appProperties,
                 refreshTokenRepository,
-                oAuth2AuthorizationRequestBasedOnCookieRepository()
-//                userRepository
+                oAuth2AuthorizationRequestBasedOnCookieRepository(),
+                redisUtil
         );
     }
 
