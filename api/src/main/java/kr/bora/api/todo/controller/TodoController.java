@@ -53,7 +53,10 @@ public class TodoController {
     public ResponseEntity<ApiResponse> todoSave(@Valid @RequestPart(value = "file", required = false) List<MultipartFile> files,
                                                 @RequestPart("todoDto") TodoDto.Request todoDto,
                                                 @RequestParam(required = false) String teamName) {
+//        String s = SecurityUtil.currentUserName();
+//        System.out.println("2asff22 == "+s);
         service.todoSave(todoDto, files, teamName);
+
 
         return ResponseEntity.ok(ApiResponse.success("response save data", todoDto));
     }

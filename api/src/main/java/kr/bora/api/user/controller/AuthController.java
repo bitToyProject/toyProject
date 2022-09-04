@@ -9,6 +9,7 @@ import kr.bora.api.common.response.ApiResponse;
 import kr.bora.api.mailauth.service.MailSendServiceImpl;
 import kr.bora.api.user.dto.*;
 import kr.bora.api.user.service.AuthServiceImpl;
+import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;

@@ -23,7 +23,7 @@ public class TodoDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-//    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Request{
         private Long todoId;
 
