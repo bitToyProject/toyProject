@@ -1,5 +1,6 @@
 package kr.bora.api.team.service;
 
+import kr.bora.api.team.domain.dto.TeamDto;
 import kr.bora.api.team.domain.dto.TeamRequestDto;
 import kr.bora.api.team.domain.dto.TeamResponseDto;
 import kr.bora.api.team.domain.entity.Team;
@@ -23,4 +24,5 @@ public class TeamServiceImpl implements TeamService{
         Team result = repository.save(entity);
         return result.toResponseDto(result);
     }
+
 }

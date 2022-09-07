@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 public class SubTaskReplyDto {
 
     @Getter
@@ -64,9 +66,9 @@ public class SubTaskReplyDto {
 
         private String subtaskReplyer;
 
-        private String regDate;
+        private LocalDateTime regDate;
 
-        private String modDate;
+        private LocalDateTime modDate;
 
         /* Entity -> Dto */
         public Response(SubTaskReply subTaskReply) {

@@ -7,7 +7,6 @@ import kr.bora.api.teamuser.domain.dto.TeamUserResponse;
 import kr.bora.api.teamuser.domain.dto.TeamUsersResponseDto;
 import kr.bora.api.teamuser.domain.dto.UserDto;
 import kr.bora.api.user.domain.User;
-import kr.bora.api.user.dto.UserResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

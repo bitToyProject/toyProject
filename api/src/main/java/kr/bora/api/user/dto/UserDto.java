@@ -43,10 +43,10 @@ public class UserDto {
 
         public User toEntity(PasswordEncoder passwordEncoder) {
             return User.builder()
-                    .username(username)
+                    .username(passwordEncoder.encode(username))
                     .password(passwordEncoder.encode(password))
                     .nickName(nickName)
-                    .phoneNum(phoneNum)
+                    .phoneNum(passwordEncoder.encode(phoneNum))
                     .title(Title.STARTER)
                     .authority(Authority.ROLE_USER)
                     .avatar(avatar)

@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 
 public class TodoReplyDto {
 
@@ -68,9 +70,9 @@ public class TodoReplyDto {
 
         private String todoReplyer;
 
-        private String regDate;
+        private LocalDateTime regDate;
 
-        private String modDate;
+        private LocalDateTime modDate;
 
         /* Entity -> Dto */
         public Response(TodoReply todoReply) {

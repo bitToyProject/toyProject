@@ -1,8 +1,10 @@
 package kr.bora.api.user.domain;
 
+import kr.bora.api.common.domain.BaseEntity;
 import kr.bora.api.department.domain.entity.Department;
 import kr.bora.api.socialAuth.domain.ProviderType;
 import kr.bora.api.user.domain.reader.MailSender;
+import kr.bora.api.user.domain.reader.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +27,7 @@ import javax.persistence.*;
 @Table(name="users")
 @Slf4j
 @Audited(withModifiedFlag = true)
-public class User{
+public class User extends BaseEntity {
 //notnull : username , password , phonenum, gender
     @Id
     @Column(name = "user_id")
@@ -66,6 +68,9 @@ public class User{
     @Enumerated(EnumType.STRING)
     private ProviderType providerType;
 
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
+
     private String oauthId;
 
     public String toString(){
@@ -84,6 +89,10 @@ public class User{
     }
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setUserStatus() {
+        this.userStatus = UserStatus.INACTIVE;
     }
 
     @Transient
