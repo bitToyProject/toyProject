@@ -91,8 +91,9 @@ public class User extends BaseEntity {
         this.username = username;
     }
 
-    public void setUserStatus() {
+    public User setUserInactive() {
         this.userStatus = UserStatus.INACTIVE;
+        return this;
     }
 
     @Transient
