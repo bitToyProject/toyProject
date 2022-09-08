@@ -5,6 +5,7 @@ import kr.bora.api.user.domain.Authority;
 import kr.bora.api.user.domain.Avatar;
 import kr.bora.api.user.domain.Title;
 import kr.bora.api.user.domain.User;
+import kr.bora.api.user.domain.reader.UserStatus;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,18 +40,17 @@ public class UserDto {
         private Authority authority;
 
         private Title title;
-        private Avatar avatar;
 
         public User toEntity(PasswordEncoder passwordEncoder) {
             return User.builder()
-                    .username(passwordEncoder.encode(username))
+                    .username(username)
                     .password(passwordEncoder.encode(password))
                     .nickName(nickName)
-                    .phoneNum(passwordEncoder.encode(phoneNum))
+                    .phoneNum(phoneNum)
                     .title(Title.STARTER)
                     .authority(Authority.ROLE_USER)
-                    .avatar(avatar)
                     .providerType(ProviderType.LOCAL)
+                    .userStatus(UserStatus.ACTIVE)
                     .build();
         }
     }

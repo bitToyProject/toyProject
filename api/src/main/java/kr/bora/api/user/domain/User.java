@@ -52,11 +52,11 @@ public class User extends BaseEntity {
     private Title title;
 
     @Column(name = "avatar")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Avatar avatar;
 
     @Column(name="authority")
-    @Enumerated(EnumType.ORDINAL) // enum 문자열 자체가 저장(USER, ADMIN 등)
+    @Enumerated(EnumType.ORDINAL)
     private Authority authority;
     //TODO : 프로필 사진 어떻게 할진 확인
 
@@ -92,7 +92,7 @@ public class User extends BaseEntity {
     }
 
     public User setUserInactive() {
-        this.userStatus = UserStatus.INACTIVE;
+        userStatus = UserStatus.INACTIVE;
         return this;
     }
 
