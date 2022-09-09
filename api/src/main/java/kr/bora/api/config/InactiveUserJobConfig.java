@@ -28,6 +28,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -70,12 +71,9 @@ public class InactiveUserJobConfig {
     @Bean
     @StepScope
     public ListItemReader<User> inactiveUserReader(@Value("#{jobParameters[nowDate]}") Date nowDate, UserRepository userRepository) {
-        LocalDateTime now = nowDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-        List<User> inactiveUsers = userRepository.findByModDateBeforeAndUserStatusEquals(nowDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime().minusYears(1), UserStatus.ACTIVE);
+
+        LocalDateTime now = LocalDateTime.ofInstant(nowDate.toInstant(), ZoneId.systemDefault());
+        List<User> inactiveUsers = userRepository.findByModDateBeforeAndUserStatusEquals(now.minusYears(1), UserStatus.ACTIVE);
         return new ListItemReader<>(inactiveUsers);
     }
 

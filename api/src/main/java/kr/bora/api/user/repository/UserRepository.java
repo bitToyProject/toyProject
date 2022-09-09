@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -32,5 +33,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("update User u set u.department = :#{#user.department} where u.userId=:#{#user.userId}")
     int assiningUserDepartment(@Param("user") User user);
 
-    List<User> findByModDateBeforeAndUserStatusEquals(LocalDateTime localDateTime, UserStatus status);
+
+    List<User> findByModDateBeforeAndUserStatusEquals( LocalDateTime localDateTime, UserStatus status);
 }
