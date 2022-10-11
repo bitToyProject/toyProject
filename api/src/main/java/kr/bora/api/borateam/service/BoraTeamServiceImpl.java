@@ -5,21 +5,16 @@ import kr.bora.api.borateam.domain.BoraTeam;
 import kr.bora.api.borateam.repository.BoraTeamRepository;
 import kr.bora.api.borateamuser.domain.BoraTeamUser;
 import kr.bora.api.borateamuser.repository.BoraTeamUserRepository;
-import kr.bora.api.borateamuser.service.BoraTeamUserService;
 import kr.bora.api.common.exception.BoraException;
 import kr.bora.api.common.exception.ErrorCode;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.UserDto;
-import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

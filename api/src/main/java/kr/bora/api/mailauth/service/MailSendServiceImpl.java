@@ -38,6 +38,7 @@ public class MailSendServiceImpl implements MailSendService {
                     .append("&authKey=")
                     .append(authMailDto.getKey())
                     .append("'target='_blank'>이메일 인증 확인</a>")
+                            .append('l')
                     .toString());
             sendMail.setFrom("noreply.bora@gmail.com", "BORA");
             sendMail.setTo(authMailDto.getAuthMail());

@@ -2,7 +2,6 @@ package kr.bora.api.todo.service;
 
 import kr.bora.api.borateam.repository.BoraTeamRepository;
 import kr.bora.api.borateamuser.domain.BoraTeamUser;
-import kr.bora.api.borateamuser.domain.dto.BoraTeamUserDto;
 import kr.bora.api.borateamuser.repository.BoraTeamUserRepository;
 import kr.bora.api.borateamuser.service.BoraTeamUserService;
 import kr.bora.api.files.domain.FileType;
@@ -21,9 +20,7 @@ import kr.bora.api.todo.repository.TodoReplyRepository;
 import kr.bora.api.todo.repository.TodoRepository;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.UserDto;
-import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
-import kr.bora.api.user.service.UserService;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +32,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

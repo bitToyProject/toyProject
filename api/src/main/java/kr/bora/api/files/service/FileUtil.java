@@ -9,7 +9,6 @@ import kr.bora.api.files.repository.FileRepository;
 import kr.bora.api.files.util.MD5Generator;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.dto.UserDto;
-import kr.bora.api.user.dto.UserResponseDto;
 import kr.bora.api.user.repository.UserRepository;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +50,7 @@ public class FileUtil {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-//        if (todoId == null || textId == null) {
+        if (todoId == null || textId == null) {
 
             /* 파일 개수만큼 forEach 실행 */
             for (MultipartFile file : files) {
@@ -90,7 +89,7 @@ public class FileUtil {
                     throw new BoraException(ErrorCode.FAIL_SAVE_FILE, "[" + file.getOriginalFilename() + "] failed to save file...");
                 }
             } // end of for}
-//        }
+        }
         return attachList;
     }
 

@@ -2,18 +2,14 @@ package kr.bora.api.user.dto;
 
 import kr.bora.api.socialAuth.domain.ProviderType;
 import kr.bora.api.user.domain.Authority;
-import kr.bora.api.user.domain.Avatar;
-import kr.bora.api.user.domain.Title;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.util.SecurityUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.annotation.RegEx;
 import javax.validation.constraints.*;
 import java.security.InvalidParameterException;
 
@@ -38,18 +34,12 @@ public class UserDto {
 
         private Authority authority;
 
-        private Title title;
-        private Avatar avatar;
-
         public User toEntity(PasswordEncoder passwordEncoder) {
             return User.builder()
                     .username(username)
                     .password(passwordEncoder.encode(password))
                     .nickName(nickName)
-                    .phoneNum(phoneNum)
-                    .title(Title.STARTER)
                     .authority(Authority.ROLE_USER)
-                    .avatar(avatar)
                     .providerType(ProviderType.LOCAL)
                     .build();
         }
@@ -63,16 +53,12 @@ public class UserDto {
         private Long userId;
         private String username;
         private String nickname;
-        private String phoneNumber;
-        private Avatar avatar;
         private ProviderType providerType;
 
         public UserResponse(User user) {
             this.userId = user.getUserId();
             this.username = user.getUsername();
             this.nickname = user.getNickName();
-            this.phoneNumber = user.getPhoneNum();
-            this.avatar = user.getAvatar();
             this.providerType = user.getProviderType();
         }
     }

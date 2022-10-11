@@ -10,8 +10,6 @@ public interface UserService {
 
     boolean checkChangeableAuthority(long userId, int authorityCode);
 
-    UserWithDepartmentDto departmentAssigning(AssignDepartmentDto dto);
-
     void modify(UserDto.UserRequest userRequest);
 
     UserDto.UserResponse getMyInfo();

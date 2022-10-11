@@ -20,19 +20,19 @@ public class TodoNotificationController {
     /**
      * @title 로그인 한 유저 sse 연결
 //     */
-//    @GetMapping(value="/subscribe", produces = "text/event-stream")
-//    public SseEmitter subscribe(@RequestParam(value = "lastEventId", required = false, defaultValue = "") String lastEventId) {
-//        return todoNotiService.subscribe(lastEventId);
-//    }
+    @GetMapping(value="/subscribe", produces = "text/event-stream")
+    public SseEmitter subscribe(@RequestParam(value = "lastEventId", required = false, defaultValue = "") String lastEventId) {
+        return todoNotiService.subscribe(lastEventId);
+    }
 
     /**
      * @title 로그인 한 유저 sse 연결 - 테스트용
      */
-    @GetMapping(value = "/subscribe/{id}", produces = "text/event-stream")
-    public SseEmitter subscribe(@PathVariable Long id,
-                                @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
-        return todoNotiService.subscribe(id, lastEventId);
-    }
+//    @GetMapping(value = "/subscribe/{id}", produces = "text/event-stream")
+//    public SseEmitter subscribe(@PathVariable Long id,
+//                                @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
+//        return todoNotiService.subscribe(id, lastEventId);
+//    }
 
     @GetMapping("/test")
     public ModelAndView noti() {

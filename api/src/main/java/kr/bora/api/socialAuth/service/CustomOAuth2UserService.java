@@ -1,19 +1,20 @@
 package kr.bora.api.socialAuth.service;
 
+import kr.bora.api.common.exception.BoraException;
+import kr.bora.api.common.exception.ErrorCode;
+import kr.bora.api.mailauth.domain.entity.AuthMail;
+import kr.bora.api.mailauth.repository.MailAuthRepository;
 import kr.bora.api.socialAuth.domain.ProviderType;
 import kr.bora.api.socialAuth.domain.UserPrincipal;
 import kr.bora.api.socialAuth.domain.info.OAuth2UserInfo;
 import kr.bora.api.socialAuth.domain.info.OAuth2UserInfoFactory;
 import kr.bora.api.socialAuth.exception.OAuthProviderMissMatchException;
 import kr.bora.api.user.domain.Authority;
-import kr.bora.api.user.domain.Avatar;
-import kr.bora.api.user.domain.Title;
 import kr.bora.api.user.domain.User;
 import kr.bora.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -28,6 +29,8 @@ import java.util.Optional;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
+
+    private final MailAuthRepository mailAuthRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -54,14 +57,18 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User users;
         if (userOptional.isPresent()) {//회원가입 o
             users = userOptional.get();
-//            System.out.println("users = " + users.getUserId());
             if (providerType != users.getProviderType()) {
                 throw new OAuthProviderMissMatchException(
                         "Looks like you're signed up with " + providerType +
                                 " account. Please use your " + users.getProviderType() + " account to login."
                 );
             }
-            updateUser(users, userInfo);
+            AuthMail authMail = mailAuthRepository.findByAuthMailEquals(users.getUsername());
+            if (authMail.getAuthStatus().equals(AuthMail.AuthStatus.CHECKED)) {
+                  updateUser(users, userInfo);
+            } else{
+                throw new BoraException(ErrorCode.CHECKED_USER_AUTH_EMAIL, "이메일 인증을 먼저 해주세요.");
+            }
         } else {//회원가입 x
             users = createUser(userInfo, providerType);
         }
@@ -75,12 +82,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User user = User.builder()
                 .username(userInfo.getEmail())
                 .password("Thank you for Social User!")
-                .title(Title.BEGINNER)
-                .avatar(Avatar.DEFAULTMAN)
                 .nickName(userInfo.getName())
                 .providerType(providerType)
                 .authority(Authority.ROLE_USER)
-                .phoneNum(null)
                 .oauthId(userInfo.getId())
                 .build();
         return userRepository.save(user);

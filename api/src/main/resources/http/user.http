@@ -27,8 +27,8 @@ POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "username": "wkdgothf@gmail.com",
-  "password": "haesol2"
+  "username": "user1@naver.com",
+  "password": "woals1212!"
 }
 
 ###

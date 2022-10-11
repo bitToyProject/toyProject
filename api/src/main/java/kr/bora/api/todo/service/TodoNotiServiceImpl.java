@@ -1,5 +1,6 @@
 package kr.bora.api.todo.service;
 
+import kr.bora.api.borateamuser.repository.BoraTeamUserRepository;
 import kr.bora.api.common.exception.BoraException;
 import kr.bora.api.common.exception.ErrorCode;
 import kr.bora.api.todo.domain.Todo;
@@ -32,53 +33,55 @@ public class TodoNotiServiceImpl implements TodoNotiService {
 
     private final TodoNotiRepository todoNotiRepository;
 
-//    @Override
-//    public SseEmitter subscribe(String lastEventId) {
-//        Long userId = SecurityUtil.getCurrentUserId();
-//        String id = userId + "_" + System.currentTimeMillis();
-//
-//        SseEmitter emitter = emitterRepository.save(id, new SseEmitter(DEFAULT_TIMEOUT));
-//        emitter.onCompletion(() -> emitterRepository.deleteById(id));
-//        emitter.onTimeout(() -> emitterRepository.deleteById(id));
-//
-//        // 503 에러 방지 -> 더미 이벤트 전송
-//        sendToClient(emitter, id, "EventStream Created. [userId=" + userId + "]");
-//
-//        if (!lastEventId.isEmpty()) {
-//            Map<String, Object> events = emitterRepository.findAllEventCacheStartWithId(String.valueOf(userId));
-//            events.entrySet().stream()
-//                    .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
-//                    .forEach(entry -> sendToClient(emitter, entry.getKey(), entry.getValue()));
-//        }
-//        return emitter;
-//
-//    }
+    @Override
+    public SseEmitter subscribe(String lastEventId) {
 
-    public SseEmitter subscribe(Long userId, String lastEventId) {
-        // 1
+        Long userId = SecurityUtil.getCurrentUserId();
+
         String id = userId + "_" + System.currentTimeMillis();
 
-        // 2
         SseEmitter emitter = emitterRepository.save(id, new SseEmitter(DEFAULT_TIMEOUT));
-
         emitter.onCompletion(() -> emitterRepository.deleteById(id));
         emitter.onTimeout(() -> emitterRepository.deleteById(id));
 
-        // 3
-        // 503 에러를 방지하기 위한 더미 이벤트 전송
-        sendToClient(emitter, id, "eventStream Created. [userId=" + userId + "]");
+        // 503 에러 방지 -> 더미 이벤트 전송
+        sendToClient(emitter, id, "EventStream Created. [userId=" + userId + "]");
 
-        // 4
-        // 클라이언트가 미수신한 Event 목록이 존재할 경우 전송하여 Event 유실을 예방
         if (!lastEventId.isEmpty()) {
             Map<String, Object> events = emitterRepository.findAllEventCacheStartWithId(String.valueOf(userId));
             events.entrySet().stream()
                     .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
                     .forEach(entry -> sendToClient(emitter, entry.getKey(), entry.getValue()));
         }
-
         return emitter;
+
     }
+
+//    public SseEmitter subscribe(Long userId, String lastEventId) {
+//        // 1
+//        String id = userId + "_" + System.currentTimeMillis();
+//
+//        // 2
+//        SseEmitter emitter = emitterRepository.save(id, new SseEmitter(DEFAULT_TIMEOUT));
+//
+//        emitter.onCompletion(() -> emitterRepository.deleteById(id));
+//        emitter.onTimeout(() -> emitterRepository.deleteById(id));
+//
+//        // 3
+//        // 503 에러를 방지하기 위한 더미 이벤트 전송
+//        sendToClient(emitter, id, "eventStream Created. [userId=" + userId + "]");
+//
+//        // 4
+//        // 클라이언트가 미수신한 Event 목록이 존재할 경우 전송하여 Event 유실을 예방
+//        if (!lastEventId.isEmpty()) {
+//            Map<String, Object> events = emitterRepository.findAllEventCacheStartWithId(String.valueOf(userId));
+//            events.entrySet().stream()
+//                    .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
+//                    .forEach(entry -> sendToClient(emitter, entry.getKey(), entry.getValue()));
+//        }
+//
+//        return emitter;
+//    }
 
     public void sendToClient(SseEmitter emitter, String id, Object data) {
 

@@ -55,14 +55,6 @@ public class UserController {
         return ResponseEntity.ok("회원 탈퇴가 성공적으로 완료되었습니다. 그 동안 이용해주셔서 감사합니다.");
     }
 
-
-    @PutMapping("/assign/department")
-    public ResponseEntity<UserWithDepartmentDto> assignUserDepartment(
-            @RequestBody UserRequestCommand.RequestAssignDepartment command) {
-        var dto = command.toDto();
-        return ResponseEntity.ok(userService.departmentAssigning(dto));
-    }
-
     @PostMapping("/temp_pwd")
     public ResponseEntity<String> sendTempPwd(@RequestParam String username) throws MessagingException, UnsupportedEncodingException {
         String tempPassword = userService.getTempPassword();

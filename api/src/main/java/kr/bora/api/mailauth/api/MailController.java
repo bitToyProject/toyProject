@@ -28,7 +28,7 @@ public class MailController {
     public ResponseEntity<ApiResponse> checkAuthMail(String username, String authKey) {
 
         if (mss.checkMailAuthKey(username, authKey)) {
-            return ResponseEntity.ok(ApiResponse.success(username+"인증이 완료되었습니다.", "로그인 해주세요." ));
+            return ResponseEntity.ok(ApiResponse.success(username+" 인증이 완료되었습니다.", "로그인 해주세요." ));
         } else {
             return ResponseEntity.ok(ApiResponse.fail());
         }

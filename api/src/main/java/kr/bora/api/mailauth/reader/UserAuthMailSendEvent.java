@@ -1,4 +1,4 @@
-package kr.bora.api.user.domain.reader;
+package kr.bora.api.mailauth.reader;
 
 import kr.bora.api.mailauth.domain.dto.AuthMailDto;
 import kr.bora.api.mailauth.service.MailSendServiceImpl;

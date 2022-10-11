@@ -50,14 +50,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserWithDepartmentDto departmentAssigning(AssignDepartmentDto dto) {
-        User user = dto.toUser();
-        int dup = repository.assiningUserDepartment(user);
-        return UserWithDepartmentDto.toDto(user);
-    }
-
-
-    @Override
     public void modify(UserDto.UserRequest userRequest) {
         User user = userRequest.toEntity(passwordEncoder);
 

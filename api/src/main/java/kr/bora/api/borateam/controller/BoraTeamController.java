@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/teams")
 public class BoraTeamController {
 
     private final BoraTeamService service;
@@ -17,7 +18,6 @@ public class BoraTeamController {
 
         return ResponseEntity.ok(ApiResponse.success("팀 등록 성공", service.saveTeam(command)));
     }
-
 
     @PutMapping("/modify/{teamId}")
     public ResponseEntity<ApiResponse> modifyTeam(@PathVariable Long teamId, @RequestBody BoraTeamDto.TeamRequest teamRequest) {

@@ -14,7 +14,7 @@ public class SecurityUtil {
     // static메서드에 repository 주입 시
     // 방법 1 -> setter 메서드를 사용
     // 방법 2 -> 생성자를 이용
-    public static UserRepository userRepository;
+    private static UserRepository userRepository;
 
     @Autowired
     private SecurityUtil(UserRepository userRepository) {
