@@ -1,5 +1,6 @@
 package kr.bora.api.socialAuth.handler;
 
+import kr.bora.api.common.util.RedisUtil;
 import kr.bora.api.socialAuth.domain.ProviderType;
 import kr.bora.api.socialAuth.domain.info.AuthToken;
 import kr.bora.api.socialAuth.domain.info.OAuth2UserInfo;
@@ -45,7 +46,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final RefreshTokenRepository refreshTokenRepository;
     private final OAuth2AuthorizationRequestBasedOnCookieRepository authorizationRequestRepository;
 
-//    private final UserRepository userRepository;
+    private final RedisUtil redisUtil;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -107,10 +108,13 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             refreshTokenRepository.saveAndFlush(userRefreshToken);
         }
 
-        int cookieMaxAge = (int)refreshTokenExpiry / 60;
+//        int cookieMaxAge = (int)refreshTokenExpiry / 60;
+//
+//        CookieUtils.deleteCookie(request, response,REFRESH_TOKEN);
+//        CookieUtils.addCookie(response,REFRESH_TOKEN, refreshToken.getToken(), cookieMaxAge);
 
-        CookieUtils.deleteCookie(request, response,REFRESH_TOKEN);
-        CookieUtils.addCookie(response,REFRESH_TOKEN, refreshToken.getToken(), cookieMaxAge);
+        redisUtil.set(authentication.getName(), refreshToken, refreshTokenExpiry);
+
 
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", accessToken.getToken())

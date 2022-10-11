@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,7 @@ public class TodoDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-//    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Request{
         private Long todoId;
 
@@ -46,12 +47,12 @@ public class TodoDto {
         private TodoType todoType;
 
         @LastModifiedDate
-        private String doneTime;
+        private LocalDateTime doneTime;
 
-        private String regDate;
+        private LocalDateTime regDate;
 
         @JsonIgnore
-        private String modDate;
+        private LocalDateTime modDate;
 
 
 
@@ -104,12 +105,12 @@ public class TodoDto {
         private Integer point = 0;
 
         @LastModifiedDate
-        private String doneTime;
+        private LocalDateTime doneTime;
 
-        private String regDate;
+        private LocalDateTime regDate;
 
         @JsonIgnore
-        private String modDate;
+        private LocalDateTime modDate;
 
         private TodoType todoType;
 

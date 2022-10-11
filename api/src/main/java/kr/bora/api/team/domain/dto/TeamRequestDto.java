@@ -15,8 +15,8 @@ public class TeamRequestDto {
     private Long id;
     private String teamName;
     private String memo;
-    private TeamDto superTeam;
-    private List<TeamDto> subTeamList;
+//    private TeamDto superTeam;
+//    private List<TeamDto> subTeamList;
 
 
     public Team toEntity(TeamRequestDto dto) {
@@ -24,8 +24,8 @@ public class TeamRequestDto {
         return Team.builder()
             .teamName(dto.getTeamName())
             .memo(dto.getMemo())
-            .subTeamList(TeamDto.toEntityList(dto.getSubTeamList()))
-            .superTeam(TeamDto.toEntity(dto.getSuperTeam()))
+//            .subTeamList(TeamDto.toEntityList(dto.getSubTeamList()))
+//            .superTeam(TeamDto.toEntity(dto.getSuperTeam()))
             .build();
     }
 

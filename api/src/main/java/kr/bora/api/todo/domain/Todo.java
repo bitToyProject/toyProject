@@ -9,6 +9,7 @@ import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Table(name = "todos")
@@ -38,7 +39,7 @@ public class Todo extends BaseEntity {
     private String nickname;
 
     @LastModifiedDate
-    private String doneTime;
+    private LocalDateTime doneTime;
     @Enumerated(EnumType.STRING)
     private TodoType todoType;
     @Enumerated(EnumType.ORDINAL)
@@ -84,13 +85,8 @@ public class Todo extends BaseEntity {
         this.todoType = todoType;
     }
 
-    public void changeDoneTime(String doneTime) {
+    public void changeDoneTime(LocalDateTime doneTime) {
         this.doneTime = doneTime;
     }
-
-//    @PrePersist
-//    public void defaultTodoPoint() {
-//        this.point = this.point == null ? 0 : this.point;
-//    }
 
 }

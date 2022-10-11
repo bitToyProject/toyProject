@@ -27,14 +27,14 @@ public class TeamCommandDto {
     static class RegisterTeam{
         private String teamName;
         private String memo;
-        private TeamDto superTeam;
-        private List<TeamDto> subTeamList;
+//        private TeamDto superTeam;
+//        private List<TeamDto> subTeamList;
         TeamRequestDto toDto(){
             return TeamRequestDto.builder()
                 .teamName(teamName)
                 .memo(memo)
-                .superTeam(superTeam)
-                .subTeamList(subTeamList)
+//                .superTeam(superTeam)
+//                .subTeamList(subTeamList)
                 .build();
         }
     }

@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 public class BoraTeamUserDto {
 
     @Getter
@@ -38,7 +40,7 @@ public class BoraTeamUserDto {
 
         private String nickname;
 
-        private String regDate;
+        private LocalDateTime regDate;
 
         public BoraTeamUserResponse(BoraTeamUser boraTeamUser) {
             this.teamName = boraTeamUser.getBoraTeam().getTeamName();

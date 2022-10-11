@@ -1,5 +1,7 @@
 package kr.bora.api.team.controller;
 
+import kr.bora.api.common.response.ApiResponse;
+import kr.bora.api.team.domain.dto.TeamDto;
 import kr.bora.api.team.domain.dto.TeamRequestDto;
 import kr.bora.api.team.domain.dto.TeamResponseDto;
 import kr.bora.api.team.service.TeamService;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/team")
-@CrossOrigin(origins = "*")
 public class TeamController {
     private final TeamService service;
 
@@ -19,6 +20,7 @@ public class TeamController {
         TeamRequestDto dto = command.toDto();
         return ResponseEntity.ok(service.registerTeam(dto));
     }
+
 //    @PostMapping("/enrollment")
 //    public ResponseEntity<TeamResponseDto> enrollmentUser(TeamCommandDto.)
 

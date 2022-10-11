@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class TodoFileDto {
     private String ofname;
     private String path;
 
-    private String regDate;
+    private LocalDateTime regDate;
 
-    private String modDate;
+    private LocalDateTime modDate;
 }

@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 public class TextEditorDto {
 
     @Getter
@@ -44,9 +46,9 @@ public class TextEditorDto {
         private String subtitle;
         private String contents;
         @JsonIgnore
-        private String regDate;
+        private LocalDateTime regDate;
         @JsonIgnore
-        private String modDate;
+        private LocalDateTime modDate;
 
         /* Dto -> Entity */
         public Response(TextEditor textEditor) {

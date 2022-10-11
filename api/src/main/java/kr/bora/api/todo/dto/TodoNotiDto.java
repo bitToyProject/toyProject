@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 public class TodoNotiDto {
     @Getter
     @NoArgsConstructor
@@ -23,7 +25,7 @@ public class TodoNotiDto {
         private String url;
 
         // 알림이 생성된 날짜
-        private String createAt;
+        private LocalDateTime createAt;
 
         // 알림 읽음 여부
         private boolean isRead;
@@ -55,7 +57,7 @@ public class TodoNotiDto {
         private String url;
 
         // 알림이 생성된 날짜
-        private String createAt;
+        private LocalDateTime createAt;
 
         // 알림 읽음 여부
         private boolean isRead;

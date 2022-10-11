@@ -1,10 +1,12 @@
 package kr.bora.api.user.util;
 
+import kr.bora.api.user.domain.User;
 import kr.bora.api.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -59,5 +61,4 @@ public class SecurityUtil {
         //일반 유저 로그인
         return Long.parseLong(authentication.getName());
     }
-
 }

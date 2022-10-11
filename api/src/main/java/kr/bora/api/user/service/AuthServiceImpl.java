@@ -89,11 +89,11 @@ public class AuthServiceImpl implements AuthService {
         tokenDto.setUserName(loginRequestDto.getUsername());
 
         // 쿠키에 저장할지 redis에 저장할지 선택
-        int cookieMaxAge = (int) (THREE_DAYS_MSEC / 60);
-        CookieUtils.deleteCookie(request, response, REFRESH_TOKEN); // 리프레시 토큰을 3일간 쿠키에 저장
-        CookieUtils.addCookie(response, REFRESH_TOKEN, refreshToken.getValue(), cookieMaxAge);
+//        int cookieMaxAge = (int) (THREE_DAYS_MSEC / 60);
+//        CookieUtils.deleteCookie(request, response, REFRESH_TOKEN); // 리프레시 토큰을 3일간 쿠키에 저장
+//        CookieUtils.addCookie(response, REFRESH_TOKEN, refreshToken.getValue(), cookieMaxAge);
 
-//        redisUtil.set(authentication.getName(), refreshToken, tokenDto.getAccessTokenExpiresIn());
+        redisUtil.set(authentication.getName(), refreshToken, tokenDto.getAccessTokenExpiresIn());
 
         return tokenDto;
     }
@@ -108,7 +108,7 @@ public class AuthServiceImpl implements AuthService {
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 
         // redis로 RefreshToken 업데이트
-//        redisUtil.set(authentication.getName(), tokenDto.getRefreshToken(), tokenDto.getAccessTokenExpiresIn());
+        redisUtil.set(authentication.getName(), tokenDto.getRefreshToken(), tokenDto.getAccessTokenExpiresIn());
 
         RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
 
@@ -116,9 +116,9 @@ public class AuthServiceImpl implements AuthService {
 
         tokenDto.setUserName(refreshToken.getUsername());
 
-        int cookieMaxAge = (int) (THREE_DAYS_MSEC / 60);
-        CookieUtils.deleteCookie(request, response, REFRESH_TOKEN); // 리프레시 토큰을 3일간 쿠키에 저장
-        CookieUtils.addCookie(response, REFRESH_TOKEN, refreshToken.getValue(), cookieMaxAge);
+//        int cookieMaxAge = (int) (THREE_DAYS_MSEC / 60);
+//        CookieUtils.deleteCookie(request, response, REFRESH_TOKEN); // 리프레시 토큰을 3일간 쿠키에 저장
+//        CookieUtils.addCookie(response, REFRESH_TOKEN, refreshToken.getValue(), cookieMaxAge);
 
 
         return tokenDto;

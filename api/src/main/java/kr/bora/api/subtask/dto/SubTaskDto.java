@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,9 +79,9 @@ public class SubTaskDto {
         @LastModifiedDate
         private String doneTime;
         @JsonIgnore
-        private String regDate;
+        private LocalDateTime regDate;
         @JsonIgnore
-        private String modDate;
+        private LocalDateTime modDate;
 
         private String nickName;
 
